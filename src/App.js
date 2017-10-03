@@ -4,7 +4,8 @@ import { renderRoutes } from 'react-router-config';
 import routes from './routes';
 import './App.css';
 import './assets/scss/include.css';
-
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 
 class App extends Component {
   render() {

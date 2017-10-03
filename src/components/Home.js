@@ -26,29 +26,19 @@ class Home extends Component {
   render() {
     return(
       <div>
-        <h1 className="greenText">
+        <h1 className="center greenText">
             Welcome to Our Senior Design Project Prototype
         </h1>
 
         <button onClick={this.displayState}>Display State</button>
 
-        <div className="row">
-          <div className="col-md-6 greenText">
-            <h1>hello</h1>
-          </div>
-          <div className="col-md-6 greenText">
-            <h1>world</h1>
-          </div>
-        </div>
-
-
         <Grid>
-          <Col md={6}>
+          <Col sm={4} md={6}>
             <h4>Falcrum Approach</h4>
             <input className="tgl tgl-flat" id="cb1" type="checkbox" onClick={this.toggleFalcrum}/>
             <label className="tgl-btn" htmlFor="cb1"></label>
           </Col>
-          <Col md={6}>
+          <Col sm={4} md={6}>
             <h4>TDB</h4>
             <input className="tgl tgl-flat" id="cb2" type="checkbox" onClick={this.toggleTBD}/>
             <label className="tgl-btn" htmlFor="cb2"></label>
