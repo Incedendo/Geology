@@ -4,18 +4,18 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 class Home extends Component {
   state = {
-      falcrumApproach: false,
+      fulcrumApproach: false,
       tbd: false
   };
 
   displayState = () => {
-    console.log("Falcrum Approach chosen: " + this.state.falcrumApproach)
+    console.log("Fulcrum Approach chosen: " + this.state.fulcrumApproach)
   }
 
-  toggleFalcrum = () => {
-    this.setState((prevState) => ({falcrumApproach: !prevState.falcrumApproach}))
+  toggleFulcrum = () => {
+    this.setState((prevState) => ({fulcrumApproach: !prevState.fulcrumApproach}))
 
-    console.log("the state is: " + this.state.falcrumApproach)
+    console.log("the state is: " + this.state.faulcrumApproach)
   }
 
   toggleTBD = () => {
@@ -52,7 +52,7 @@ class Home extends Component {
          </Col>
        </Grid>
 
-        {(this.state.falcrumApproach || this.state.tbd) && <a class="btn-5" href="#" onClick={this.displayState}>Next (Slide Effect)</a>}
+        {(this.state.fulcrumApproach || this.state.tbd) && <a class="btn-5" href="#" onClick={this.displayState}>Next (Slide Effect)</a>}
       </div>
     )
   }
