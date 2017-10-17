@@ -38,18 +38,19 @@ class Home extends Component {
           [Explanation for TBD approach]
         </p>
 
+
         <Grid>
-          <Col sm={4} md={6}>
-            <h4>Falcrum Approach</h4>
-            <input className="tgl tgl-flat" id="cb1" type="checkbox" onClick={this.toggleFalcrum}/>
-            <label className="tgl-btn centeredPosition" htmlFor="cb1"></label>
-          </Col>
-          <Col sm={4} md={6}>
-            <h4>TDB</h4>
-            <input className="tgl tgl-flat" id="cb2 " type="checkbox" onClick={this.toggleTBD}/>
-            <label className="tgl-btn centeredPosition" htmlFor="cb2"></label>
-          </Col>
-        </Grid>
+         <Col sm={4} md={6}>
+           <h4>Fulcrum Approach</h4>
+           <input className="tgl tgl-flat" id="cb3" type="checkbox" onClick={this.toggleFulcrum}/>
+           <label className="tgl-btn centeredPosition" htmlFor="cb3"></label>
+         </Col>
+         <Col sm={4} md={6}>
+           <h4>TDB</h4>
+           <input className="tgl tgl-flat" id="cb4" type="checkbox" onClick={this.toggleTBD}/>
+           <label className="tgl-btn centeredPosition" htmlFor="cb4"></label>
+         </Col>
+       </Grid>
 
         {(this.state.falcrumApproach || this.state.tbd) && <a class="btn-5" href="#" onClick={this.displayState}>Next (Slide Effect)</a>}
       </div>
