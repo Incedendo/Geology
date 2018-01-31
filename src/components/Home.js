@@ -4,6 +4,7 @@ import '../assets/scss/include.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import fetch from 'isomorphic-fetch';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 const baseURL = 'http://localhost:3000';
 
@@ -155,7 +156,6 @@ class Home extends Component {
           <h1>TBD</h1>
           [Explanation for TBD approach]
         </p>
-
 
         <Grid>
          <Col sm={4} md={6}>
