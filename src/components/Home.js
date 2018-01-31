@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import fetch from 'isomorphic-fetch';
 
-
-const baseURL = 'http://localhost:3000'
+const baseURL = 'http://localhost:3000';
 
 class Home extends Component {
   state = {
       methods: [],
       valueSent: false,
+      fulcrumApproach: false,
+      tbd: false
   };
 
   displayState = () => {
@@ -99,6 +100,12 @@ class Home extends Component {
         );
   }
 
+  toggleFulcrum = () => {
+    this.setState((prevState) => ({fulcrumApproach: !prevState.fulcrumApproach}))
+
+    console.log("the state is: " + this.state.faulcrumApproach)
+  }
+
   handleSubmit = (data) => {
     this.createBlogPost(data)
   }
@@ -137,7 +144,33 @@ class Home extends Component {
           Research Documents/ White papers
         </Link>
 
+        <h1 className="center greenText">
+            Welcome to Our Senior Design Project Prototype
+        </h1>
 
+        {/* <button onClick={this.displayState}>Display State</button> */}
+        <p>
+          <h1>Fulcrum</h1>
+            [Explanation for Fulcrum approach]
+          <h1>TBD</h1>
+          [Explanation for TBD approach]
+        </p>
+
+
+        <Grid>
+         <Col sm={4} md={6}>
+           <h4>Fulcrum Approach</h4>
+           <input className="tgl tgl-flat" id="cb3" type="checkbox" onClick={this.toggleFulcrum}/>
+           <label className="tgl-btn centeredPosition" htmlFor="cb3"></label>
+         </Col>
+         <Col sm={4} md={6}>
+           <h4>TDB</h4>
+           <input className="tgl tgl-flat" id="cb4" type="checkbox" onClick={this.toggleTBD}/>
+           <label className="tgl-btn centeredPosition" htmlFor="cb4"></label>
+         </Col>
+       </Grid>
+
+        {(this.state.fulcrumApproach || this.state.tbd) && <a class="btn-5" href="#" onClick={this.displayState}>Next (Slide Effect)</a>}
       </div>
     )
   }
