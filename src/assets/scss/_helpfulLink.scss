@@ -1,0 +1,138 @@
+.helpLink {
+  color: white !important;
+}
+
+.centerText{
+  text-align: center;
+}
+
+.detailTaskbarCloseBut{
+  // background: #001E64;
+  // height: 5rem;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  // margin-top: -250px;
+  .btn-close-task{
+    background: none;
+    border: 0;
+    width: 5rem;
+    height: 5rem;
+    padding: 1.5rem;
+    position: absolute;
+    right: 0;
+    .x,.three{
+      backface-visibility: hidden;
+      transition: all 0.2s linear;
+      display: block;
+      position: absolute;
+    }
+    .x{
+      overflow: hidden;
+      width: 1.8rem;
+      height: 1.8rem;
+      top: 1.6rem;
+      right: 1.6rem;
+      margin: 0 auto;
+      stroke-width: .13rem;
+      z-index: 2;
+    }
+    .three{
+      transition: all 0.2s 0.05s ease-out;
+      border: 2px solid #ffffff;
+      z-index: 1;
+      background: none;
+      top: 1.3rem;
+      right: 1.3rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(.6);
+    }
+    &:hover{
+      cursor: pointer;
+      .x{
+        top: 2rem;
+        right: 2.0rem;
+        width: 16px;
+        height: 16px;
+        stroke-width: 4px;
+      }
+      .three{
+        top: 1.3rem;
+        opacity: .35;
+        transform: scale(1);
+      }
+    }
+    &:focus{
+      .one,.two{
+        background: #4c8af4;
+      }
+      .three{
+        border: 2px solid #4c8af4;
+      }
+    }
+  }
+
+  .btn-back-task{
+    background: none;
+    border: 0;
+    width: 5rem;
+    height: 5rem;
+    padding: 1rem 1.5rem;
+    position: absolute;
+    left: 0;
+    .one,.two,.three{
+      transition: all .18s ease-out;
+      display: block;
+      position: relative;
+      height: 2px;
+      background: #ffffff;
+    }
+    .one,.two{
+      top: .2rem;
+      left: 0;
+      width: 1.3rem;
+    }
+    .one{
+      transform: rotate(-45deg);
+      transform-origin: 8% 50% 0;
+    }
+    .two{
+      transform: rotate(45deg);
+      transform-origin: 8% 50% 0;
+    }
+    .three{
+      left: 0;
+      width: 2.1rem;
+    }
+    &:hover{
+      cursor: pointer;
+      .one,.two,.three{
+        left: -.75rem;
+      }
+      .one,.two{
+        width: 1.1rem;
+      }
+      .one{
+        transform: rotate(-38deg);
+        transform-origin: 8% 50% 0;
+      }
+      .two{
+        transform: rotate(38deg);
+        transform-origin: 8% 50% 0;
+      }
+      .three{
+        transition: all .22s ease-in-out;
+        width: 2.0rem;
+      }
+    }
+    &:focus{
+      .one,.two,.three{
+        background: #4c8af4;
+      }
+    }
+  }
+
+}
