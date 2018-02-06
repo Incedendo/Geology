@@ -5,6 +5,7 @@ import NotFound from './components/NotFound';
 import FulcrumApproach from './components/FulcrumApproach';
 import TBDApproach from './components/TBDApproach';
 import BothApproach from './components/BothApproach';
+import AnalogComponent from './components/AnalogComponent';
 
 export default [
   {
@@ -27,6 +28,12 @@ export default [
         exact: true,
         component: TBDApproach,
         name: "TBDApproach"
+      },
+      {
+        path: '/AnalogChannels',
+        exact: true,
+        component: AnalogComponent,
+        name: "AnalogComponent"
       },
       {
         path: '/bothApproach',

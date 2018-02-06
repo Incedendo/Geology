@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
+import AnalogComponent from './AnalogComponent';
 import '../assets/scss/include.scss';
 
 class FulcrumApproach extends Component {
@@ -154,6 +155,8 @@ class FulcrumApproach extends Component {
             </button>
           </div>
         }
+
+        <AnalogComponent/>
 
         {/* {this.state.submitted &&
           <div>

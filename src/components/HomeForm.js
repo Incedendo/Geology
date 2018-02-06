@@ -79,7 +79,7 @@ class HomeForm extends Component {
     render() {
         return (
           <Grid>
-            <Col md={4}>
+            <Col md={3}>
               <Link
                 to={{
                   pathname: '/FulcrumApproach',
@@ -93,7 +93,7 @@ class HomeForm extends Component {
               </div>
             </Col>
 
-            <Col md={4}>
+            <Col md={3}>
               <Link to={{
                 pathname: '/TBDApproach',
               }}
@@ -106,7 +106,20 @@ class HomeForm extends Component {
               </div>
             </Col>
 
-            <Col md={4}>
+            <Col md={3}>
+              <Link to={{
+                pathname: '/AnalogChannels',
+              }}
+                className=""
+              >
+                Analog Channel
+              </Link>
+              <div>
+                Allow users to search for Analog Streams
+              </div>
+            </Col>
+
+            <Col md={3}>
               <Link to={{
                 pathname: '/bothApproach',
               }}
