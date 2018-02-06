@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
+import fetch from 'isomorphic-fetch';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
 import AnalogComponent from './AnalogComponent';
 import '../assets/scss/include.scss';
 
 class FulcrumApproach extends Component {
+
   state = {
     AvgBkflDpt: 0,
     BkflChanWdt: 0,
@@ -18,6 +21,56 @@ class FulcrumApproach extends Component {
     DMLMult: 0,
     submitted: false,
   };
+
+  postFulcrum = () => {
+    // console.log("doing Fetch for postFulcrum")
+    // var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+    // targetUrl = 'http://localhost:5000/api/values/fulcrum'
+
+
+    // fetch(api_url + '/api/values/fulcrum', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     method: 'Fulcrum',
+    //   })
+    // })
+
+    console.log("---Making Post Request with Axios---")
+
+    axios.post('http://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum', {
+      "isFulcrum": true,
+      "isTBD": false,
+      "isMetric": false,
+      "TBD": {
+        "first_order": 1,
+        "second_order": 2,
+        "third_order": 3,
+        "drainage": 123,
+        "riverSize": 503
+      },
+      "Fulcrum": {
+        "avgBankfullDepth": 9,
+        "bankfullWidth": 8,
+        "hydraulicRadius": 7,
+        "grainSize_d16": 6,
+        "grainSize_d50": 5,
+        "grainSize_d84": 4,
+        "grainSize_d90": 3,
+        "sedimentDensity": 2,
+        "dimensionlessMultiplier": 1
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
   renderFulcrumField = (title, state, name) => {
     return(
@@ -69,6 +122,8 @@ class FulcrumApproach extends Component {
         status: `Submitted AvgBkflDpt: ${AvgBkflDpt}, BkflChanWdt: ${BkflChanWdt}, HydrolicRad: ${HydrolicRad}`,
         submitted: true,
       }))
+
+      this.postFulcrum();
   }
 
   render() {
