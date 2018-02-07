@@ -10,6 +10,7 @@ import '../assets/scss/include.scss';
 class FulcrumApproach extends Component {
 
   state = {
+    post: [],
     AvgBkflDpt: 0,
     BkflChanWdt: 0,
     HydrolicRad: 0,
@@ -21,6 +22,69 @@ class FulcrumApproach extends Component {
     DMLMult: 0,
     submitted: false,
   };
+
+  componentDidMount() {
+
+    const JsonServerUrl = 'http://localhost:3004/posts';
+
+    const JimGetUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/TestReturn';
+
+    const JimPostUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum';
+
+
+    // axios.get(url)
+    //   .then(res => {
+    //     console.log(res.data[0]);
+    //   });
+
+    const fulcrumData = {
+      "isFulcrum": true,
+      "isTBD": false,
+      "isMetric": false,
+      "TBD": {
+        "first_order": 1,
+        "second_order": 2,
+        "third_order": 3,
+        "drainage": 123,
+        "riverSize": 503
+      },
+      "Fulcrum": {
+        "avgBankfullDepth": 9,
+        "bankfullWidth": 8,
+        "hydraulicRadius": 7,
+        "grainSize_d16": 6,
+        "grainSize_d50": 5,
+        "grainSize_d84": 4,
+        "grainSize_d90": 3,
+        "sedimentDensity": 2,
+        "dimensionlessMultiplier": 1
+      }
+    }
+
+    const getRequestData = {
+      method: 'GET',
+      Origin:'https://powerful-cliffs-45352.herokuapp.com',
+    }
+
+    const postRequestData = {
+      method: 'Post',
+      Origin:'https://powerful-cliffs-45352.herokuapp.com',
+      headers: {
+        headers:{'content-type': 'application/json'},
+      },
+      body: fulcrumData,
+    }
+
+    fetch(JimGetUrl, getRequestData)
+    .then(results => {
+      return results.json();
+    }).then(data => {
+        console.log(data);
+        console.log("Post success!!!");
+      }
+    );
+
+  }
 
   postFulcrum = () => {
     // console.log("doing Fetch for postFulcrum")
