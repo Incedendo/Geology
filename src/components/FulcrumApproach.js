@@ -215,6 +215,10 @@ class FulcrumApproach extends Component {
         state_DMLMult,
       } = this.state;
 
+      this.setState({
+        submitted: true,
+      })
+
       this.postFulcrum();
   }
 
@@ -247,37 +251,31 @@ class FulcrumApproach extends Component {
         title: "Hydraulic  Radius (m),  R",
         state: HydrolicRad,
         name: "HydrolicRad",
-
       },
       {
         title: "D16 (mm)",
         state: Dee16,
         name: "Dee16",
-
       },
       {
         title: "D50 (mm)",
         state: Dee50,
         name: "Dee50",
-
       },
       {
         title: "D84 (mm)",
         state: Dee84,
         name: "Dee84",
-
       },
       {
         title: "D90 (mm)",
         state: Dee90,
         name: "Dee90",
-
       },
       {
         title: "Sediment Density (g/cm^3)",
         state: SedimentDensity,
         name: "SedimentDensity",
-
       },
       {
         title: "Dimensionless Multiplier,  b. [b=1/(bankfull  annual  proportion)]",
@@ -289,7 +287,7 @@ class FulcrumApproach extends Component {
     const fakeResults = [
       {
         title: "Average Bankfull  Channel",
-        returnedData: this.state.AvgBkflDpt,
+        returnedData: AvgBkflDpt,
       },
       {
         title: "Bankful Channel Width, Bbf (m)",

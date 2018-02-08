@@ -52,7 +52,6 @@ class AnalogComponent extends Component{
               Analog Channels
             </h1>
 
-
             {FieldTitles.map( title => this.renderUnit(title) )}
 
             <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">

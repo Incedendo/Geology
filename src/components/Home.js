@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import HomeForm from './HomeForm';
 import '../assets/scss/include.scss';
-import { Link } from 'react-router-dom';
+import HomeLinkComponent from './HomeLinkComponent';
 import axios from 'axios';
 import fetch from 'isomorphic-fetch';
 import { Grid, Row, Col } from 'react-bootstrap';
@@ -118,33 +118,12 @@ class Home extends Component {
 
         <h1>Users</h1>
 
-        {/* {this.state.users.map(user =>
-          <div key={user}>{user}</div>
-        )} */}
-
-        {/* {this.state.methods} */}
-
-
-
-        {/* <button onClick={this.displayState}>Display State</button> */}
-
-        {/* <HomeForm onSubmit={this.processOptions} /> */}
         <HomeForm />
 
-        {/* wtf is this  */}
-        {/* <div>
-          {(this.state.fulcrumApproach || this.state.tbd) && <a class="btn-5" href="#" onClick={this.processOptions}>Next (Slide Effect)</a>}
-        </div> */}
-
-
-        <Link to={{
-          pathname: '/helpfullinks',
-        }}
-          className=""
-        >
-          Research Documents/ White papers
-        </Link>
-
+        <HomeLinkComponent
+          pathname='/helpfullinks'
+          linkTitle= 'Research Documents/ White papers'
+        />
 
       </div>
     )
