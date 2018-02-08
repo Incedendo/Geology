@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import HomeForm from './HomeForm';
 import '../assets/scss/include.scss';
+import HomeForm from './HomeForm';
 import HomeLinkComponent from './HomeLinkComponent';
 import axios from 'axios';
 import fetch from 'isomorphic-fetch';
@@ -9,18 +9,6 @@ import { Grid, Row, Col } from 'react-bootstrap';
 const baseURL = 'http://localhost:3000';
 
 class Home extends Component {
-  state = {
-      methods: [],
-      valueSent: false,
-      fulcrumApproach: false,
-      tbd: false
-  };
-
-  displayState = () => {
-    console.log("Fulcrum Approach chosen: " + this.state.fulcrumApproach)
-  }
-
-
   renderHeader = () => (
     <div>
       <h1 className="center greenText">
@@ -58,65 +46,10 @@ class Home extends Component {
     // });
   }
 
-  postTBD = () => {
-    // fetch('http://localhost:5000/api/values/tbd', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     method: 'TBD',
-    //   })
-    // })
-
-    axios.post('http://localhost:5000/api/values', {
-      firstName: 'TBD',
-      lastName: 'Approach'
-    })
-    .then(response => console.log(response))
-    .catch(error => console.log(error));
-  }
-
-  createBlogPost = (data) => {
-    let herokuURL = 'https://cors-anywhere.herokuapp.com/';
-    let apiURL =  'http://localhost:5000/api/values';
-    let finalURL = herokuURL+apiURL;
-
-    console.log(data);
-
-    fetch(finalURL, {
-          method: 'POST',
-          mode: 'CORS',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-      }).then(res => {
-        console.log("POST status: "+ res.status);
-
-        return res;
-      }).catch(error =>
-          console.log(error)
-        );
-  }
-
-  toggleFulcrum = () => {
-    this.setState((prevState) => ({fulcrumApproach: !prevState.fulcrumApproach}))
-
-    console.log("the state is: " + this.state.faulcrumApproach)
-  }
-
-  handleSubmit = (data) => {
-    this.createBlogPost(data)
-  }
-
   render() {
     return(
       <div>
         {this.renderHeader()}
-
-        <h1>Users</h1>
 
         <HomeForm />
 
@@ -131,19 +64,3 @@ class Home extends Component {
 }
 
 export default Home;
-
-// componentDidMount() {
-//   fetch('/api/values')
-//     .then(res => res.json())
-//     .then(data => {
-//       console.log(data[0])
-//       let methods = data.map( item => {
-//         return (
-//           <div key={item}>
-//             <h3>User Choose: {item}</h3>
-//           </div>
-//         )
-//       })
-//       this.setState({ methods: methods })
-//     });
-// }
