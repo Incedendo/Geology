@@ -7,6 +7,19 @@ import FulcrumResultComponent from './FulcrumResultComponent';
 import AnalogComponent from './AnalogComponent';
 import '../assets/scss/include.scss';
 
+const FulcrumField = ( {...props} ) =>
+(
+    <FulcrumInputComponent
+      { ...props }
+    />
+);
+
+const FulcrumResults = ({...props}) => (
+    <FulcrumResultComponent
+      {...props}
+    />
+)
+
 class FulcrumApproach extends Component {
 
   state = {
@@ -31,11 +44,6 @@ class FulcrumApproach extends Component {
 
     const JimPostUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum';
 
-
-    // axios.get(url)
-    //   .then(res => {
-    //     console.log(res.data[0]);
-    //   });
 
     const fulcrumData = {
       "isFulcrum": true,
@@ -67,15 +75,48 @@ class FulcrumApproach extends Component {
     }
 
     const postRequestData = {
-      method: 'Post',
+      method: 'POST',
       Origin:'https://powerful-cliffs-45352.herokuapp.com',
       headers: {
-        headers:{'content-type': 'application/json'},
+        headers: {
+          'content-type': 'application/json',
+        },
       },
-      body: fulcrumData,
+      body: JSON.stringify({
+          "isFulcrum": true,
+          "isTBD": false,
+          "isMetric": false,
+          "TBD": {
+            "first_order": 1,
+            "second_order": 2,
+            "third_order": 3,
+            "drainage": 123,
+            "riverSize": 503
+          },
+          "Fulcrum": {
+            "avgBankfullDepth": 9,
+            "bankfullWidth": 8,
+            "hydraulicRadius": 7,
+            "grainSize_d16": 6,
+            "grainSize_d50": 5,
+            "grainSize_d84": 4,
+            "grainSize_d90": 3,
+            "sedimentDensity": 2,
+            "dimensionlessMultiplier": 1
+          },
+      })
     }
 
-    fetch(JimGetUrl, getRequestData)
+    // fetch(JimGetUrl, getRequestData)
+    // .then(results => {
+    //   return results.json();
+    // }).then(data => {
+    //     console.log(data);
+    //     console.log("Get success!!!");
+    //   }
+    // );
+
+    fetch(JimPostUrl, postRequestData)
     .then(results => {
       return results.json();
     }).then(data => {
@@ -87,10 +128,10 @@ class FulcrumApproach extends Component {
   }
 
   postFulcrum = () => {
+
     // console.log("doing Fetch for postFulcrum")
     // var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
     // targetUrl = 'http://localhost:5000/api/values/fulcrum'
-
 
     // fetch(api_url + '/api/values/fulcrum', {
     //   method: 'POST',
@@ -103,65 +144,57 @@ class FulcrumApproach extends Component {
     //   })
     // })
 
-    console.log("---Making Post Request with Axios---")
+    // console.log("---Making Post Request with Axios---")
 
-    axios.post('http://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum', {
-      "isFulcrum": true,
-      "isTBD": false,
-      "isMetric": false,
-      "TBD": {
-        "first_order": 1,
-        "second_order": 2,
-        "third_order": 3,
-        "drainage": 123,
-        "riverSize": 503
-      },
-      "Fulcrum": {
-        "avgBankfullDepth": 9,
-        "bankfullWidth": 8,
-        "hydraulicRadius": 7,
-        "grainSize_d16": 6,
-        "grainSize_d50": 5,
-        "grainSize_d84": 4,
-        "grainSize_d90": 3,
-        "sedimentDensity": 2,
-        "dimensionlessMultiplier": 1
-      }
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    //https://github.com/axios/axios/issues/191
+
+    // axios.post('http://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum', {
+    //   "isFulcrum": true,
+    //   "isTBD": false,
+    //   "isMetric": false,
+    //   "TBD": {
+    //     "first_order": 1,
+    //     "second_order": 2,
+    //     "third_order": 3,
+    //     "drainage": 123,
+    //     "riverSize": 503
+    //   },
+    //   "Fulcrum": {
+    //     "avgBankfullDepth": 9,
+    //     "bankfullWidth": 8,
+    //     "hydraulicRadius": 7,
+    //     "grainSize_d16": 6,
+    //     "grainSize_d50": 5,
+    //     "grainSize_d84": 4,
+    //     "grainSize_d90": 3,
+    //     "sedimentDensity": 2,
+    //     "dimensionlessMultiplier": 1
+    //   }
+    // })
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   }
 
-  renderFulcrumField = (title, state, name) => {
-    return(
-      <FulcrumInputComponent
-        key={title}
-        fulcrumTitle={title}
-        inputState={state}
-        name={name}
-        onChange={this.updateFieldValue}
-      />
-    );
-  }
 
-  renderResults = (title, data) => {
-    return(
-      <FulcrumResultComponent
-        key={title}
-        fulcrumTitle={title}
-        returnedData={data}
-      />
-    );
-  }
+  // renderResults = (title, data) => (
+  // renderResults = (title, data) => (
+  //     <FulcrumResultComponent
+  //       key={title}
+  //       fulcrumTitle={title}
+  //       returnedData={data}
+  //     />
+  // )
 
   updateFieldValue = (e) => {
 
     const {name, value} = e.target;
+
     console.log("this gets called: new value of " + name + " is: "+value);
+
     this.setState(() => ({
       [name]: value
     }))
@@ -171,21 +204,16 @@ class FulcrumApproach extends Component {
       e.preventDefault();
 
       const {
-        AvgBkflDpt,
-        BkflChanWdt,
-        HydrolicRad,
-        Dee16,
-        Dee50,
-        Dee84,
-        Dee90,
-        SedimentDensity,
-        DMLMult,
+        state_AvgBkflDpt,
+        state_BkflChanWdt,
+        state_HydrolicRad,
+        state_Dee16,
+        state_Dee50,
+        state_Dee84,
+        state_Dee90,
+        state_SedimentDensity,
+        state_DMLMult,
       } = this.state;
-
-      this.setState(() => ({
-        status: `Submitted AvgBkflDpt: ${AvgBkflDpt}, BkflChanWdt: ${BkflChanWdt}, HydrolicRad: ${HydrolicRad}`,
-        submitted: true,
-      }))
 
       this.postFulcrum();
   }
@@ -258,6 +286,45 @@ class FulcrumApproach extends Component {
       },
     ]
 
+    const fakeResults = [
+      {
+        title: "Average Bankfull  Channel",
+        returnedData: this.state.AvgBkflDpt,
+      },
+      {
+        title: "Bankful Channel Width, Bbf (m)",
+        returnedData: 777,
+      },
+      {
+        title: "Hydraulic  Radius (m),  R",
+        returnedData: 777,
+      },
+      {
+        title: "D16 (mm)",
+        returnedData: 777,
+      },
+      {
+        title: "D50 (mm)",
+        returnedData: 777,
+      },
+      {
+        title: "D84 (mm)",
+        returnedData: 777,
+      },
+      {
+        title: "D90 (mm)",
+        returnedData: 777,
+      },
+      {
+        title: "Sediment Density (g/cm^3)",
+        returnedData: 777,
+      },
+      {
+        title: "Dimensionless Multiplier,  b. [b=1/(bankfull  annual  proportion)]",
+        returnedData: 777,
+      },
+    ]
+
     return (
       <form onSubmit={this.handleSubmit}>
         <h1>
@@ -266,7 +333,11 @@ class FulcrumApproach extends Component {
         {!this.state.submitted &&
           <div>
             {fieldInputs.map(
-              (fieldObject,index) => this.renderFulcrumField(fieldObject.title, fieldObject.state, fieldObject.name)
+              (fieldObject,index) => (<FulcrumField
+                title = {fieldObject.title}
+                name = {fieldObject.name} state = {fieldObject.state}
+                update = {this.updateFieldValue}
+              />)
             )}
 
             <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
@@ -277,15 +348,18 @@ class FulcrumApproach extends Component {
 
         <AnalogComponent/>
 
-        {/* {this.state.submitted &&
+        {this.state.submitted &&
           <div>
             {fakeResults.map(
-              (fieldObject,index) => this.renderResults(fieldObject.title, fieldObject.data )
+              (fieldObject,index) => <FulcrumResultComponent
+                title = {fieldObject.title} returnedData = {fieldObject.returnedData}
+              />
             )}
-          </div> */}
+          </div>
         }
 
         {status && <div>{status}</div>}
+
       </form>
     )
   }
