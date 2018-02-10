@@ -15,6 +15,8 @@ class TBDApproach extends Component{
   state = {
     defaultTBD: false,
     customizedTBD: false,
+    tenPercentTBD: false,
+    twentyPercentTBD: false,
   }
 
   handleSubmit = (e) => {
@@ -22,21 +24,41 @@ class TBDApproach extends Component{
       e.preventDefault();
   }
 
-  renderUnit = (title) => (
-      <Grid className="padding-grid">
-          <Col sm={4} md={6} className="rightAlignedText">
-              {title}
-          </Col>
-          <Col sm={4} md={6} className="leftAlignedText">
-            <select name="cars">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="fiat">Fiat</option>
-              <option value="audi">Audi</option>
-            </select>
-         </Col>
-      </Grid>
-  )
+  renderUnit = (title) => {
+    return(
+      <div>
+        {
+          (title === "Climate 1st Order" || title === "Climate 2nd Order" || title === "Climate 3rd Order") &&
+            <Grid className="padding-grid">
+                <Col sm={4} md={6} className="rightAlignedText">
+                    {title}
+                </Col>
+                <Col sm={4} md={6} className="leftAlignedText">
+                  <select name="cars">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                  </select>
+               </Col>
+            </Grid>
+        }
+        {
+          (title === "Drainage Area" || title === "River  Size") &&
+            <Grid className="padding-grid">
+                <Col sm={4} md={6} className="rightAlignedText">
+                    {title}
+                </Col>
+                <Col sm={4} md={6} className="leftAlignedText">
+                  <div>
+                    slider will be used here
+                  </div>
+               </Col>
+            </Grid>
+        }
+      </div>
+    )
+  }
 
   toggleDefaultTBDCheckbox = () => {
     this.setState( (prevState) => ({defaultTBD: !prevState.defaultTBD}) )
@@ -46,10 +68,22 @@ class TBDApproach extends Component{
     this.setState( (prevState) => ({customizedTBD: !prevState.customizedTBD}) )
   }
 
+  toggleTenPercentTBD = () => {
+    this.setState( (prevState) => ({tenPercentTBD: !prevState.tenPercentTBD}) )
+    console.log("set 10%");
+  }
+
+  toggleTwentyPercentTBD = () => {
+    this.setState( (prevState) => ({twentyPercentTBD: !prevState.twentyPercentTBD}) )
+    console.log("set 20%");
+  }
+
   resetOptions = () => {
     this.setState({
       defaultTBD: false,
       customizedTBD: false,
+      tenPercentTBD: false,
+      twentyPercentTBD: false,
     })
   }
 
@@ -81,9 +115,20 @@ class TBDApproach extends Component{
           </div>
         }
 
-        {this.state.customizedTBD && FieldTitles.map(
-          title => this.renderUnit(title)
-        )}
+        {this.state.customizedTBD &&
+          <div>
+            <input
+              type="radio"
+              name="TBDCustomizedOptions" onClick={this.toggleTenPercentTBD}/> 10% TBD
+
+            <input
+              type="radio"
+              name="TBDCustomizedOptions" onClick={this.toggleTwentyPercentTBD}/> 20% TBD
+
+            {FieldTitles.map( title => this.renderUnit(title))}
+
+          </div>
+        }
 
         {
           (this.state.defaultTBD ||

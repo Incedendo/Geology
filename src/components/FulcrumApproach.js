@@ -77,34 +77,38 @@ class FulcrumApproach extends Component {
     const postRequestData = {
       method: 'POST',
       Origin:'https://powerful-cliffs-45352.herokuapp.com',
+      mode: "cors",
       headers: {
-        headers: {
-          'content-type': 'application/json',
-        },
+        // 'Content-Type': 'text/plain',
+        // Accept: 'text/plain',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        // 'X-Content-Type-Options': 'nosniff',
       },
-      body: JSON.stringify({
-          "isFulcrum": true,
-          "isTBD": false,
-          "isMetric": false,
-          "TBD": {
-            "first_order": 1,
-            "second_order": 2,
-            "third_order": 3,
-            "drainage": 123,
-            "riverSize": 503
-          },
-          "Fulcrum": {
-            "avgBankfullDepth": 9,
-            "bankfullWidth": 8,
-            "hydraulicRadius": 7,
-            "grainSize_d16": 6,
-            "grainSize_d50": 5,
-            "grainSize_d84": 4,
-            "grainSize_d90": 3,
-            "sedimentDensity": 2,
-            "dimensionlessMultiplier": 1
-          },
-      })
+      body:
+        JSON.stringify({
+            "isFulcrum": true,
+            "isTBD": false,
+            "isMetric": false,
+            "TBD": {
+              "first_order": 1,
+              "second_order": 2,
+              "third_order": 3,
+              "drainage": 123,
+              "riverSize": 503
+            },
+            "Fulcrum": {
+              "avgBankfullDepth": 9,
+              "bankfullWidth": 8,
+              "hydraulicRadius": 7,
+              "grainSize_d16": 6,
+              "grainSize_d50": 5,
+              "grainSize_d84": 4,
+              "grainSize_d90": 3,
+              "sedimentDensity": 2,
+              "dimensionlessMultiplier": 1
+            },
+        })
     }
 
     // fetch(JimGetUrl, getRequestData)
@@ -117,14 +121,21 @@ class FulcrumApproach extends Component {
     // );
 
     fetch(JimPostUrl, postRequestData)
-    .then(results => {
-      return results.json();
-    }).then(data => {
-        console.log(data);
-        console.log("Post success!!!");
+    // .then( results => results.json() )
+    .then( response =>
+      {
+        if (response.status == 200 || response.status == 201) {
+            return response.json();
+        } else {
+          console.log('Failure!', response.status);
+        }
       }
-    );
+    ).then(function (json) {
 
+      var responseBody = json;
+
+      console.log(typeof responseBody, responseBody);
+    });
   }
 
   postFulcrum = () => {
