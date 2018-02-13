@@ -21,7 +21,7 @@ class TBDApproach extends Component{
 
   componentDidMount() {
 
-    const JimPostTBDUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/TBD';
+    const JimPostTBDUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TBD';
 
     const postRequestData = {
       method: 'POST',

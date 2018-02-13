@@ -38,9 +38,9 @@ class FulcrumApproach extends Component {
 
   componentDidMount() {
 
-    const JimGetUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/TestReturn';
+    const JimGetUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TestReturn';
 
-    const JimPostUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum';
+    const JimPostUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum';
 
     const getRequestData = {
       method: 'GET',
