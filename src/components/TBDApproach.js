@@ -19,6 +19,71 @@ class TBDApproach extends Component{
     twentyPercentTBD: false,
   }
 
+  componentDidMount() {
+
+    const JimPostTBDUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/TBD';
+
+    const postRequestData = {
+      method: 'POST',
+      Origin:'https://powerful-cliffs-45352.herokuapp.com',
+      mode: "cors",
+      headers: {
+        // 'Content-Type': 'text/plain',
+        // Accept: 'text/plain',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        // 'X-Content-Type-Options': 'nosniff',
+      },
+      body:
+        JSON.stringify({
+          "isFulcrum": true,
+          "isMetric": false,
+          "isRiverAnalogue" : true,
+          "isTBD": false,
+          "TBD": {
+          "isCrossSection": true,
+            "isWithin10": true,
+            "isWithin20": true,
+            "climate": "B",
+            "drainage_low": null,
+            "drainage_high": null,
+            "riverSize_low": null,
+            "riverSize_high": null,
+          },
+          "Fulcrum": {
+            "avgBankfullDepth": 9,
+            "bankfullWidth": 8,
+            "hydraulicRadius": 7,
+            "grainSize_d16": 6,
+            "grainSize_d50": 5,
+            "grainSize_d84": 4,
+            "grainSize_d90": 3,
+            "sedimentDensity": 2,
+            "dimensionlessMultiplier": 1,
+          },
+        })
+    }
+
+    fetch(JimPostTBDUrl, postRequestData)
+    // .then( results => results.json() )
+    .then( response =>
+      {
+        if (response.status == 200 || response.status == 201) {
+            return response.json();
+        } else {
+          console.log('TBD Failure!', response.status);
+        }
+      }
+    ).then(function (json) {
+
+      var responseBody = json;
+
+      console.log("POST CORS works");
+
+      console.log(typeof responseBody, responseBody);
+    });
+  }
+
   handleSubmit = (e) => {
       console.log("handle submit in TBD")
       e.preventDefault();

@@ -38,36 +38,9 @@ class FulcrumApproach extends Component {
 
   componentDidMount() {
 
-    const JsonServerUrl = 'http://localhost:3004/posts';
-
     const JimGetUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/TestReturn';
 
     const JimPostUrl = 'http://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum';
-
-
-    const fulcrumData = {
-      "isFulcrum": true,
-      "isTBD": false,
-      "isMetric": false,
-      "TBD": {
-        "first_order": 1,
-        "second_order": 2,
-        "third_order": 3,
-        "drainage": 123,
-        "riverSize": 503
-      },
-      "Fulcrum": {
-        "avgBankfullDepth": 9,
-        "bankfullWidth": 8,
-        "hydraulicRadius": 7,
-        "grainSize_d16": 6,
-        "grainSize_d50": 5,
-        "grainSize_d84": 4,
-        "grainSize_d90": 3,
-        "sedimentDensity": 2,
-        "dimensionlessMultiplier": 1
-      }
-    }
 
     const getRequestData = {
       method: 'GET',
@@ -87,38 +60,42 @@ class FulcrumApproach extends Component {
       },
       body:
         JSON.stringify({
-            "isFulcrum": true,
-            "isTBD": false,
-            "isMetric": false,
-            "TBD": {
-              "first_order": 1,
-              "second_order": 2,
-              "third_order": 3,
-              "drainage": 123,
-              "riverSize": 503
-            },
-            "Fulcrum": {
-              "avgBankfullDepth": 9,
-              "bankfullWidth": 8,
-              "hydraulicRadius": 7,
-              "grainSize_d16": 6,
-              "grainSize_d50": 5,
-              "grainSize_d84": 4,
-              "grainSize_d90": 3,
-              "sedimentDensity": 2,
-              "dimensionlessMultiplier": 1
-            },
+          "isFulcrum": true,
+          "isMetric": false,
+          "isRiverAnalogue" : true,
+          "isTBD": false,
+          "TBD": {
+          "isCrossSection": true,
+            "isWithin10": true,
+            "isWithin20": true,
+            "climate": "B",
+            "drainage_low": null,
+            "drainage_high": null,
+            "riverSize_low": null,
+            "riverSize_high": null,
+          },
+          "Fulcrum": {
+            "avgBankfullDepth": 9,
+            "bankfullWidth": 8,
+            "hydraulicRadius": 7,
+            "grainSize_d16": 6,
+            "grainSize_d50": 5,
+            "grainSize_d84": 4,
+            "grainSize_d90": 3,
+            "sedimentDensity": 2,
+            "dimensionlessMultiplier": 1,
+          },
         })
     }
 
-    // fetch(JimGetUrl, getRequestData)
-    // .then(results => {
-    //   return results.json();
-    // }).then(data => {
-    //     console.log(data);
-    //     console.log("Get success!!!");
-    //   }
-    // );
+    fetch(JimGetUrl, getRequestData)
+    .then(results => {
+      return results.json();
+    }).then(data => {
+        console.log(data);
+        console.log("Get success!!!");
+      }
+    );
 
     fetch(JimPostUrl, postRequestData)
     // .then( results => results.json() )
@@ -133,6 +110,8 @@ class FulcrumApproach extends Component {
     ).then(function (json) {
 
       var responseBody = json;
+
+      console.log("POST CORS works");
 
       console.log(typeof responseBody, responseBody);
     });
