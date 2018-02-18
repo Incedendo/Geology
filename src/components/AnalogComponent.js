@@ -21,7 +21,7 @@ class AnalogComponent extends Component{
   }
 
   renderUnit = (title) => (
-      <Grid className="padding-grid">
+      <Grid className="padding-grid" key={title}>
           <Col sm={4} md={6} className="rightAlignedText">
               {title}
           </Col>

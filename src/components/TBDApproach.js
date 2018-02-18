@@ -68,7 +68,7 @@ class TBDApproach extends Component{
     // .then( results => results.json() )
     .then( response =>
       {
-        if (response.status == 200 || response.status == 201) {
+        if (response.status === 200 || response.status === 201) {
             return response.json();
         } else {
           console.log('TBD Failure!', response.status);
@@ -91,7 +91,7 @@ class TBDApproach extends Component{
 
   renderUnit = (title) => {
     return(
-      <div>
+      <div key={title}>
         {
           (title === "Climate 1st Order" || title === "Climate 2nd Order" || title === "Climate 3rd Order") &&
             <Grid className="padding-grid">

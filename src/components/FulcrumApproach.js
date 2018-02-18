@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
-import axios from 'axios';
 import fetch from 'isomorphic-fetch';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
@@ -9,7 +7,7 @@ import '../assets/scss/include.scss';
 
 const FulcrumField = ( {...props} ) =>
 (
-    <FulcrumInputComponent
+    <FulcrumInputComponent key={props.title}
       { ...props }
     />
 );
@@ -34,9 +32,24 @@ class FulcrumApproach extends Component {
     SedimentDensity: 0,
     DMLMult: 0,
     submitted: false,
+    response: {
+      slope: 0,
+      meanSlopeVelocity: 0,
+      channelBankfullDischarge: 0,
+      totalBedloadDischarge: 0,
+      totalBedloadVolumeSedimentDischarge: 0,
+      tbdWithin10: 0,
+      tbdWithin20: 0,
+      totalBankfullSuspendedSedimentDischarge_VanRijn: 0,
+      totalBankfullSuspendedSedimentDischarge_WrightParker: 0,
+      totalCombinedSedimentVolumeDischargePerYear_VanRijn: 0,
+      totalCombinedSedimentVolumeDischargePerYear_WrightParker:0,
+      totalSuspendedSedimentVolumeDischargePerYear_VanRjin: 0,
+      totalSuspendedSedimentVolumeDischargePerYear_WrightParker: 0,
+    },
   };
 
-  componentDidMount() {
+  postFulcrum = () => {
 
     const JimGetUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TestReturn';
 
@@ -88,14 +101,14 @@ class FulcrumApproach extends Component {
         })
     }
 
-    fetch(JimGetUrl, getRequestData)
-    .then(results => {
-      return results.json();
-    }).then(data => {
-        console.log(data);
-        console.log("Get success!!!");
-      }
-    );
+    // fetch(JimGetUrl, getRequestData)
+    // .then(results => {
+    //   return results.json();
+    // }).then(data => {
+    //     console.log(data);
+    //     console.log("Get success!!!");
+    //   }
+    // );
 
     fetch(JimPostUrl, postRequestData)
     // .then( results => results.json() )
@@ -107,83 +120,28 @@ class FulcrumApproach extends Component {
           console.log('Failure!', response.status);
         }
       }
-    ).then(function (json) {
-
-      var responseBody = json;
-
-      console.log("POST CORS works");
-
-      console.log(typeof responseBody, responseBody);
+    ).then( data => {
+      //console.log(data);
+      this.setState({ response: data });
     });
   }
 
-  postFulcrum = () => {
-
-    // console.log("doing Fetch for postFulcrum")
-    // var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-    // targetUrl = 'http://localhost:5000/api/values/fulcrum'
-
-    // fetch(api_url + '/api/values/fulcrum', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     method: 'Fulcrum',
-    //   })
-    // })
-
-    // console.log("---Making Post Request with Axios---")
-
-    //https://github.com/axios/axios/issues/191
-
-    // axios.post('http://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum', {
-    //   "isFulcrum": true,
-    //   "isTBD": false,
-    //   "isMetric": false,
-    //   "TBD": {
-    //     "first_order": 1,
-    //     "second_order": 2,
-    //     "third_order": 3,
-    //     "drainage": 123,
-    //     "riverSize": 503
-    //   },
-    //   "Fulcrum": {
-    //     "avgBankfullDepth": 9,
-    //     "bankfullWidth": 8,
-    //     "hydraulicRadius": 7,
-    //     "grainSize_d16": 6,
-    //     "grainSize_d50": 5,
-    //     "grainSize_d84": 4,
-    //     "grainSize_d90": 3,
-    //     "sedimentDensity": 2,
-    //     "dimensionlessMultiplier": 1
-    //   }
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
-  }
-
-
-  // renderResults = (title, data) => (
-  // renderResults = (title, data) => (
-  //     <FulcrumResultComponent
-  //       key={title}
-  //       fulcrumTitle={title}
-  //       returnedData={data}
-  //     />
+  // renderResults = () => (
+  //   <div>
+  //     {FetchedResults.map(
+  //       (fieldObject,index) =>
+  //       <FulcrumResultComponent
+  //         key={fieldObject.title}
+  //         title = {fieldObject.title}
+  //         returnedData = {fieldObject.returnedData}
+  //       />
+  //     )}
+  //   </div>
   // )
 
   updateFieldValue = (e) => {
 
     const {name, value} = e.target;
-
-    console.log("this gets called: new value of " + name + " is: "+value);
 
     this.setState(() => ({
       [name]: value
@@ -207,7 +165,7 @@ class FulcrumApproach extends Component {
 
       this.setState({
         submitted: true,
-      })
+      });
 
       this.postFulcrum();
   }
@@ -274,44 +232,60 @@ class FulcrumApproach extends Component {
       },
     ]
 
-    const fakeResults = [
+    const FetchedResults = [
       {
-        title: "Average Bankfull  Channel",
-        returnedData: AvgBkflDpt,
+        title: "Slope",
+        returnedData: this.state.response.slope,
       },
       {
-        title: "Bankful Channel Width, Bbf (m)",
-        returnedData: 777,
+        title: "Mean Slope Velocity",
+        returnedData: this.state.response.meanSlopeVelocity,
       },
       {
-        title: "Hydraulic  Radius (m),  R",
-        returnedData: 777,
+        title: "Channel Bankful Discharge",
+        returnedData: this.state.response.channelBankfullDischarge,
       },
       {
-        title: "D16 (mm)",
-        returnedData: 777,
+        title: "Total BedLoad Discharge",
+        returnedData: this.state.response.totalBedloadDischarge,
       },
       {
-        title: "D50 (mm)",
-        returnedData: 777,
+        title: "Total Bedload Volume Sediment Discharge",
+        returnedData: this.state.response.totalBedloadVolumeSedimentDischarge,
       },
       {
-        title: "D84 (mm)",
-        returnedData: 777,
+        title: "TBD Within 10%",
+        returnedData: this.state.response.tbdWithin10,
       },
       {
-        title: "D90 (mm)",
-        returnedData: 777,
+        title: "TBD Within 20%",
+        returnedData: this.state.response.tbdWithin20,
       },
       {
-        title: "Sediment Density (g/cm^3)",
-        returnedData: 777,
+        title: "Total Bankful Suspended Sediment Discharge (Van Rijn)",
+        returnedData: this.state.response.totalBankfullSuspendedSedimentDischarge_VanRijn,
       },
       {
-        title: "Dimensionless Multiplier,  b. [b=1/(bankfull  annual  proportion)]",
-        returnedData: 777,
+        title: "Total Bankful Suspended Sediment Discharge (Wright Parker)",
+        returnedData: this.state.response.totalBankfullSuspendedSedimentDischarge_WrightParker,
       },
-    ]
+      {
+        title: "Total Combined Sediment Volume Discharge Per Year (Van Rijn)",
+        returnedData: this.state.response.totalCombinedSedimentVolumeDischargePerYear_VanRijn,
+      },
+      {
+        title: "Total Combined Sediment Volume Discharge Per Year (Wright Parker)",
+        returnedData: this.state.response.totalCombinedSedimentVolumeDischargePerYear_WrightParker,
+      },
+      {
+        title: "Total Suspended Sediment Volume Discharge Per Year (Van Rijn)",
+        returnedData: this.state.response.totalSuspendedSedimentVolumeDischargePerYear_VanRjin,
+      },
+      {
+        title: "Total Suspended Sediment Volume Discharge Per Year (Wright Parker)",
+        returnedData: this.state.response.totalSuspendedSedimentVolumeDischargePerYear_WrightParker,
+      },
+    ];
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -322,6 +296,7 @@ class FulcrumApproach extends Component {
           <div>
             {fieldInputs.map(
               (fieldObject,index) => (<FulcrumField
+                key={fieldObject.title}
                 title = {fieldObject.title}
                 name = {fieldObject.name} state = {fieldObject.state}
                 update = {this.updateFieldValue}
@@ -338,15 +313,16 @@ class FulcrumApproach extends Component {
 
         {this.state.submitted &&
           <div>
-            {fakeResults.map(
-              (fieldObject,index) => <FulcrumResultComponent
-                title = {fieldObject.title} returnedData = {fieldObject.returnedData}
+            {FetchedResults.map(
+              (fieldObject,index) =>
+              <FulcrumResultComponent
+                key={fieldObject.title}
+                title = {fieldObject.title}
+                returnedData = {fieldObject.returnedData}
               />
             )}
           </div>
         }
-
-        {status && <div>{status}</div>}
 
       </form>
     )
