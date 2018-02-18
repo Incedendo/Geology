@@ -32,6 +32,7 @@ class FulcrumApproach extends Component {
     SedimentDensity: 0,
     DMLMult: 0,
     submitted: false,
+    measuringSystem: "metric",
     response: {
       slope: 0,
       meanSlopeVelocity: 0,
@@ -148,6 +149,18 @@ class FulcrumApproach extends Component {
     }))
   }
 
+  setMeasureSystem = (e) => {
+    if(e.target.value === "imperial"){
+      this.setState({
+        measuringSystem: "imperial"
+      })
+    }else{
+      this.setState({
+        measuringSystem: "metric"
+      })
+    }
+  }
+
   handleSubmit = (e) => {
       e.preventDefault();
 
@@ -181,7 +194,8 @@ class FulcrumApproach extends Component {
       Dee90,
       SedimentDensity,
       DMLMult,
-      status,
+      submitted,
+      measuringSystem,
     } = this.state;
 
     const fieldInputs = [
@@ -294,6 +308,10 @@ class FulcrumApproach extends Component {
         </h1>
         {!this.state.submitted &&
           <div>
+            <select id= "measuringSystem" onChange={this.setMeasureSystem}>
+              <option value="metric">Metric</option>
+              <option value="imperial">Imperial</option>
+            </select>
             {fieldInputs.map(
               (fieldObject,index) => (<FulcrumField
                 key={fieldObject.title}
@@ -313,6 +331,7 @@ class FulcrumApproach extends Component {
 
         {this.state.submitted &&
           <div>
+            Measuring System: {this.state.measuringSystem}
             {FetchedResults.map(
               (fieldObject,index) =>
               <FulcrumResultComponent
