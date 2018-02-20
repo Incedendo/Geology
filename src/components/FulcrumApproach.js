@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
+import { Link } from 'react-router-dom';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
 import AnalogComponent from './AnalogComponent';
 import '../assets/scss/include.scss';
-
-const FulcrumField = ( {...props} ) =>
-(
-    <FulcrumInputComponent key={props.title}
-      { ...props }
-    />
-);
-
-const FulcrumResults = ({...props}) => (
-    <FulcrumResultComponent
-      {...props}
-    />
-)
 
 class FulcrumApproach extends Component {
 
@@ -32,7 +20,9 @@ class FulcrumApproach extends Component {
     SedimentDensity: 0,
     DMLMult: 0,
     submitted: false,
-    measuringSystem: "metric",
+    isMetric: true,
+    isRiverAnalogue: false,
+    isChecked: false,
     response: {
       slope: 0,
       meanSlopeVelocity: 0,
@@ -75,8 +65,8 @@ class FulcrumApproach extends Component {
       body:
         JSON.stringify({
           "isFulcrum": true,
-          "isMetric": false,
-          "isRiverAnalogue" : true,
+          "isMetric": this.state.isMetric,
+          "isRiverAnalogue" : this.state.isRiverAnalogue,
           "isTBD": false,
           "TBD": {
           "isCrossSection": true,
@@ -89,15 +79,15 @@ class FulcrumApproach extends Component {
             "riverSize_high": null,
           },
           "Fulcrum": {
-            "avgBankfullDepth": 9,
-            "bankfullWidth": 8,
-            "hydraulicRadius": 7,
-            "grainSize_d16": 6,
-            "grainSize_d50": 5,
-            "grainSize_d84": 4,
-            "grainSize_d90": 3,
-            "sedimentDensity": 2,
-            "dimensionlessMultiplier": 1,
+            "avgBankfullDepth": this.state.AvgBkflDpt,
+            "bankfullWidth": this.state.BkflChanWdt,
+            "hydraulicRadius": this.state.HydrolicRad,
+            "grainSize_d16": this.state.Dee16,
+            "grainSize_d50": this.state.Dee50,
+            "grainSize_d84": this.state.Dee84,
+            "grainSize_d90": this.state.Dee90,
+            "sedimentDensity": this.state.SedimentDensity,
+            "dimensionlessMultiplier": this.state.DMLMult,
           },
         })
     }
@@ -146,21 +136,41 @@ class FulcrumApproach extends Component {
 
     this.setState(() => ({
       [name]: value
-    }))
+    }));
   }
 
+  //Switches the isMetric state according to the dropdown option chosen on the Measuing System
   setMeasureSystem = (e) => {
     if(e.target.value === "imperial"){
       this.setState({
-        measuringSystem: "imperial"
+        isMetric: false,
       })
     }else{
       this.setState({
-        measuringSystem: "metric"
+        isMetric: true,
       })
     }
   }
 
+  // Switches the isAnalog state whenever the checkbox is clicked/unclicked
+  toggleIsAnalog = () => {
+    this.setState( (prevState) => ({isAnalog: !prevState.isAnalog}) )
+  }
+
+  // This method checks if the input by user is a valid number
+  validateInputFulcrum = (e) => {
+    const {name, value} = e.target;
+
+    console.log("current val is:" + value);
+    //if the inputs is a valid number
+    if(1 === 2){
+      this.setState({
+        isChecked: true,
+      })
+    }
+  }
+
+  //set the isSubmitted state to true
   handleSubmit = (e) => {
       e.preventDefault();
 
@@ -176,11 +186,14 @@ class FulcrumApproach extends Component {
         state_DMLMult,
       } = this.state;
 
-      this.setState({
-        submitted: true,
-      });
+      //make sure the form's inputs are validated before proceed to send the post request to the server.
+      if(this.state.checkedInputs){
+        this.setState({
+          submitted: true,
+        });
 
-      this.postFulcrum();
+        this.postFulcrum();
+      }
   }
 
   render() {
@@ -195,7 +208,6 @@ class FulcrumApproach extends Component {
       SedimentDensity,
       DMLMult,
       submitted,
-      measuringSystem,
     } = this.state;
 
     const fieldInputs = [
@@ -203,46 +215,55 @@ class FulcrumApproach extends Component {
         title: "Average Bankfull  Channel  Depth,  Hbf (m)[dm=0.5(channel  story  thickness)]",
         state: AvgBkflDpt,
         name: "AvgBkflDpt",
+        error: false,
       },
       {
         title: "Bankful Channel Width, Bbf (m)",
         state: BkflChanWdt,
         name: "BkflChanWdt",
+        error: false,
       },
       {
         title: "Hydraulic  Radius (m),  R",
         state: HydrolicRad,
         name: "HydrolicRad",
+        error: false,
       },
       {
         title: "D16 (mm)",
         state: Dee16,
         name: "Dee16",
+        error: false,
       },
       {
         title: "D50 (mm)",
         state: Dee50,
         name: "Dee50",
+        error: false,
       },
       {
         title: "D84 (mm)",
         state: Dee84,
         name: "Dee84",
+        error: false,
       },
       {
         title: "D90 (mm)",
         state: Dee90,
         name: "Dee90",
+        error: false,
       },
       {
         title: "Sediment Density (g/cm^3)",
         state: SedimentDensity,
         name: "SedimentDensity",
+        error: false,
       },
       {
         title: "Dimensionless Multiplier,  b. [b=1/(bankfull  annual  proportion)]",
         state: DMLMult,
         name: "DMLMult",
+        error: false,
       },
     ]
 
@@ -306,6 +327,11 @@ class FulcrumApproach extends Component {
         <h1>
           Fulcrum Approach
         </h1>
+
+        <div className="">
+           <Link to="/">Back</Link>
+        </div>
+
         {!this.state.submitted &&
           <div>
             <select id= "measuringSystem" onChange={this.setMeasureSystem}>
@@ -313,25 +339,46 @@ class FulcrumApproach extends Component {
               <option value="imperial">Imperial</option>
             </select>
             {fieldInputs.map(
-              (fieldObject,index) => (<FulcrumField
-                key={fieldObject.title}
-                title = {fieldObject.title}
-                name = {fieldObject.name} state = {fieldObject.state}
-                update = {this.updateFieldValue}
-              />)
+              (fieldObject,index) => (
+                <div>
+                  <FulcrumInputComponent
+                    key={fieldObject.title}
+                    title = {fieldObject.title}
+                    name = {fieldObject.name}
+                    state = {fieldObject.state}
+                    update = {this.updateFieldValue}
+                    validate = {this.validateInputFulcrum}
+                  />
+
+                </div>
+              )
             )}
 
+            {/* ANALOG COMPONENT */}
+            <div>
+              <input type="checkbox" onClick={this.toggleIsAnalog}/> Analog Channels
+              {this.state.isAnalog && <AnalogComponent/>}
+            </div>
+
+            {/* SUBMIT BUTTON */}
             <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
               Submit
             </button>
           </div>
         }
 
-        <AnalogComponent/>
-
         {this.state.submitted &&
           <div>
-            Measuring System: {this.state.measuringSystem}
+            {this.state.isMetric ?
+              <div>
+                METRIC System
+              </div>
+              :
+              <div>
+                IMPERIAL System
+              </div>
+            }
+
             {FetchedResults.map(
               (fieldObject,index) =>
               <FulcrumResultComponent

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import '../assets/scss/include.scss';
 
 const FieldTitles = [
@@ -12,56 +13,55 @@ const FieldTitles = [
 
 class AnalogComponent extends Component{
 
-  state = {
-    isAnalog: false,
-  }
-
-  toggleCheckbox = () => {
-    this.setState( (prevState) => ({isAnalog: !prevState.isAnalog}) )
-  }
-
-  renderUnit = (title) => (
+  renderAnalogUnit = (title) => (
       <Grid className="padding-grid" key={title}>
           <Col sm={4} md={6} className="rightAlignedText">
               {title}
           </Col>
           <Col sm={4} md={6} className="leftAlignedText">
-            <select name="cars">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="fiat">Fiat</option>
-              <option value="audi">Audi</option>
-            </select>
+            {this.renderClimateOrders()}
+            {this.renderDrainageArea()}
+            {this.renderRiverSize()}
          </Col>
       </Grid>
   )
 
-  handleSubmit = (e) => {
-      console.log("handle submit in TBD")
-      e.preventDefault();
-  }
+  renderClimateOrders = () => (
+    <div>
+      <select name="analogOptions">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="fiat">Fiat</option>
+        <option value="audi">Audi</option>
+      </select>
+    </div>
+  )
+
+  renderDrainageArea = () => (
+    <div>
+
+    </div>
+  )
+
+  renderRiverSize = () => (
+    <div>
+
+    </div>
+  )
 
   render(){
     return(
-      <form>
+      <div>
+        <h1>
+          Analog Channels
+        </h1>
 
-        <input type="checkbox" onClick={this.toggleCheckbox}/> Analog Channels
-        {this.state.isAnalog &&
-          <div>
-            <h1>
-              Analog Channels
-            </h1>
+        <div className="">
+           <Link to="/">Back</Link>
+        </div>
 
-            {FieldTitles.map( title => this.renderUnit(title) )}
-
-            <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
-              Submit
-            </button>
-
-          </div>
-        }
-
-      </form>
+        {FieldTitles.map( title => this.renderAnalogUnit(title) )}
+      </div>
     )
   }
 }

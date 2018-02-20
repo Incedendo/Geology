@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import '../assets/scss/include.scss';
 
 const FieldTitles = [
@@ -19,8 +20,8 @@ class TBDApproach extends Component{
     twentyPercentTBD: false,
   }
 
-  componentDidMount() {
-
+  // componentDidMount() {
+  postTBD = () =>{
     const JimPostTBDUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TBD';
 
     const postRequestData = {
@@ -154,11 +155,13 @@ class TBDApproach extends Component{
 
   render(){
     return(
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <h1>
           TBD Approach
         </h1>
-
+        <div className="">
+           <Link to="/">Back</Link>
+        </div>
         {
           !this.state.defaultTBD && !this.state.customizedTBD &&
 
