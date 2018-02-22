@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
 import AnalogComponent from './AnalogComponent';
+import FulcrumAddedTBDComponent from './FulcrumAddedTBDComponent';
 import '../assets/scss/include.scss';
 
 class FulcrumApproach extends Component {
@@ -357,7 +358,7 @@ class FulcrumApproach extends Component {
             {/* ANALOG COMPONENT */}
             <div>
               <input type="checkbox" onClick={this.toggleIsAnalog}/> Analog Channels
-              {this.state.isAnalog && <AnalogComponent/>}
+              {this.state.isAnalog && <FulcrumAddedTBDComponent/>}
             </div>
 
             {/* SUBMIT BUTTON */}

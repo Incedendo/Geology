@@ -3,21 +3,16 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import '../assets/scss/include.scss';
 
-const FieldTitles = [
-  "Climate 1st Order",
-  "Climate 2nd Order",
-  "Climate 3rd Order",
-  "Drainage Area",
-  "River  Size"
-]
-
 class TBDApproach extends Component{
 
   state = {
-    defaultTBD: false,
-    customizedTBD: false,
-    tenPercentTBD: false,
-    twentyPercentTBD: false,
+    selectedClimate: "FirstOrder",
+    selectedRiverSize: "RiverDepth",
+    selectedPrecision: "10%",
+    riverDepth_Min: 0,
+    riverDepth_Max: 0,
+    crossSectionalArea_Min: 0,
+    crossSectionalArea_Max: 0,
   }
 
   // componentDidMount() {
@@ -90,68 +85,173 @@ class TBDApproach extends Component{
       e.preventDefault();
   }
 
-  renderUnit = (title) => {
-    return(
-      <div key={title}>
-        {
-          (title === "Climate 1st Order" || title === "Climate 2nd Order" || title === "Climate 3rd Order") &&
-            <Grid className="padding-grid">
-                <Col sm={4} md={6} className="rightAlignedText">
-                    {title}
-                </Col>
-                <Col sm={4} md={6} className="leftAlignedText">
-                  <select name="cars">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="fiat">Fiat</option>
-                    <option value="audi">Audi</option>
-                  </select>
-               </Col>
-            </Grid>
-        }
-        {
-          (title === "Drainage Area" || title === "River  Size") &&
-            <Grid className="padding-grid">
-                <Col sm={4} md={6} className="rightAlignedText">
-                    {title}
-                </Col>
-                <Col sm={4} md={6} className="leftAlignedText">
-                  <div>
-                    slider will be used here
-                  </div>
-               </Col>
-            </Grid>
-        }
-      </div>
-    )
+  renderClimateOrders = () => (
+    <div>
+      <Grid className="padding-grid">
+
+        <Col sm={4} md={4} className="rightAlignedText">
+          <div>
+            Climate
+          </div>
+        </Col>
+
+        <Col sm={4} md={8} className="leftAlignedText">
+          <input
+              type="radio"
+              name="climate"
+              value="FirstOrder" onChange={this.setSelectedClimate}
+              className=""
+            /> First Order
+           <input
+             type="radio"
+             name="climate"
+             value="KoppenClassification"  onChange={this.setSelectedClimate}
+             className=""
+           /> Koppen Classification
+        </Col>
+      </Grid>
+
+      <Grid className="padding-grid">
+
+          <Col sm={4} md={6} className="rightAlignedText">
+            <select name="cars">
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="fiat">Fiat</option>
+              <option value="audi">Audi</option>
+            </select>
+         </Col>
+
+         <Col sm={4} md={6} className="leftAlignedText">
+           <select name="cars">
+             <option value="volvo">Volvo</option>
+             <option value="saab">Saab</option>
+             <option value="fiat">Fiat</option>
+             <option value="audi">Audi</option>
+           </select>
+        </Col>
+      </Grid>
+    </div>
+  )
+
+  renderDrainageArea = () => (
+    <div>
+      <Grid className="padding-grid">
+          <Col sm={4} md={4} className="rightAlignedText">
+              Drainage Area:
+          </Col>
+          <Col sm={4} md={8} className="leftAlignedText">
+            <div>
+              slider will be used here
+            </div>
+         </Col>
+      </Grid>
+    </div>
+  )
+
+  renderRiverSize = () => (
+    <div>
+      <Grid className="padding-grid">
+        <Col sm={4} md={4} className="rightAlignedText">
+            River Size:
+        </Col>
+        <Col sm={4} md={8} className="leftAlignedText">
+          <input
+              type="radio"
+              name="channelSizeOptions"
+              value="RiverDepth"
+              onChange={this.setSelectedRiverSize}
+              className=""
+            /> River Depth
+           <input
+             type="radio"
+             name="channelSizeOptions"
+             value="CrossSectionalArea" onChange={this.setSelectedRiverSize}
+             className=""
+           /> Cross Sectional Area
+         </Col>
+      </Grid>
+
+      <Grid className="padding-grid">
+        <Col sm={4} md={4} className="rightAlignedText">
+
+        </Col>
+        <Col sm={4} md={8} className="leftAlignedText">
+          Slider rendered here
+         </Col>
+      </Grid>
+    </div>
+  )
+
+  renderTBDPrecision = () => (
+    <div>
+      <Grid className="padding-grid">
+        <Col sm={4} md={4} className="rightAlignedText">
+          <div>
+            Precision:
+          </div>
+        </Col>
+        <Col sm={4} md={8} className="leftAlignedText">
+          <input
+              type="radio"
+              name="precision"
+              value="10%"
+              onChange={this.setSelectedPrecision}
+              className=""
+            /> Within 10%
+           <input
+             type="radio"
+             name="precision"
+             value="20%" onChange={this.setSelectedPrecision}
+             className=""
+           /> Within 20%
+        </Col>
+      </Grid>
+    </div>
+  )
+
+  setSelectedClimate = (e) => {
+    if(e.target.value === "KoppenClassification"){
+      this.setState({
+        selectedClimate: "KoppenClassification",
+      });
+      console.log(this.state.selectedClimate);
+    }else{
+      this.setState({
+        selectedClimate: "FirstOrder",
+      });
+      console.log(this.state.selectedClimate);
+    }
   }
 
-  toggleDefaultTBDCheckbox = () => {
-    this.setState( (prevState) => ({defaultTBD: !prevState.defaultTBD}) )
+  setSelectedRiverSize = (e) => {
+    if(e.target.value === "CrossSectionalArea"){
+      this.setState({
+        selectedRiverSize: "CrossSectionalArea",
+      });
+      console.log(this.state.selectedRiverSize);
+    }else{
+      this.setState({
+        selectedRiverSize: "RiverDepth",
+      });
+      console.log(this.state.selectedRiverSize);
+    }
+
   }
 
-  toggleCustomizedTBDCheckbox = () => {
-    this.setState( (prevState) => ({customizedTBD: !prevState.customizedTBD}) )
+  setSelectedPrecision = (e) => {
+    if(e.target.value === "20%"){
+      this.setState({
+        selectedPrecision: "20%",
+      });
+    }else{
+      this.setState({
+        selectedPrecision: "10%",
+      });
+    }
+    console.log(this.state.selectedPrecision);
   }
 
-  toggleTenPercentTBD = () => {
-    this.setState( (prevState) => ({tenPercentTBD: !prevState.tenPercentTBD}) )
-    console.log("set 10%");
-  }
-
-  toggleTwentyPercentTBD = () => {
-    this.setState( (prevState) => ({twentyPercentTBD: !prevState.twentyPercentTBD}) )
-    console.log("set 20%");
-  }
-
-  resetOptions = () => {
-    this.setState({
-      defaultTBD: false,
-      customizedTBD: false,
-      tenPercentTBD: false,
-      twentyPercentTBD: false,
-    })
-  }
 
   render(){
     return(
@@ -159,56 +259,25 @@ class TBDApproach extends Component{
         <h1>
           TBD Approach
         </h1>
+
         <div className="">
            <Link to="/">Back</Link>
         </div>
-        {
-          !this.state.defaultTBD && !this.state.customizedTBD &&
 
-          <div>
-            <div>
-              <input type="checkbox" onClick={this.toggleDefaultTBDCheckbox}/> Default TBD [default value]
-            </div>
+        {this.renderClimateOrders()}
 
-            <div>
-              <input type="checkbox" onClick={this.toggleCustomizedTBDCheckbox}/> Customized TDB
-            </div>
+        {this.renderDrainageArea()}
 
-          </div>
-        }
+        {this.renderRiverSize()}
 
-        {this.state.defaultTBD &&
-          <div>
-            TBD will be calculated using Default value of [...]
-          </div>
-        }
+        {this.renderTBDPrecision()}
 
-        {this.state.customizedTBD &&
-          <div>
-            <input
-              type="radio"
-              name="TBDCustomizedOptions" onClick={this.toggleTenPercentTBD}/> 10% TBD
-
-            <input
-              type="radio"
-              name="TBDCustomizedOptions" onClick={this.toggleTwentyPercentTBD}/> 20% TBD
-
-            {FieldTitles.map( title => this.renderUnit(title))}
-
-          </div>
-        }
-
-        {
-          (this.state.defaultTBD ||
-          this.state.customizedTBD) &&
-          <button onClick={this.resetOptions}>
-            Cancel Options
+        {!this.props.submitNotNeeded &&
+          <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
+            Submit
           </button>
-        }
+         }
 
-        <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
-          Submit
-        </button>
       </form>
     )
   }
