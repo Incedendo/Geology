@@ -15,10 +15,13 @@ class TBDApproach extends Component{
     selectedClimate: "FirstOrder",
     selectedRiverSize: "RiverDepth",
     selectedPrecision: "10%",
+    drainage_low: 0,
+    drainage_high: 0,
     riverDepth_Min: 0,
     riverDepth_Max: 0,
     crossSectionalArea_Min: 0,
     crossSectionalArea_Max: 0,
+    inputs_validated: true,
   }
 
 
@@ -90,7 +93,31 @@ class TBDApproach extends Component{
 
   handleSubmit = (e) => {
       console.log("handle submit in TBD")
-      this.postTBD();
+      if(this.validateInputs()){
+        this.setState({
+          inputs_validated: true,
+        })
+        this.postTBD();
+      }else{
+        this.setState({
+          inputs_validated: false,
+        })
+      }
+
+  }
+
+  validateInputs(){
+    if(this.state.drainage_low > 0 &&
+      this.state.drainage_high > 0 &&
+      this.state.riverDepth_Max > 0 &&
+      this.state.riverDepth_Min > 0 &&
+      this.state.crossSectionalArea_Max > 0 &&
+      this.state.crossSectionalArea_Min > 0
+    ){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   renderClimateOrders = () => (
@@ -106,14 +133,14 @@ class TBDApproach extends Component{
         <Col sm={4} md={8} className="leftAlignedText">
           <input
               type="radio"
-              name="climate"
-              value="FirstOrder" onChange={this.setSelectedClimate}
+              name="selectedClimate"
+              value="FirstOrder" onChange={this.setSelectedOption}
               className=""
             /> First Order
            <input
              type="radio"
-             name="climate"
-             value="KoppenClassification"  onChange={this.setSelectedClimate}
+             name="selectedClimate"
+             value="KoppenClassification"  onChange={this.setSelectedOption}
              className=""
            /> Koppen Classification
         </Col>
@@ -150,7 +177,14 @@ class TBDApproach extends Component{
           </Col>
           <Col sm={4} md={8} className="leftAlignedText">
             <div>
-              slider will be used here
+              Min: <input type="textbox"
+                name="drainage_low"
+                onBlur={this.setRangeValues}
+              />
+              Max: <input type="textbox"
+                name="drainage_high"
+                onBlur={this.setRangeValues}
+              />
             </div>
          </Col>
       </Grid>
@@ -166,15 +200,15 @@ class TBDApproach extends Component{
         <Col sm={4} md={8} className="leftAlignedText">
           <input
               type="radio"
-              name="channelSizeOptions"
+              name="selectedRiverSize"
               value="RiverDepth"
-              onChange={this.setSelectedRiverSize}
+              onChange={this.setSelectedOption}
               className=""
             /> River Depth
            <input
              type="radio"
-             name="channelSizeOptions"
-             value="CrossSectionalArea" onChange={this.setSelectedRiverSize}
+             name="selectedRiverSize"
+             value="CrossSectionalArea" onChange={this.setSelectedOption}
              className=""
            /> Cross Sectional Area
          </Col>
@@ -186,7 +220,32 @@ class TBDApproach extends Component{
         </Col>
         <Col sm={4} md={8} className="leftAlignedText">
 
-          {/* <Slider /> */}
+          {this.state.selectedRiverSize === "RiverDepth" &&
+          <div>
+            Min: <input type="textbox"
+              name="riverDepth_Min"
+              onBlur={this.setRangeValues}
+            />
+            Max: <input type="textbox"
+              name="riverDepth_Max"
+              onBlur={this.setRangeValues}
+            />
+          </div>
+          }
+
+          {this.state.selectedRiverSize === "CrossSectionalArea" &&
+          <div>
+            Min: <input type="textbox"
+              name="crossSectionalArea_Min"
+              onBlur={this.setRangeValues}
+            />
+            Max: <input type="textbox"
+              name="crossSectionalArea_Max"
+              onBlur={this.setRangeValues}
+            />
+          </div>
+          }
+
         </Col>
       </Grid>
 
@@ -204,15 +263,15 @@ class TBDApproach extends Component{
         <Col sm={4} md={8} className="leftAlignedText">
           <input
               type="radio"
-              name="precision"
+              name="selectedPrecision"
               value="10%"
-              onChange={this.setSelectedPrecision}
+              onChange={this.setSelectedOption}
               className=""
             /> Within 10%
            <input
              type="radio"
-             name="precision"
-             value="20%" onChange={this.setSelectedPrecision}
+             name="selectedPrecision"
+             value="20%" onChange={this.setSelectedOption}
              className=""
            /> Within 20%
         </Col>
@@ -220,52 +279,39 @@ class TBDApproach extends Component{
     </div>
   )
 
-  setSelectedClimate = (e) => {
-    if(e.target.value === "KoppenClassification"){
-      this.setState({
-        selectedClimate: "KoppenClassification",
-      });
-      console.log(this.state.selectedClimate);
+
+  setSelectedOption = (e) => {
+    const {name, value} = e.target;
+    this.setState(() => ({
+      [name]: value,
+    }));
+    console.log("set " + name + " to " + value);
+  }
+
+
+  //A function that set the max/min values for either the drainage_low/ drainage_high, crossSectionalArea_Min/ crossSectionalArea_Max, riverDepth_Min/ riverDepth_Max
+  setRangeValues = (e) => {
+    const {name, value}  = e.target;
+
+    if(value.length !== 0){
+      if(!isNaN(value)){
+        this.setState(() => ({
+          [name]: value,
+        }));
+        console.log("set "+ name + " to " + value);
+      }else{
+        console.log(name + "is not a valid number");
+        this.setState(() => ({
+          [name]: -1,
+        }));
+      }
     }else{
+      console.log(name + "is empty");
       this.setState({
-        selectedClimate: "FirstOrder",
-      });
-      console.log(this.state.selectedClimate);
+        [name]: -1,
+      })
     }
   }
-
-  setSelectedRiverSize = (e) => {
-    if(e.target.value === "CrossSectionalArea"){
-      this.setState({
-        selectedRiverSize: "CrossSectionalArea",
-      });
-      console.log(this.state.selectedRiverSize);
-    }else{
-      this.setState({
-        selectedRiverSize: "RiverDepth",
-      });
-      console.log(this.state.selectedRiverSize);
-    }
-
-  }
-
-  setSelectedPrecision = (e) => {
-    if(e.target.value === "20%"){
-      this.setState({
-        selectedPrecision: "20%",
-      });
-    }else{
-      this.setState({
-        selectedPrecision: "10%",
-      });
-    }
-    console.log(this.state.selectedPrecision);
-  }
-
-  changeValue = () => {
-    console.log("changed value slider");
-  }
-
 
   render(){
     return(
@@ -285,6 +331,11 @@ class TBDApproach extends Component{
         {this.renderRiverSize()}
 
         {this.renderTBDPrecision()}
+
+        {!this.state.inputs_validated &&
+        <div>
+          Please enter correct values for inputs...
+        </div>}
 
         {!this.props.submitNotNeeded &&
           <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">

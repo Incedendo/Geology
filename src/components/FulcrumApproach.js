@@ -378,17 +378,14 @@ class FulcrumApproach extends Component {
             </select>
             {fieldInputs.map(
               (fieldObject,index) => (
-                <div>
-                  <FulcrumInputComponent
-                    key={fieldObject.title}
-                    title = {fieldObject.title}
-                    name = {fieldObject.name}
-                    state = {fieldObject.state}
-                    update = {this.updateFieldValue}
-                    validate = {this.validateInputFulcrum}
-                  />
-
-                </div>
+                <FulcrumInputComponent
+                  key={fieldObject.title}
+                  title = {fieldObject.title}
+                  name = {fieldObject.name}
+                  state = {fieldObject.state}
+                  update = {this.updateFieldValue}
+                  validate = {this.validateInputFulcrum}
+                />
               )
             )}
 
