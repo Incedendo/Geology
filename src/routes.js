@@ -5,6 +5,7 @@ import NotFound from './components/NotFound';
 import FulcrumApproach from './components/FulcrumApproach';
 import TBDApproach from './components/TBDApproach';
 import AnalogComponent from './components/AnalogComponent';
+import LandingPage from './components/LandingPage';
 
 export default [
   {
@@ -12,6 +13,12 @@ export default [
     routes: [
       {
         path: '/',
+        exact: true,
+        component: LandingPage,
+        name: "Home"
+      },
+      {
+        path: '/home',
         exact: true,
         component: Home,
         name: "Home"

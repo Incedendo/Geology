@@ -214,7 +214,7 @@ class AnalogComponent extends Component{
         </h1>
 
         <div className="">
-           <Link to="/">Back</Link>
+           <Link to="/home">Back</Link>
         </div>
 
         {this.renderClimateOrders()}

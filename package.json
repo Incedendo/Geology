@@ -11,6 +11,7 @@
     "bootstrap": "^3.3.7",
     "cors": "^2.8.4",
     "isomorphic-fetch": "^2.2.1",
+    "namor": "^1.0.1",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
     "prop-types": "^15.6.0",
@@ -24,6 +25,7 @@
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.2.2",
     "react-slider": "^0.9.0",
+    "react-table": "^6.8.0",
     "reactrangeslider": "^3.0.6",
     "surge": "^0.19.0"
   },

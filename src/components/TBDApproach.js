@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import RangeSlider from 'reactrangeslider';
-//import Slider from 'reactrangeslider';
-//import { Slider } from 'range-slider';
-
+import { RiverChannelsTable } from "./Utils";
 import '../assets/scss/include.scss';
-
-const sliderValue = {start: 20, end: 80 }
 
 class TBDApproach extends Component{
   state = {
@@ -130,20 +125,22 @@ class TBDApproach extends Component{
           <input
               type="radio"
               name="selectedClimate"
-              value="FirstOrder" onChange={this.setSelectedOption}
+              value="FirstOrder"
+              checked={this.state.selectedClimate === 'FirstOrder'}
+              onChange={this.setSelectedOption}
               className=""
             /> First Order
            <input
              type="radio"
              name="selectedClimate"
-             value="KoppenClassification"  onChange={this.setSelectedOption}
+             value="KoppenClassification"
+             checked={this.state.selectedClimate === 'KoppenClassification'}  onChange={this.setSelectedOption}
              className=""
            /> Koppen Classification
         </Col>
       </Grid>
 
       <Grid className="padding-grid">
-
           <Col sm={4} md={6} className="rightAlignedText">
             <select name="cars">
               <option value="volvo">Volvo</option>
@@ -198,13 +195,15 @@ class TBDApproach extends Component{
               type="radio"
               name="selectedRiverSize"
               value="RiverDepth"
+              checked={this.state.selectedRiverSize==='RiverDepth'}
               onChange={this.setSelectedOption}
               className=""
             /> River Depth
            <input
              type="radio"
              name="selectedRiverSize"
-             value="CrossSectionalArea" onChange={this.setSelectedOption}
+             value="CrossSectionalArea"
+             checked={this.state.selectedRiverSize==='CrossSectionalArea'} onChange={this.setSelectedOption}
              className=""
            /> Cross Sectional Area
          </Col>
@@ -215,7 +214,6 @@ class TBDApproach extends Component{
 
         </Col>
         <Col sm={4} md={8} className="leftAlignedText">
-
           {this.state.selectedRiverSize === "RiverDepth" &&
           <div>
             Min: <input type="textbox"
@@ -241,10 +239,13 @@ class TBDApproach extends Component{
             />
           </div>
           }
-
         </Col>
       </Grid>
 
+      <div>
+        <RiverChannelsTable />
+        <br />
+      </div>
     </div>
   )
 
@@ -261,13 +262,15 @@ class TBDApproach extends Component{
               type="radio"
               name="selectedPrecision"
               value="10%"
+              checked={this.state.selectedPrecision==='10%'}
               onChange={this.setSelectedOption}
               className=""
             /> Within 10%
            <input
              type="radio"
              name="selectedPrecision"
-             value="20%" onChange={this.setSelectedOption}
+             value="20%"
+             checked={this.state.selectedPrecision==='20%'} onChange={this.setSelectedOption}
              className=""
            /> Within 20%
         </Col>
@@ -283,7 +286,6 @@ class TBDApproach extends Component{
     }));
     console.log("set " + name + " to " + value);
   }
-
 
   //A function that set the max/min values for either the drainage_low/ drainage_high, crossSectionalArea_Min/ crossSectionalArea_Max, riverDepth_Min/ riverDepth_Max
   setRangeValues = (e) => {
@@ -317,7 +319,7 @@ class TBDApproach extends Component{
         </h1>
 
         <div className="">
-           <Link to="/">Back</Link>
+           <Link to="/home">Back</Link>
         </div>
 
         {this.renderClimateOrders()}
