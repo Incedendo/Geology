@@ -242,10 +242,6 @@ class TBDApproach extends Component{
         </Col>
       </Grid>
 
-      <div>
-        <RiverChannelsTable />
-        <br />
-      </div>
     </div>
   )
 
@@ -341,6 +337,7 @@ class TBDApproach extends Component{
           </button>
          }
 
+          <RiverChannelsTable />
       </form>
     )
   }

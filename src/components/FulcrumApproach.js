@@ -21,6 +21,7 @@ class FulcrumApproach extends Component {
     SedimentDensity: 0,
     DMLMult: 0,
     submitted: false,
+    inputs_validated: true,
     isMetric: true,
     isRiverAnalogue: false,
 
@@ -104,15 +105,6 @@ class FulcrumApproach extends Component {
         })
     }
 
-    // fetch(JimGetUrl, getRequestData)
-    // .then(results => {
-    //   return results.json();
-    // }).then(data => {
-    //     console.log(data);
-    //     console.log("Get success!!!");
-    //   }
-    // );
-
     fetch(JimPostUrl, postRequestData)
     // .then( results => results.json() )
     .then( response =>
@@ -128,19 +120,6 @@ class FulcrumApproach extends Component {
       this.setState({ response: data });
     });
   }
-
-  // renderResults = () => (
-  //   <div>
-  //     {FetchedResults.map(
-  //       (fieldObject,index) =>
-  //       <FulcrumResultComponent
-  //         key={fieldObject.title}
-  //         title = {fieldObject.title}
-  //         returnedData = {fieldObject.returnedData}
-  //       />
-  //     )}
-  //   </div>
-  // )
 
   updateFieldValue = (e) => {
 
@@ -169,7 +148,7 @@ class FulcrumApproach extends Component {
     this.setState( (prevState) => ({isAnalog: !prevState.isAnalog}) )
   }
 
-  testAllInputs() {
+  validateInputs() {
       if(this.state.valid_AvgBkflDpt &&
           this.state.valid_BkflChanWdt &&
           this.state.valid_HydrolicRad &&
@@ -224,13 +203,17 @@ class FulcrumApproach extends Component {
       } = this.state;
 
       //make sure the form's inputs are validated before proceed to send the post request to the server.
-      if(this.testAllInputs()){
+      if(this.validateInputs()){
         this.setState({
           submitted: true,
+          inputs_validated: true,
         });
         this.postFulcrum();
       }else{
-
+        this.setState({
+          inputs_validated: false,
+        });
+        console.log("unable to post bc inputs are invalid...");
       }
   }
 
@@ -395,7 +378,7 @@ class FulcrumApproach extends Component {
               {this.state.isAnalog && <FulcrumAddedTBDComponent/>}
             </div>
 
-            {!this.state.submitted &&
+            {!this.state.inputs_validated &&
             <div>
               Please check the inputs and make sure you have entered all correct values!
             </div>}
