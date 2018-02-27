@@ -10,7 +10,6 @@ import '../assets/scss/include.scss';
 const sliderValue = {start: 20, end: 80 }
 
 class TBDApproach extends Component{
-
   state = {
     selectedClimate: "FirstOrder",
     selectedRiverSize: "RiverDepth",
@@ -23,8 +22,6 @@ class TBDApproach extends Component{
     crossSectionalArea_Max: 0,
     inputs_validated: true,
   }
-
-
 
   // componentDidMount() {
   postTBD = () =>{
@@ -82,28 +79,25 @@ class TBDApproach extends Component{
         }
       }
     ).then(function (json) {
-
       var responseBody = json;
-
       console.log("POST CORS works");
-
       console.log(typeof responseBody, responseBody);
     });
   }
 
   handleSubmit = (e) => {
-      console.log("handle submit in TBD")
-      if(this.validateInputs()){
-        this.setState({
-          inputs_validated: true,
-        })
-        this.postTBD();
-      }else{
-        this.setState({
-          inputs_validated: false,
-        })
-      }
-
+    e.preventDefault();
+    if(this.validateInputs()){
+      this.setState({
+        inputs_validated: true,
+      });
+      this.postTBD();
+    }else{
+      this.setState({
+        inputs_validated: false,
+      });
+      console.log("unable to post bc inputs are invalid...");
+    }
   }
 
   validateInputs(){
@@ -114,8 +108,10 @@ class TBDApproach extends Component{
       this.state.crossSectionalArea_Max > 0 &&
       this.state.crossSectionalArea_Min > 0
     ){
+      console.log("successfully Validate Inputs");
       return true;
     }else{
+      console.log("fail to validate inputs");
       return false;
     }
   }
