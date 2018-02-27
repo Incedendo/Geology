@@ -23,7 +23,18 @@ class FulcrumApproach extends Component {
     submitted: false,
     isMetric: true,
     isRiverAnalogue: false,
-    isChecked: false,
+
+    valid_AvgBkflDpt: false,
+    valid_BkflChanWdt: false,
+    valid_HydrolicRad: false,
+    valid_Dee16: false,
+    valid_Dee50: false,
+    valid_Dee84: false,
+    valid_Dee90: false,
+    valid_SedimentDensity: false,
+    valid_DMLMult: false,
+
+    //passedTest: false,
     response: {
       slope: 0,
       meanSlopeVelocity: 0,
@@ -158,16 +169,41 @@ class FulcrumApproach extends Component {
     this.setState( (prevState) => ({isAnalog: !prevState.isAnalog}) )
   }
 
+  testAllInputs() {
+      if(this.state.valid_AvgBkflDpt &&
+          this.state.valid_BkflChanWdt &&
+          this.state.valid_HydrolicRad &&
+          this.state.valid_Dee16 &&
+          this.state.valid_Dee50 &&
+          this.state.valid_Dee84 &&
+          this.state.valid_Dee90 &&
+          this.state.valid_SedimentDensity &&
+          this.state.valid_DMLMult){
+            console.log("ALL true!!!");
+            return true;
+      }else{
+        console.log("...got errors");
+        return false;
+      }
+  }
+
   // This method checks if the input by user is a valid number
   validateInputFulcrum = (e) => {
     const {name, value} = e.target;
+    const test =  "valid_"+name;
+    console.log(test);
 
-    console.log("current val is:" + value);
     //if the inputs is a valid number
-    if(1 === 2){
-      this.setState({
-        isChecked: true,
-      })
+    if(!isNaN(value)){
+      if(Number(value) !== 0){
+        this.setState(() => ({
+          [name]: value,
+          [test]: true,
+        }));
+        console.log("checked for " + name);
+      }
+    }else{
+      console.log("not a number...");
     }
   }
 
@@ -188,12 +224,13 @@ class FulcrumApproach extends Component {
       } = this.state;
 
       //make sure the form's inputs are validated before proceed to send the post request to the server.
-      if(this.state.checkedInputs){
+      if(this.testAllInputs()){
         this.setState({
           submitted: true,
         });
-
         this.postFulcrum();
+      }else{
+
       }
   }
 
@@ -360,6 +397,11 @@ class FulcrumApproach extends Component {
               <input type="checkbox" onClick={this.toggleIsAnalog}/> Analog Channels
               {this.state.isAnalog && <FulcrumAddedTBDComponent/>}
             </div>
+
+            {!this.state.submitted &&
+            <div>
+              Please check the inputs and make sure you have entered all correct values!
+            </div>}
 
             {/* SUBMIT BUTTON */}
             <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">

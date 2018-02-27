@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import RangeSlider from 'reactrangeslider';
+//import Slider from 'reactrangeslider';
+//import { Slider } from 'range-slider';
+
 import '../assets/scss/include.scss';
+
+const sliderValue = {start: 20, end: 80 }
 
 class TBDApproach extends Component{
 
@@ -14,6 +20,8 @@ class TBDApproach extends Component{
     crossSectionalArea_Min: 0,
     crossSectionalArea_Max: 0,
   }
+
+
 
   // componentDidMount() {
   postTBD = () =>{
@@ -82,7 +90,7 @@ class TBDApproach extends Component{
 
   handleSubmit = (e) => {
       console.log("handle submit in TBD")
-      e.preventDefault();
+      this.postTBD();
   }
 
   renderClimateOrders = () => (
@@ -177,9 +185,11 @@ class TBDApproach extends Component{
 
         </Col>
         <Col sm={4} md={8} className="leftAlignedText">
-          Slider rendered here
-         </Col>
+
+          {/* <Slider /> */}
+        </Col>
       </Grid>
+
     </div>
   )
 
@@ -250,6 +260,10 @@ class TBDApproach extends Component{
       });
     }
     console.log(this.state.selectedPrecision);
+  }
+
+  changeValue = () => {
+    console.log("changed value slider");
   }
 
 
