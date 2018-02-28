@@ -11,19 +11,15 @@ class FulcrumApproach extends Component {
 
   state = {
     post: [],
-    AvgBkflDpt: 0,
-    BkflChanWdt: 0,
-    HydrolicRad: 0,
-    Dee16: 0,
-    Dee50: 0,
-    Dee84: 0,
-    Dee90: 0,
-    SedimentDensity: 0,
-    DMLMult: 0,
-    submitted: false,
-    inputs_validated: true,
-    isMetric: true,
-    isRiverAnalogue: false,
+    AvgBkflDpt: 10,
+    BkflChanWdt: 10,
+    HydrolicRad: 10,
+    Dee16: 10,
+    Dee50: 10,
+    Dee84: 10,
+    Dee90: 10,
+    SedimentDensity: 10,
+    DMLMult: 10,
 
     valid_AvgBkflDpt: false,
     valid_BkflChanWdt: false,
@@ -35,7 +31,12 @@ class FulcrumApproach extends Component {
     valid_SedimentDensity: false,
     valid_DMLMult: false,
 
-    //passedTest: false,
+    submitted: false,
+    submitClicked: false,
+    inputs_validated: true,
+    isMetric: true,
+    isRiverAnalogue: false,
+
     response: {
       slope: 0,
       meanSlopeVelocity: 0,
@@ -106,9 +107,7 @@ class FulcrumApproach extends Component {
     }
 
     fetch(JimPostUrl, postRequestData)
-    // .then( results => results.json() )
-    .then( response =>
-      {
+    .then( response => {
         if (response.status == 200 || response.status == 201) {
             return response.json();
         } else {
@@ -116,8 +115,10 @@ class FulcrumApproach extends Component {
         }
       }
     ).then( data => {
-      //console.log(data);
-      this.setState({ response: data });
+      console.log(data.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn);
+      this.setState({
+        response: data,
+      });
     });
   }
 
@@ -183,6 +184,9 @@ class FulcrumApproach extends Component {
       }
     }else{
       console.log("not a number...");
+      this.setState(() => ({
+        [test]: false,
+      }))
     }
   }
 
@@ -206,15 +210,23 @@ class FulcrumApproach extends Component {
       if(this.validateInputs()){
         this.setState({
           submitted: true,
+          submitClicked: true,
           inputs_validated: true,
         });
         this.postFulcrum();
+        console.log(this.state.submitted);
       }else{
         this.setState({
+          submitClicked: true,
           inputs_validated: false,
         });
         console.log("unable to post bc inputs are invalid...");
+
       }
+  }
+
+  printResponse = () => {
+    console.log(this.state.response);
   }
 
   render() {
@@ -228,7 +240,17 @@ class FulcrumApproach extends Component {
       Dee90,
       SedimentDensity,
       DMLMult,
-      submitted,
+
+      valid_AvgBkflDpt,
+      valid_BkflChanWdt,
+      valid_HydrolicRad,
+      valid_Dee16,
+      valid_Dee50,
+      valid_Dee84,
+      valid_Dee90,
+      valid_SedimentDensity,
+      valid_DMLMult,
+
     } = this.state;
 
     const fieldInputs = [
@@ -236,55 +258,55 @@ class FulcrumApproach extends Component {
         title: "Average Bankfull  Channel  Depth,  Hbf (m)[dm=0.5(channel  story  thickness)]",
         state: AvgBkflDpt,
         name: "AvgBkflDpt",
-        error: false,
+        isValid: valid_AvgBkflDpt,
       },
       {
         title: "Bankful Channel Width, Bbf (m)",
         state: BkflChanWdt,
         name: "BkflChanWdt",
-        error: false,
+        isValid: valid_BkflChanWdt,
       },
       {
         title: "Hydraulic  Radius (m),  R",
         state: HydrolicRad,
         name: "HydrolicRad",
-        error: false,
+        isValid: valid_HydrolicRad,
       },
       {
         title: "D16 (mm)",
         state: Dee16,
         name: "Dee16",
-        error: false,
+        isValid: valid_Dee16,
       },
       {
         title: "D50 (mm)",
         state: Dee50,
         name: "Dee50",
-        error: false,
+        isValid: valid_Dee50,
       },
       {
         title: "D84 (mm)",
         state: Dee84,
         name: "Dee84",
-        error: false,
+        isValid: valid_Dee84,
       },
       {
         title: "D90 (mm)",
         state: Dee90,
         name: "Dee90",
-        error: false,
+        isValid: valid_Dee90,
       },
       {
         title: "Sediment Density (g/cm^3)",
         state: SedimentDensity,
         name: "SedimentDensity",
-        error: false,
+        isValid: valid_SedimentDensity,
       },
       {
         title: "Dimensionless Multiplier,  b. [b=1/(bankfull  annual  proportion)]",
         state: DMLMult,
         name: "DMLMult",
-        error: false,
+        isValid: valid_DMLMult,
       },
     ]
 
@@ -340,7 +362,7 @@ class FulcrumApproach extends Component {
       {
         title: "Total Suspended Sediment Volume Discharge Per Year (Wright Parker)",
         returnedData: this.state.response.totalSuspendedSedimentVolumeDischargePerYear_WrightParker,
-      },
+      }
     ];
 
     return (
@@ -366,6 +388,8 @@ class FulcrumApproach extends Component {
                   title = {fieldObject.title}
                   name = {fieldObject.name}
                   state = {fieldObject.state}
+                  isValid = {fieldObject.isValid}
+                  submitted = {this.state.submitClicked}
                   update = {this.updateFieldValue}
                   validate = {this.validateInputFulcrum}
                 />
@@ -392,6 +416,9 @@ class FulcrumApproach extends Component {
 
         {this.state.submitted &&
           <div>
+            <button onClick={this.printResponse}>
+              DISPLAY RESPONSE
+            </button>
             {this.state.isMetric ?
               <div>
                 METRIC System
