@@ -19,9 +19,9 @@ class TBDApproach extends Component{
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
 
     selectedFirstOrder: '',
-    disabledFirstOrderDropdown: true,
+    enabledFirstOrderDropdown: false,
     selectedKoppen: '',
-    disabledKoppenDropdown: true,
+    enabledKoppenDropdown: false,
 
     // 6 inputs for the text fields
     drainage_low: 0,
@@ -191,7 +191,7 @@ class TBDApproach extends Component{
   }
 
   renderClimateOrders = () => (
-    <div>
+    <div className="enclosing-border">
       <Grid className="padding-grid">
 
         <Col sm={4} md={4} className="rightAlignedText">
@@ -234,62 +234,65 @@ class TBDApproach extends Component{
         </Col>
       </Grid>
 
-      <Grid className="padding-grid">
-          <Col sm={4} md={6} className="rightAlignedText">
+      <div className="climate_select">
+        {this.state.enabledFirstOrderDropdown &&
+          <Select
+            name="first-order"
+            value={this.state.selectedFirstOrder && this.state.selectedFirstOrder.value}
+            onChange={this.handleFirstOrderSelectionChange}
+            autoFocus
+            autoBlur
+            searchable
+            options={[
+              { value: 'monsoon', label: 'Monsoon' },
+              { value: 'cold', label: 'Cold' },
+              { value: 'arid', label: 'Arid'},
+            ]}
+          />
+        }
 
-            <Select
-              name="first-order"
-              value={this.state.selectedFirstOrder && this.state.selectedFirstOrder.value}
-              onChange={this.handleFirstOrderSelectionChange}
-              disabled={this.state.disabledFirstOrderDropdown}
-              autoFocus
-              autoBlur
-              searchable
-              options={[
-                { value: 'monsoon', label: 'Monsoon' },
-                { value: 'cold', label: 'Cold' },
-              ]}
-            />
-         </Col>
+       {this.state.enabledKoppenDropdown &&
+         <Select
+           name="first-order"
+           value={this.state.selectedKoppen && this.state.selectedKoppen.value}
+           onChange={this.handleKoppenSelectionChange}
+           autoFocus
+           autoBlur
+           searchable
+           options={[
+             { value: 'monsoon', label: 'Monsoon' },
+             { value: 'cold', label: 'Cold' },
+           ]}
+         />
+       }
+      </div>
 
-         <Col sm={4} md={6} className="leftAlignedText">
 
-           <Select
-             name="first-order"
-             value={this.state.selectedKoppen && this.state.selectedKoppen.value}
-             onChange={this.handleKoppenSelectionChange}
-             disabled={this.state.disabledKoppenDropdown}
-             autoFocus
-             autoBlur
-             searchable
-             options={[
-               { value: 'monsoon', label: 'Monsoon' },
-               { value: 'cold', label: 'Cold' },
-             ]}
-           />
-        </Col>
-      </Grid>
     </div>
   )
 
   renderDrainageArea = () => (
-    <div>
+    <div className="enclosing-border">
       <Grid className="padding-grid">
           <Col sm={4} md={4} className="rightAlignedText">
               Drainage Area:
           </Col>
           <Col sm={4} md={8} className="leftAlignedText">
-            <div>
+            <div className="inline">
               Min: <input type="textbox"
                 name="drainage_low"
                 onBlur={this.setRangeValues}
                 style={{
-                  borderColor: 'red',
+                  borderColor: '',
                 }}
+
               />
+            </div>
+            <div className="inline-no-right-margin">
               Max: <input type="textbox"
                 name="drainage_high"
                 onBlur={this.setRangeValues}
+
               />
             </div>
          </Col>
@@ -298,7 +301,7 @@ class TBDApproach extends Component{
   )
 
   renderRiverSize = () => (
-    <div>
+    <div className="enclosing-border">
       <Grid className="padding-grid">
         <Col sm={4} md={4} className="rightAlignedText">
             River Size:
@@ -342,27 +345,35 @@ class TBDApproach extends Component{
         <Col sm={4} md={8} className="leftAlignedText">
           {this.state.selectedRiverSize === "RiverDepth" &&
           <div>
-            Min: <input type="textbox"
-              name="riverDepth_Min"
-              onBlur={this.setRangeValues}
-            />
-            Max: <input type="textbox"
-              name="riverDepth_Max"
-              onBlur={this.setRangeValues}
-            />
+            <div className="inline">
+              Min: <input type="textbox"
+                name="riverDepth_Min"
+                onBlur={this.setRangeValues}
+              />
+            </div>
+            <div className="inline-no-right-margin">
+              Max: <input type="textbox"
+                name="riverDepth_Max"
+                onBlur={this.setRangeValues}
+              />
+            </div>
           </div>
           }
 
           {this.state.selectedRiverSize === "CrossSectionalArea" &&
           <div>
-            Min: <input type="textbox"
-              name="crossSectionalArea_Min"
-              onBlur={this.setRangeValues}
-            />
-            Max: <input type="textbox"
-              name="crossSectionalArea_Max"
-              onBlur={this.setRangeValues}
-            />
+            <div className="inline">
+              Min: <input type="textbox"
+                name="crossSectionalArea_Min"
+                onBlur={this.setRangeValues}
+              />
+            </div>
+            <div className="inline-no-right-margin">
+              Max: <input type="textbox"
+                name="crossSectionalArea_Max"
+                onBlur={this.setRangeValues}
+              />
+            </div>
           </div>
           }
         </Col>
@@ -372,7 +383,7 @@ class TBDApproach extends Component{
   )
 
   renderTBDPrecision = () => (
-    <div>
+    <div className="enclosing-border">
       <Grid className="padding-grid">
         <Col sm={4} md={4} className="rightAlignedText">
           <div>
@@ -431,16 +442,16 @@ class TBDApproach extends Component{
     if(value === "FirstOrder"){
       //when user chooses First Order option
       this.setState({
-        disabledFirstOrderDropdown: false, //disable the radio for first order
+        enabledFirstOrderDropdown: true, //disable the radio for first order
         selectedKoppen: '', //set the state to nil for error checking
-        disabledKoppenDropdown: true,
+        enabledKoppenDropdown: false,
       })
     }else{
       //when user chooses Koppen options
       this.setState({
-        disabledKoppenDropdown: false,
+        enabledKoppenDropdown: true,
         selectedFirstOrder: '', //set the state to nil to for error checking
-        disabledFirstOrderDropdown: true,
+        enabledFirstOrderDropdown: false,
       })
     }
   }

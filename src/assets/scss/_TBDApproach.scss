@@ -9,3 +9,25 @@
 .margin-10{
   margin: 10px;
 }
+
+.climate_select{
+  margin-left: 465px;
+  margin-right: 85px,
+}
+
+.inline {
+  display: inline-block;
+  // border: 1px solid red;
+  margin-right: 190px;
+}
+
+.inline-no-right-margin {
+  display: inline-block;
+  margin-right: 0px;
+}
+
+.enclosing-border{
+  border: 2px solid;
+  margin: 20px;
+  padding: 20px;
+}

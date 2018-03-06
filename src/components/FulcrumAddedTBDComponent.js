@@ -76,13 +76,9 @@ class FulcrumAddedTBDComponent extends Component{
   render(){
     return(
       <div>
-        <h1>
-          added TBD
-        </h1>
 
         {
           !this.state.defaultTBD && !this.state.customizedTBD &&
-
 
           <div>
             {/* <input

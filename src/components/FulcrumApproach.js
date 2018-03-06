@@ -388,7 +388,7 @@ class FulcrumApproach extends Component {
 
         {!this.state.submitted &&
           <div>
-            <Select
+            {/* <Select
               value={this.state.measuringSystem && this.state.measuringSystem.value}
               onChange={this.setMeasureSystem}
               autoFocus
@@ -398,13 +398,7 @@ class FulcrumApproach extends Component {
                 { value: 'metric', label: 'Metric' },
                 { value: 'imperial', label: 'Imperial' },
               ]}
-            />
-
-            {/* <select id= "measuringSystem" onChange={this.setMeasureSystem}>
-              <option value="metric">Metric</option>
-              <option value="imperial">Imperial</option>
-            </select> */}
-
+            /> */}
 
             {fieldInputs.map(
               (fieldObject,index) => (
@@ -421,11 +415,7 @@ class FulcrumApproach extends Component {
               )
             )}
 
-            {/* ANALOG COMPONENT */}
-            <div>
-              <input type="checkbox" onClick={this.toggleIsAnalog}/> Analog Channels
-              {this.state.isAnalog && <FulcrumAddedTBDComponent/>}
-            </div>
+            <FulcrumAddedTBDComponent/>
 
             {!this.state.inputs_validated &&
             <div>
