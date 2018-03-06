@@ -14,9 +14,9 @@ import '../assets/scss/include.scss';
 
 class TBDApproach extends Component{
   state = {
-    selectedClimate: "FirstOrder",
-    selectedRiverSize: "RiverDepth",
-    selectedPrecision: "10%",
+    selectedClimate: "",
+    selectedRiverSize: "",
+    selectedPrecision: "",
 
     selectedFirstOrder: '',
     disabledFirstOrderDropdown: true,
@@ -121,19 +121,61 @@ class TBDApproach extends Component{
     }
   }
 
-  validateInputs(){
-    if(this.state.drainage_low > 0 &&
-      this.state.drainage_high > 0 &&
-      this.state.riverDepth_Max > 0 &&
-      this.state.riverDepth_Min > 0 &&
-      this.state.crossSectionalArea_Max > 0 &&
-      this.state.crossSectionalArea_Min > 0
-    ){
-      console.log("successfully Validate Inputs");
-      return true;
+  validateDrainageInputs(){
+    if(this.state.drainage_low > 0 &&  this.state.drainage_high > 0){
+            console.log("successfully Validate Inputs");
+            return true;
     }else{
-      console.log("fail to validate inputs");
-      return false;
+            console.log("fail to validate inputs");
+            return false;
+    }
+  }
+
+  validateRiverDepthInputs(){
+    if(this.state.riverDepth_Max > 0 && this.state.riverDepth_Min > 0){
+            console.log("validated River Size");
+            return true;
+    }else{
+            console.log("fail to validate River Size");
+            return false;
+    }
+  }
+
+  validateCrossSectionalAreaInputs(){
+    if(this.state.crossSectionalArea_Max > 0 && this.state.crossSectionalArea_Min > 0){
+            console.log("validated Cross Sectional Area");
+            return true;
+    }else{
+            console.log("fail to validate Cross Sectional Area");
+            return false;
+    }
+  }
+
+  validateInputs(){
+    if(this.state.selectedClimate !== "" &&
+       this.state.selectedRiverSize !== "" &&
+       this.state.selectedPrecision !== ""
+    ){
+          if(this.state.selectedFirstOrder !== "" ||
+             this.state.selectedKoppen !== ""
+          ){
+                  if(
+                    this.validateDrainageInputs() &&
+                    ( this.validateRiverDepthInputs() || this.validateCrossSectionalAreaInputs())
+                  ){
+                          console.log("successfully Validate Inputs");
+                          return true;
+                  }else{
+                          console.log("invalid Text inputs");
+                          return false;
+                  }
+          }else{
+                  console.log("User did not choose SELECT");
+                  return false;
+          }
+    }else{
+          console.log("One of the radio checkbox is unchecked");
+          return false;
     }
   }
 
@@ -361,48 +403,50 @@ class TBDApproach extends Component{
     </div>
   )
 
-
   setSelectedOption = (e) => {
     const {name, value} = e.target;
     this.setState(() => ({
       [name]: value,
     }));
-
-
     console.log("set " + name + " to " + value);
   }
 
-  setPrecisionSelectedOption = (value) => {
-    this.setState({
-      selectedPrecision: value,
-    })
-  }
-
+  //onChange function for Climate Radio Button Group
   setClimateSelectedOption = (value) => {
     this.setState({
       selectedClimate: value,
     })
 
     if(value === "FirstOrder"){
+      //when user chooses First Order option
       this.setState({
-        disabledFirstOrderDropdown: false,
+        disabledFirstOrderDropdown: false, //disable the radio for first order
+        selectedKoppen: '', //set the state to nil for error checking
         disabledKoppenDropdown: true,
       })
     }else{
+      //when user chooses Koppen options
       this.setState({
-        disabledFirstOrderDropdown: true,
         disabledKoppenDropdown: false,
+        selectedFirstOrder: '', //set the state to nil to for error checking
+        disabledFirstOrderDropdown: true,
       })
     }
-
   }
 
+  //onChange function for River Size Radio Button Group
   setRiverSizeSelectedOption = (value) => {
     this.setState({
       selectedRiverSize: value,
     })
   }
 
+  //onChange function for Precision Radio Button Group
+  setPrecisionSelectedOption = (value) => {
+    this.setState({
+      selectedPrecision: value,
+    })
+  }
 
   //A function that set the max/min values for either the drainage_low/ drainage_high, crossSectionalArea_Min/ crossSectionalArea_Max, riverDepth_Min/ riverDepth_Max
   setRangeValues = (e) => {
