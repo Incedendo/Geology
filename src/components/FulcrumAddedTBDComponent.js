@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import TBDApproach from './TBDApproach';
+//import RadioButton package
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
 import '../assets/scss/include.scss';
 
 class FulcrumAddedTBDComponent extends Component{
@@ -59,8 +61,8 @@ class FulcrumAddedTBDComponent extends Component{
     })
   }
 
-  setSelectedTBDMode = (e) => {
-    if(e.target.value === "default"){
+  setSelectedTBDMode = (value) => {
+    if(value === "default"){
       this.setState({
         TBDMode: "Default",
       });
@@ -81,22 +83,35 @@ class FulcrumAddedTBDComponent extends Component{
         {
           !this.state.defaultTBD && !this.state.customizedTBD &&
 
+
           <div>
-            <div>
-              <input
-                type="radio"
-                name="TBDMode"
-                onChange={this.setSelectedTBDMode}
+            {/* <input
+              type="radio"
+              name="TBDMode"
+              onChange={this.setSelectedTBDMode}
+              value="default"
+            /> Default TBD [default value]
+
+            <input
+              type="radio"
+              name="TBDMode" onChange={this.setSelectedTBDMode}
+              value="customized"
+            /> Customized TDB */}
+
+            <RadioGroup
+              onChange={ this.setSelectedTBDMode } horizontal
+            >
+              <RadioButton
                 value="default"
-              /> Default TBD [default value]
-
-              <input
-                type="radio"
-                name="TBDMode" onChange={this.setSelectedTBDMode}
+                pointColor="green">
+                Default TBD [default value]
+              </RadioButton>
+              <RadioButton
                 value="customized"
-              /> Customized TDB
-            </div>
-
+                pointColor="green">
+                Customized TDB
+              </RadioButton>
+            </RadioGroup>
           </div>
         }
 
