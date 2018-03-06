@@ -14,21 +14,23 @@ import '../assets/scss/include.scss';
 
 class TBDApproach extends Component{
   state = {
-    selectedClimate: "",
-    selectedRiverSize: "",
-    selectedPrecision: "",
+    selectedClimate: "", // set when Climate radio buttons are clicked
+    selectedRiverSize: "", // set when river size radio buttons are clicked
+    selectedPrecision: "", // set when Precision Radio Buttons are clicked
 
     selectedFirstOrder: '',
     disabledFirstOrderDropdown: true,
     selectedKoppen: '',
     disabledKoppenDropdown: true,
 
+    // 6 inputs for the text fields
     drainage_low: 0,
     drainage_high: 0,
     riverDepth_Min: 0,
     riverDepth_Max: 0,
     crossSectionalArea_Min: 0,
     crossSectionalArea_Max: 0,
+
     inputs_validated: true,
   }
 
@@ -121,6 +123,7 @@ class TBDApproach extends Component{
     }
   }
 
+  // validate if the user enter positive numbers for min and max drainage area
   validateDrainageInputs(){
     if(this.state.drainage_low > 0 &&  this.state.drainage_high > 0){
             console.log("successfully Validate Inputs");
@@ -131,6 +134,7 @@ class TBDApproach extends Component{
     }
   }
 
+  // validate if the user enter positive numbers for min and max River Depth
   validateRiverDepthInputs(){
     if(this.state.riverDepth_Max > 0 && this.state.riverDepth_Min > 0){
             console.log("validated River Size");
@@ -141,6 +145,7 @@ class TBDApproach extends Component{
     }
   }
 
+  // validate if the user enter positive numbers for min and max Cross Sectional Area
   validateCrossSectionalAreaInputs(){
     if(this.state.crossSectionalArea_Max > 0 && this.state.crossSectionalArea_Min > 0){
             console.log("validated Cross Sectional Area");
@@ -151,14 +156,18 @@ class TBDApproach extends Component{
     }
   }
 
+  //Encapsulating Validate inputs that check for all fields
   validateInputs(){
+    // check if users choose ALL 3 big Radio Buttons
     if(this.state.selectedClimate !== "" &&
        this.state.selectedRiverSize !== "" &&
        this.state.selectedPrecision !== ""
     ){
+          // check if Users select either of the SELECT dropdown menus
           if(this.state.selectedFirstOrder !== "" ||
              this.state.selectedKoppen !== ""
           ){
+                  // validate the numerical inputs in 4 text fields
                   if(
                     this.validateDrainageInputs() &&
                     ( this.validateRiverDepthInputs() || this.validateCrossSectionalAreaInputs())
@@ -224,8 +233,6 @@ class TBDApproach extends Component{
       </Grid>
 
       <Grid className="padding-grid">
-
-
           <Col sm={4} md={6} className="rightAlignedText">
 
             <Select
@@ -322,7 +329,6 @@ class TBDApproach extends Component{
            </RadioGroup>
          </Col>
       </Grid>
-
 
       <Grid className="padding-grid">
         <Col sm={4} md={4} className="rightAlignedText">
