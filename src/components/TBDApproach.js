@@ -30,6 +30,8 @@ class TBDApproach extends Component{
     riverDepth_Max: 0,
     crossSectionalArea_Min: 0,
     crossSectionalArea_Max: 0,
+    normal_Border: '',
+    error_Border: 'red',
 
     inputs_validated: true,
   }
@@ -281,6 +283,9 @@ class TBDApproach extends Component{
               Min: <input type="textbox"
                 name="drainage_low"
                 onBlur={this.setRangeValues}
+                style={{
+                  borderColor: 'red',
+                }}
               />
               Max: <input type="textbox"
                 name="drainage_high"

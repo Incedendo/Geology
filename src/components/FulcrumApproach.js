@@ -7,6 +7,13 @@ import AnalogComponent from './AnalogComponent';
 import FulcrumAddedTBDComponent from './FulcrumAddedTBDComponent';
 import '../assets/scss/include.scss';
 
+//import Select package
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
+//import RadioButton package
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
+
 class FulcrumApproach extends Component {
 
   state = {
@@ -35,6 +42,7 @@ class FulcrumApproach extends Component {
     submitClicked: false,
     inputs_validated: true,
     isMetric: true,
+    measuringSystem: '',
     isRiverAnalogue: false,
 
     response: {
@@ -132,14 +140,17 @@ class FulcrumApproach extends Component {
   }
 
   //Switches the isMetric state according to the dropdown option chosen on the Measuing System
-  setMeasureSystem = (e) => {
-    if(e.target.value === "imperial"){
+  setMeasureSystem = (value) => {
+    console.log(value);
+    if(value === "imperial"){
       this.setState({
         isMetric: false,
+        measuringSystem: "Imperial",
       })
     }else{
       this.setState({
         isMetric: true,
+        measuringSystem: "Metric",
       })
     }
   }
@@ -377,10 +388,24 @@ class FulcrumApproach extends Component {
 
         {!this.state.submitted &&
           <div>
-            <select id= "measuringSystem" onChange={this.setMeasureSystem}>
+            <Select
+              value={this.state.measuringSystem && this.state.measuringSystem.value}
+              onChange={this.setMeasureSystem}
+              autoFocus
+              autoBlur
+              searchable
+              options={[
+                { value: 'metric', label: 'Metric' },
+                { value: 'imperial', label: 'Imperial' },
+              ]}
+            />
+
+            {/* <select id= "measuringSystem" onChange={this.setMeasureSystem}>
               <option value="metric">Metric</option>
               <option value="imperial">Imperial</option>
-            </select>
+            </select> */}
+
+
             {fieldInputs.map(
               (fieldObject,index) => (
                 <FulcrumInputComponent
