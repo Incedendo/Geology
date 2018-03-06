@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { RiverChannelsTable } from "./Utils";
+
+//import Select package
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
+//import RadioButton package
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
+
 import '../assets/scss/include.scss';
 
 class TBDApproach extends Component{
@@ -9,6 +17,12 @@ class TBDApproach extends Component{
     selectedClimate: "FirstOrder",
     selectedRiverSize: "RiverDepth",
     selectedPrecision: "10%",
+
+    selectedFirstOrder: '',
+    disabledFirstOrderDropdown: true,
+    selectedKoppen: '',
+    disabledKoppenDropdown: true,
+
     drainage_low: 0,
     drainage_high: 0,
     riverDepth_Min: 0,
@@ -80,6 +94,18 @@ class TBDApproach extends Component{
     });
   }
 
+  handleFirstOrderSelectionChange = (value) => {
+    this.setState({
+      selectedFirstOrder: value,
+    })
+  }
+
+  handleKoppenSelectionChange = (value) => {
+    this.setState({
+      selectedKoppen: value,
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     if(this.validateInputs()){
@@ -122,7 +148,7 @@ class TBDApproach extends Component{
         </Col>
 
         <Col sm={4} md={8} className="leftAlignedText">
-          <input
+          {/* <input
               type="radio"
               name="selectedClimate"
               value="FirstOrder"
@@ -136,27 +162,60 @@ class TBDApproach extends Component{
              value="KoppenClassification"
              checked={this.state.selectedClimate === 'KoppenClassification'}  onChange={this.setSelectedOption}
              className=""
-           /> Koppen Classification
+           /> Koppen Classification */}
+
+           <RadioGroup
+             onChange={ this.setClimateSelectedOption } horizontal
+           >
+             <RadioButton
+               value="FirstOrder"
+               pointColor="green">
+               First Order
+             </RadioButton>
+             <RadioButton
+               value="KoppenClassification"
+               pointColor="green">
+               Koppen Classification
+             </RadioButton>
+           </RadioGroup>
         </Col>
       </Grid>
 
       <Grid className="padding-grid">
+
+
           <Col sm={4} md={6} className="rightAlignedText">
-            <select name="cars">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="fiat">Fiat</option>
-              <option value="audi">Audi</option>
-            </select>
+
+            <Select
+              name="first-order"
+              value={this.state.selectedFirstOrder && this.state.selectedFirstOrder.value}
+              onChange={this.handleFirstOrderSelectionChange}
+              disabled={this.state.disabledFirstOrderDropdown}
+              autoFocus
+              autoBlur
+              searchable
+              options={[
+                { value: 'monsoon', label: 'Monsoon' },
+                { value: 'cold', label: 'Cold' },
+              ]}
+            />
          </Col>
 
          <Col sm={4} md={6} className="leftAlignedText">
-           <select name="cars">
-             <option value="volvo">Volvo</option>
-             <option value="saab">Saab</option>
-             <option value="fiat">Fiat</option>
-             <option value="audi">Audi</option>
-           </select>
+
+           <Select
+             name="first-order"
+             value={this.state.selectedKoppen && this.state.selectedKoppen.value}
+             onChange={this.handleKoppenSelectionChange}
+             disabled={this.state.disabledKoppenDropdown}
+             autoFocus
+             autoBlur
+             searchable
+             options={[
+               { value: 'monsoon', label: 'Monsoon' },
+               { value: 'cold', label: 'Cold' },
+             ]}
+           />
         </Col>
       </Grid>
     </div>
@@ -191,7 +250,7 @@ class TBDApproach extends Component{
             River Size:
         </Col>
         <Col sm={4} md={8} className="leftAlignedText">
-          <input
+          {/* <input
               type="radio"
               name="selectedRiverSize"
               value="RiverDepth"
@@ -205,9 +264,23 @@ class TBDApproach extends Component{
              value="CrossSectionalArea"
              checked={this.state.selectedRiverSize==='CrossSectionalArea'} onChange={this.setSelectedOption}
              className=""
-           /> Cross Sectional Area
+           /> Cross Sectional Area */}
+
+           <RadioGroup
+             onChange={ this.setRiverSizeSelectedOption } horizontal
+           >
+             <RadioButton value="RiverDepth"
+               pointColor="green">
+               River Depth
+             </RadioButton>
+             <RadioButton value="CrossSectionalArea"
+               pointColor="green">
+               Cross Sectional Area
+             </RadioButton>
+           </RadioGroup>
          </Col>
       </Grid>
+
 
       <Grid className="padding-grid">
         <Col sm={4} md={4} className="rightAlignedText">
@@ -254,7 +327,21 @@ class TBDApproach extends Component{
           </div>
         </Col>
         <Col sm={4} md={8} className="leftAlignedText">
-          <input
+
+          <RadioGroup
+            onChange={ this.setPrecisionSelectedOption } horizontal
+          >
+            <RadioButton value="10%"
+              pointColor="green">
+              10%
+            </RadioButton>
+            <RadioButton value="20%"
+              pointColor="green">
+              20%
+            </RadioButton>
+          </RadioGroup>
+
+          {/* <input
               type="radio"
               name="selectedPrecision"
               value="10%"
@@ -268,7 +355,7 @@ class TBDApproach extends Component{
              value="20%"
              checked={this.state.selectedPrecision==='20%'} onChange={this.setSelectedOption}
              className=""
-           /> Within 20%
+           /> Within 20% */}
         </Col>
       </Grid>
     </div>
@@ -280,8 +367,42 @@ class TBDApproach extends Component{
     this.setState(() => ({
       [name]: value,
     }));
+
+
     console.log("set " + name + " to " + value);
   }
+
+  setPrecisionSelectedOption = (value) => {
+    this.setState({
+      selectedPrecision: value,
+    })
+  }
+
+  setClimateSelectedOption = (value) => {
+    this.setState({
+      selectedClimate: value,
+    })
+
+    if(value === "FirstOrder"){
+      this.setState({
+        disabledFirstOrderDropdown: false,
+        disabledKoppenDropdown: true,
+      })
+    }else{
+      this.setState({
+        disabledFirstOrderDropdown: true,
+        disabledKoppenDropdown: false,
+      })
+    }
+
+  }
+
+  setRiverSizeSelectedOption = (value) => {
+    this.setState({
+      selectedRiverSize: value,
+    })
+  }
+
 
   //A function that set the max/min values for either the drainage_low/ drainage_high, crossSectionalArea_Min/ crossSectionalArea_Max, riverDepth_Min/ riverDepth_Max
   setRangeValues = (e) => {
