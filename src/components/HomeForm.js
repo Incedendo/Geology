@@ -25,8 +25,8 @@ class HomeForm extends Component {
 
   render() {
     return (
-      <Grid>
-        <Col md={4}>
+      <div>
+        <div className="enclosing-border-home">
           <HomeLinkComponent
             pathname='/FulcrumApproach'
             linkTitle= 'Fulcrum'
@@ -34,9 +34,9 @@ class HomeForm extends Component {
           <div>
             this is the explaination of Fulcrum Apprach
           </div>
-        </Col>
+        </div>
 
-        <Col md={4}>
+        <div className="enclosing-border-home">
           <HomeLinkComponent
             pathname='/TBDApproach'
             linkTitle= 'TBD'
@@ -44,9 +44,9 @@ class HomeForm extends Component {
           <div>
             this is the explaination of TBD Apprach
           </div>
-        </Col>
+        </div>
 
-        <Col md={4}>
+        <div className="enclosing-border-home">
           <HomeLinkComponent
             pathname='/AnalogChannels'
             linkTitle= 'Analog Channel'
@@ -54,9 +54,9 @@ class HomeForm extends Component {
           <div>
             Allow users to search for Analog Streams
           </div>
-        </Col>
+        </div>
 
-      </Grid>
+      </div>
     )
   }
 }

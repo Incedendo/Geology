@@ -194,13 +194,11 @@ class TBDApproach extends Component{
     <div className="enclosing-border">
       <Grid className="padding-grid">
 
-        <Col sm={4} md={4} className="rightAlignedText">
-          <div>
-            Climate
-          </div>
+        <Col sm={4} md={2} className="leftAlignedText-Title">
+            Climate:
         </Col>
 
-        <Col sm={4} md={8} className="leftAlignedText">
+        <Col sm={4} md={10} className="leftAlignedText">
           {/* <input
               type="radio"
               name="selectedClimate"
@@ -274,17 +272,14 @@ class TBDApproach extends Component{
   renderDrainageArea = () => (
     <div className="enclosing-border">
       <Grid className="padding-grid">
-          <Col sm={4} md={4} className="rightAlignedText">
+          <Col sm={4} md={2} className="leftAlignedText-Title">
               Drainage Area:
           </Col>
-          <Col sm={4} md={8} className="leftAlignedText">
-            <div className="inline">
+          <Col sm={4} md={10} className="leftAlignedText">
+            <div className="inline-with-right-margin">
               Min: <input type="textbox"
                 name="drainage_low"
                 onBlur={this.setRangeValues}
-                style={{
-                  borderColor: '',
-                }}
 
               />
             </div>
@@ -303,10 +298,10 @@ class TBDApproach extends Component{
   renderRiverSize = () => (
     <div className="enclosing-border">
       <Grid className="padding-grid">
-        <Col sm={4} md={4} className="rightAlignedText">
+        <Col sm={4} md={2} className="leftAlignedText-Title">
             River Size:
         </Col>
-        <Col sm={4} md={8} className="leftAlignedText">
+        <Col sm={4} md={10} className="leftAlignedText">
           {/* <input
               type="radio"
               name="selectedRiverSize"
@@ -339,13 +334,14 @@ class TBDApproach extends Component{
       </Grid>
 
       <Grid className="padding-grid">
-        <Col sm={4} md={4} className="rightAlignedText">
+        <Col sm={4} md={2} className="rightAlignedText">
 
         </Col>
-        <Col sm={4} md={8} className="leftAlignedText">
+
+        <Col sm={4} md={10} className="leftAlignedText">
           {this.state.selectedRiverSize === "RiverDepth" &&
           <div>
-            <div className="inline">
+            <div className="inline-with-right-margin">
               Min: <input type="textbox"
                 name="riverDepth_Min"
                 onBlur={this.setRangeValues}
@@ -385,12 +381,10 @@ class TBDApproach extends Component{
   renderTBDPrecision = () => (
     <div className="enclosing-border">
       <Grid className="padding-grid">
-        <Col sm={4} md={4} className="rightAlignedText">
-          <div>
+        <Col sm={4} md={2} className="leftAlignedText-Title">
             Precision:
-          </div>
         </Col>
-        <Col sm={4} md={8} className="leftAlignedText">
+        <Col sm={4} md={10} className="leftAlignedText">
 
           <RadioGroup
             onChange={ this.setPrecisionSelectedOption } horizontal
@@ -497,13 +491,13 @@ class TBDApproach extends Component{
   render(){
     return(
       <form onSubmit={this.handleSubmit}>
-        <h1>
-          TBD Approach
-        </h1>
-
-        <div className="">
+        <div className='inline '>
            <Link to="/home">Back</Link>
         </div>
+
+        <h1 className='inline'>
+          TBD Approach
+        </h1>
 
         {this.renderClimateOrders()}
 

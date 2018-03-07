@@ -2,8 +2,19 @@
   text-align: right;
 }
 
+.leftAlignedText{
+  text-align: left;
+}
+
+.leftAlignedText-Title{
+  text-align: left;
+  font-size: 20px;
+}
+
 .padding-grid{
   padding: 10px;
+  //margin-right: 0px !important;
+  margin-left: 0px;
 }
 
 .margin-10{
@@ -17,6 +28,10 @@
 
 .inline {
   display: inline-block;
+}
+
+.inline-with-right-margin {
+  display: inline-block;
   // border: 1px solid red;
   margin-right: 190px;
 }
@@ -27,7 +42,8 @@
 }
 
 .enclosing-border{
-  border: 2px solid;
-  margin: 20px;
+  border: 0.5px solid;
+  margin: 20px 60px 20px 100px; //top right bottom left
   padding: 20px;
+  border-radius: 15px;
 }

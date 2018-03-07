@@ -61,6 +61,12 @@
   margin-right: auto;
   margin-left: auto; }
 
+.enclosing-border-home {
+  border: 1px solid;
+  margin: 30px 700px 30px 30px;
+  padding: 30px;
+  border-radius: 15px; }
+
 .helpLink {
   color: white !important; }
 
@@ -178,8 +184,16 @@
 .rightAlignedText {
   text-align: right; }
 
+.leftAlignedText {
+  text-align: left; }
+
+.leftAlignedText-Title {
+  text-align: left;
+  font-size: 20px; }
+
 .padding-grid {
-  padding: 10px; }
+  padding: 10px;
+  margin-left: 0px; }
 
 .margin-10 {
   margin: 10px; }
@@ -189,6 +203,9 @@
   margin-right: 85px; }
 
 .inline {
+  display: inline-block; }
+
+.inline-with-right-margin {
   display: inline-block;
   margin-right: 190px; }
 
@@ -197,6 +214,7 @@
   margin-right: 0px; }
 
 .enclosing-border {
-  border: 2px solid;
-  margin: 20px;
-  padding: 20px; }
+  border: 0.5px solid;
+  margin: 20px 60px 20px 100px;
+  padding: 20px;
+  border-radius: 15px; }
