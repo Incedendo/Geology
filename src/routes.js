@@ -6,6 +6,7 @@ import FulcrumApproach from './components/FulcrumApproach';
 import TBDApproach from './components/TBDApproach';
 import AnalogComponent from './components/AnalogComponent';
 import LandingPage from './components/LandingPage';
+import DetailedChannelView from './components/DetailedChannelView';
 
 export default [
   {
@@ -40,6 +41,12 @@ export default [
         exact: true,
         component: AnalogComponent,
         name: "AnalogComponent"
+      },
+      {
+        path: '/DetailedChannelView',
+        exact: true,
+        component: DetailedChannelView,
+        name: "DetailedChannelView"
       },
       { path: '/helpfullinks',
         component: HelpfulLinkModal,

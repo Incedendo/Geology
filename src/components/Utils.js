@@ -1,10 +1,14 @@
 import React from "react";
 import namor from "namor";
+import { Link, Route } from 'react-router-dom';
+import DetailedChannelView from './DetailedChannelView';
 // import "./index.css";
 
 // Import React Table
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+
+const googleAPIKey = "AIzaSyAcAGysbpE7x7klvwHFeSDeIvphABOKsP0";
 
 const range = len => {
   const arr = [];
@@ -42,7 +46,7 @@ const newChannel = () => {
   };
 };
 
-export function makeData(len = 5553) {
+function makeData(len = 5553) {
   return range(len).map(d => {
     return {
       ...newChannel(),
@@ -58,6 +62,21 @@ export const RiverChannelsTable = () => (
       {
         Header: "Site ID",
         accessor: "siteID",
+        Cell: row => (
+          <div>
+            <Link
+              to={{
+                pathname: `/DetailedChannelView/`,
+                state: {
+                  siteID: row.value,
+                }
+              }}
+            >
+              {row.value}
+            </Link>
+            {/* <Route path="/channel/:siteID" component={DetailedChannelView}/>hello */}
+          </div>
+        )
       },
       {
         Header: "Site Name",

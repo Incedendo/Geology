@@ -17,13 +17,16 @@ class TBDApproach extends Component{
     selectedClimate: "", // set when Climate radio buttons are clicked
     selectedRiverSize: "", // set when river size radio buttons are clicked
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
-
     selectedFirstOrder: '',
-    enabledFirstOrderDropdown: false,
     selectedKoppen: '',
-    enabledKoppenDropdown: false,
 
-    // 6 inputs for the text fields
+    //boolean state:
+    enabledFirstOrderDropdown: false,
+    enabledKoppenDropdown: false,
+    calculatedDepthUsingWidth: false,
+    inputs_validated: true,
+
+    // 6 inputs for the text fields:
     drainage_low: 0,
     drainage_high: 0,
     riverDepth_Min: 0,
@@ -33,7 +36,7 @@ class TBDApproach extends Component{
     normal_Border: '',
     error_Border: 'red',
 
-    inputs_validated: true,
+    data: [],
   }
 
   // componentDidMount() {
@@ -96,6 +99,11 @@ class TBDApproach extends Component{
       console.log("POST CORS works");
       console.log(typeof responseBody, responseBody);
     });
+  }
+
+  navigate() {
+      const { router } = this.context
+      router.transitionTo('/some/new/location')
   }
 
   handleFirstOrderSelectionChange = (value) => {
@@ -375,6 +383,18 @@ class TBDApproach extends Component{
         </Col>
       </Grid>
 
+      <div>
+        <Grid>
+          <Col sm={4} md={2}></Col>
+          <Col sm={4} md={10}>
+            <input
+              type="checkbox"
+              onChange={this.toggleRiverWidthAttr}
+              className="leftAlignedText"
+            /> Derive Width from River Depth (optional)
+          </Col>
+        </Grid>
+      </div>
     </div>
   )
 
@@ -457,6 +477,17 @@ class TBDApproach extends Component{
     })
   }
 
+  //calculate River Depth based on the provided River Width using Scientific Formula
+  deriveRiverDepthFromWidth(){
+    return 0;
+  }
+
+  toggleRiverWidthAttr = () => {
+    this.setState( (prevState) => ({calculatedDepthUsingWidth: !prevState.calculatedDepthUsingWidth}) );
+
+    console.log("calculated depth using width:",this.state.calculatedDepthUsingWidth);
+  }
+
   //onChange function for Precision Radio Button Group
   setPrecisionSelectedOption = (value) => {
     this.setState({
@@ -491,13 +522,16 @@ class TBDApproach extends Component{
   render(){
     return(
       <form onSubmit={this.handleSubmit}>
-        <div className='inline '>
-           <Link to="/home">Back</Link>
+        <div>
+          <div className='inline-back-button'>
+             <Link to="/home">Back</Link>
+          </div>
+
+          <h1 className='inline-page-title'>
+            TBD Approach
+          </h1>
         </div>
 
-        <h1 className='inline'>
-          TBD Approach
-        </h1>
 
         {this.renderClimateOrders()}
 
