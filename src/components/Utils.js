@@ -62,19 +62,20 @@ export const RiverChannelsTable = () => (
       {
         Header: "Site ID",
         accessor: "siteID",
-        Cell: row => (
+        Cell: cellInfo => (
           <div>
             <Link
               to={{
                 pathname: `/DetailedChannelView/`,
                 state: {
-                  siteID: row.value,
+                  siteID: cellInfo.row.siteID,
+                  latitude: cellInfo.row.latitude,
+                  longitude: cellInfo.row.longitude,
                 }
               }}
             >
-              {row.value}
+              {cellInfo.row.siteID}
             </Link>
-            {/* <Route path="/channel/:siteID" component={DetailedChannelView}/>hello */}
           </div>
         )
       },
