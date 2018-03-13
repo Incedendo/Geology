@@ -23,6 +23,10 @@ class HomeForm extends Component {
     console.log("TBD state: " + this.state.tbd)
   }
 
+  TBDSubscript(){
+    return("T" + "BD".sub());
+  }
+
   render() {
     return (
       <div>
@@ -42,7 +46,7 @@ class HomeForm extends Component {
             linkTitle= 'TBD'
           />
           <div>
-            this is the explaination of TBD Apprach
+            this is the explaination of {this.TBDSubscript()} Apprach
           </div>
         </div>
 

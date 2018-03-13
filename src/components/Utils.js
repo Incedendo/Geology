@@ -143,7 +143,7 @@ export const ChannelLocation = () => (
         accessor: "longitude",
       },
     ]}
-    defaultPageSize={10}
+    defaultPageSize={1}
     className="-striped -highlight"
   />
 )
@@ -169,7 +169,7 @@ export const ChannelAttributes = () => (
         accessor: "latitude",
       }
     ]}
-    defaultPageSize={10}
+    defaultPageSize={1}
     className="-striped -highlight"
   />
 )
@@ -187,7 +187,7 @@ export const ClimateInformation = () => (
         accessor: "siteName",
       }
     ]}
-    defaultPageSize={10}
+    defaultPageSize={1}
     className="-striped -highlight"
   />
 )
@@ -205,7 +205,7 @@ export const ChannelReference = () => (
         accessor: "siteName",
       }
     ]}
-    defaultPageSize={10}
+    defaultPageSize={1}
     className="-striped -highlight"
   />
 )

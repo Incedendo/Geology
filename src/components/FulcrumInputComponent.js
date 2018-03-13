@@ -15,8 +15,8 @@ const FulcrumInputComponent = ( { key, title, name, state, isValid, submitted, u
           onChange={update}
           onBlur={validate}
         />
-        { submitted &&
-        <div>
+        { submitted && !isValid &&
+        <div style={{color: "red"}}>
           Invalid input
         </div>}
      </Col>
