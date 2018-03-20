@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import '../assets/scss/include.scss';
 
-const FulcrumInputComponent = ( { key, title, name, state, isValid, submitted, update, validate } ) => (
+const FulcrumInputComponent = ( { title, name, state, isValid, submitted, update, validate } ) => (
   <Grid key={title}>
     <Row className="padding-grid">
       <Col sm={4} md={6} className="rightAlignedText">

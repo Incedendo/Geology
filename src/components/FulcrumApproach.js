@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
 import AnalogComponent from './AnalogComponent';
-import FulcrumAddedTBDComponent from './FulcrumAddedTBDComponent';
+// import FulcrumAddedTBDComponent from './FulcrumAddedTBDComponent';
+import TBDApproach from './TBDApproach';
 import '../assets/scss/include.scss';
 
 //import Select package
@@ -41,9 +42,10 @@ class FulcrumApproach extends Component {
     submitted: false,
     submitClicked: false,
     inputs_validated: true,
-    isMetric: true,
-    measuringSystem: '',
     isRiverAnalogue: false,
+    displayedResult: false,
+
+    TBDMode: "",
 
     response: {
       slope: 0,
@@ -139,25 +141,45 @@ class FulcrumApproach extends Component {
     }));
   }
 
-  //Switches the isMetric state according to the dropdown option chosen on the Measuing System
-  setMeasureSystem = (value) => {
-    console.log(value);
-    if(value === "imperial"){
-      this.setState({
-        isMetric: false,
-        measuringSystem: "Imperial",
-      })
-    }else{
-      this.setState({
-        isMetric: true,
-        measuringSystem: "Metric",
-      })
-    }
+  //toggle the state to display Form OR Result
+  toggleSubmitted = () => {
+    this.setState( (prevState) => ({submitted: !prevState.submitted}) );
   }
+
+  //Switches the isMetric state according to the dropdown option chosen on the Measuing System
+  // setMeasureSystem = (value) => {
+  //   console.log(value);
+  //   if(value === "imperial"){
+  //     this.setState({
+  //       isMetric: false,
+  //       measuringSystem: "Imperial",
+  //     })
+  //   }else{
+  //     this.setState({
+  //       isMetric: true,
+  //       measuringSystem: "Metric",
+  //     })
+  //   }
+  // }
 
   // Switches the isAnalog state whenever the checkbox is clicked/unclicked
   toggleIsAnalog = () => {
     this.setState( (prevState) => ({isAnalog: !prevState.isAnalog}) )
+  }
+
+  //for the added TBD components
+  setSelectedTBDMode = (value) => {
+    if(value === "default"){
+      this.setState({
+        TBDMode: "Default",
+      });
+    }else{
+      this.setState({
+        TBDMode: "Customized",
+      });
+    }
+
+    console.log("set selected TBD modes");
   }
 
   validateInputs() {
@@ -382,11 +404,9 @@ class FulcrumApproach extends Component {
           Fulcrum Approach
         </h1>
 
-        <div className="">
-           <Link to="/home">Back</Link>
-        </div>
-
         {!this.state.submitted &&
+
+
           <div>
             {/* <Select
               value={this.state.measuringSystem && this.state.measuringSystem.value}
@@ -399,6 +419,13 @@ class FulcrumApproach extends Component {
                 { value: 'imperial', label: 'Imperial' },
               ]}
             /> */}
+
+            <div className="">
+               {!this.state.submitted
+                 ? <Link to="/home">Back</Link>
+                 : <button onClick={this.toggleDisplayedResult}>Return</button>
+               }
+            </div>
 
             {fieldInputs.map(
               (fieldObject,index) => (
@@ -415,7 +442,43 @@ class FulcrumApproach extends Component {
               )
             )}
 
-            <FulcrumAddedTBDComponent/>
+            <div>
+
+              {
+                !this.state.defaultTBD && !this.state.customizedTBD &&
+
+                <div>
+
+                  <RadioGroup
+                    onChange={ this.setSelectedTBDMode } horizontal
+                  >
+                    <RadioButton
+                      value="default"
+                      pointColor="green">
+                      Default TBD [default value]
+                    </RadioButton>
+                    <RadioButton
+                      value="customized"
+                      pointColor="green">
+                      Customized TDB
+                    </RadioButton>
+                  </RadioGroup>
+                </div>
+              }
+
+              {this.state.TBDMode === "Default" &&
+                <div>
+                  TBD will be calculated using Default value of [...]
+                </div>
+              }
+
+              {this.state.TBDMode === "Customized" &&
+                <TBDApproach
+                  submitNotNeeded={true}
+                />
+              }
+
+            </div>
 
             {!this.state.inputs_validated &&
             <div>
@@ -434,15 +497,12 @@ class FulcrumApproach extends Component {
             <button onClick={this.printResponse}>
               DISPLAY RESPONSE
             </button>
-            {this.state.isMetric ?
-              <div>
-                METRIC System
-              </div>
-              :
-              <div>
-                IMPERIAL System
-              </div>
-            }
+
+            <div className="">
+                 <button onClick={this.toggleSubmitted}>Return</button>
+               }
+            </div>
+
 
             {FetchedResults.map(
               (fieldObject,index) =>

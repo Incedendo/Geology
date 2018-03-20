@@ -10,6 +10,8 @@ import 'react-select/dist/react-select.css';
 //import RadioButton package
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
 
+import TBDResult from './components/TBDResult';
+
 import '../assets/scss/include.scss';
 
 class TBDApproach extends Component{
@@ -25,6 +27,8 @@ class TBDApproach extends Component{
     enabledKoppenDropdown: false,
     calculatedDepthUsingWidth: false,
     inputs_validated: true,
+    submitClicked: false,
+    submitted: false,
 
     // 6 inputs for the text fields:
     drainage_low: 0,
@@ -123,10 +127,13 @@ class TBDApproach extends Component{
     if(this.validateInputs()){
       this.setState({
         inputs_validated: true,
+        submitClicked: true,
+        submitted: true,
       });
       this.postTBD();
     }else{
       this.setState({
+        submitClicked: true,
         inputs_validated: false,
       });
       console.log("unable to post bc inputs are invalid...");
@@ -295,7 +302,6 @@ class TBDApproach extends Component{
               Max: <input type="textbox"
                 name="drainage_high"
                 onBlur={this.setRangeValues}
-
               />
             </div>
          </Col>
@@ -488,6 +494,11 @@ class TBDApproach extends Component{
     console.log("calculated depth using width:",this.state.calculatedDepthUsingWidth);
   }
 
+  //toggle the state to display Form OR Result
+  toggleDisplayedResult = () => {
+    this.setState( (prevState) => ({displayedResult: !prevState.displayedResult}) );
+  }
+
   //onChange function for Precision Radio Button Group
   setPrecisionSelectedOption = (value) => {
     this.setState({
@@ -521,39 +532,55 @@ class TBDApproach extends Component{
 
   render(){
     return(
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <div className='inline-back-button'>
-             <Link to="/home">Back</Link>
+      <div>
+        {!this.state.submitted &&
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <div className='inline-back-button'>
+                 <Link to="/home">Back</Link>
+              </div>
+
+              <h1 className='inline-page-title'>
+                TBD Approach
+              </h1>
+            </div>
+
+            {this.renderClimateOrders()}
+
+            {this.renderDrainageArea()}
+
+            {this.renderRiverSize()}
+
+            {this.renderTBDPrecision()}
+
+            {!this.state.inputs_validated &&
+            <div>
+              Please enter correct values for inputs...
+            </div>}
+
+            {!this.props.submitNotNeeded &&
+              <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
+                Submit
+              </button>
+             }
+
+
+          </form>
+        }
+
+        {!this.state.submitted &&
+          <div>
+            <button>
+              Back
+            </button>
+
+            <RiverChannelsTable />
           </div>
 
-          <h1 className='inline-page-title'>
-            TBD Approach
-          </h1>
-        </div>
+        }
+      </div>
 
 
-        {this.renderClimateOrders()}
-
-        {this.renderDrainageArea()}
-
-        {this.renderRiverSize()}
-
-        {this.renderTBDPrecision()}
-
-        {!this.state.inputs_validated &&
-        <div>
-          Please enter correct values for inputs...
-        </div>}
-
-        {!this.props.submitNotNeeded &&
-          <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
-            Submit
-          </button>
-         }
-
-          <RiverChannelsTable />
-      </form>
     )
   }
 }

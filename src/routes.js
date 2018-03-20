@@ -7,6 +7,8 @@ import TBDApproach from './components/TBDApproach';
 import AnalogComponent from './components/AnalogComponent';
 import LandingPage from './components/LandingPage';
 import DetailedChannelView from './components/DetailedChannelView';
+import { RiverChannelsTable } from "./components/Utils";
+// import TBDResult from './components/TBDResult';
 
 export default [
   {
@@ -42,6 +44,12 @@ export default [
         component: AnalogComponent,
         name: "AnalogComponent"
       },
+      // {
+      //   path: '/TBDResult',
+      //   exact: true,
+      //   component: TBDResult,
+      //   name: "TBDResult"
+      // },
       {
         path: '/DetailedChannelView',
         exact: true,

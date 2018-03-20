@@ -13,6 +13,10 @@ class DetailedChannelView extends Component{
      initial_map_zoom_level: 8,
    };
 
+   componentDidMount(){
+     console.log("component mounted");
+   }
+
    render(){
      console.log(this.props);
      return(

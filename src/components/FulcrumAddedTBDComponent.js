@@ -15,43 +15,6 @@ class FulcrumAddedTBDComponent extends Component{
     selectedPrecision: "10%"
   }
 
-  renderAnalogUnit = (title) => (
-      <Grid className="padding-grid" key={title}>
-          <Col sm={4} md={6} className="rightAlignedText">
-              {title}
-          </Col>
-          <Col sm={4} md={6} className="leftAlignedText">
-            {this.renderClimateOrders()}
-            {this.renderDrainageArea()}
-            {this.renderRiverSize()}
-         </Col>
-      </Grid>
-  )
-
-  renderClimateOrders = () => (
-    <div>
-      <select name="analogOptions">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="fiat">Fiat</option>
-        <option value="audi">Audi</option>
-      </select>
-    </div>
-  )
-
-  renderDrainageArea = () => (
-    <div>
-
-    </div>
-  )
-
-  renderRiverSize = () => (
-    <div>
-
-    </div>
-  )
-
-
   resetOptions = () => {
     this.setState({
       defaultTBD: false,
