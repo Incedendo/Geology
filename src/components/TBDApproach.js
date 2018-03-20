@@ -10,7 +10,7 @@ import 'react-select/dist/react-select.css';
 //import RadioButton package
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
 
-import TBDResult from './components/TBDResult';
+import TBDResult from './TBD/TBDResult';
 
 import '../assets/scss/include.scss';
 
