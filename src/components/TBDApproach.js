@@ -112,14 +112,16 @@ class TBDApproach extends Component{
 
   handleFirstOrderSelectionChange = (value) => {
     this.setState({
-      selectedFirstOrder: value,
+      selectedFirstOrder: value.value,
     })
+    console.log(this.state.selectedFirstOrder);
   }
 
   handleKoppenSelectionChange = (value) => {
     this.setState({
-      selectedKoppen: value,
+      selectedKoppen: value.value,
     })
+    console.log(value);
   }
 
   handleSubmit = (e) => {
@@ -140,35 +142,67 @@ class TBDApproach extends Component{
     }
   }
 
-  // validate if the user enter positive numbers for min and max drainage area
-  validateDrainageInputs(){
-    if(this.state.drainage_low > 0 &&  this.state.drainage_high > 0){
-            console.log("successfully Validate Inputs");
+  // validate if the user enter positive numbers for min and max Cross Sectional Area
+  validateClimateInputs(){
+    if(this.state.selectedClimate !== ""){
+        if(this.state.selectedFirstOrder !== "" || this.state.selectedKoppen !== ""){
+            console.log("validated Cross selectedClimate");
             return true;
+        }else{
+            return false;
+        }
     }else{
-            console.log("fail to validate inputs");
+            console.log("fail to validate selectedClimate: radio box NOT selected");
             return false;
     }
   }
 
-  // validate if the user enter positive numbers for min and max River Depth
-  validateRiverDepthInputs(){
-    if(this.state.riverDepth_Max > 0 && this.state.riverDepth_Min > 0){
-            console.log("validated River Size");
+  // validate if the user enter positive numbers for min and max drainage area
+  validateDrainageInputs(){
+    if(this.state.drainage_low > 0 &&  this.state.drainage_high > 0){
+            console.log("successfully Validate drainage Inputs");
             return true;
     }else{
-            console.log("fail to validate River Size");
+            console.log("fail to validate drainage inputs");
             return false;
+    }
+  }
+
+
+  validateRiverInputs(){
+    if(this.state.selectedRiverSize !== ""){
+        if(this.state.selectedRiverSize == "RiverDepth"){
+            // validate if the user enter positive numbers for min and max River Depth
+            if(this.state.riverDepth_Max > 0 && this.state.riverDepth_Min > 0){
+                    console.log("validated River Size");
+                    return true;
+            }else{
+                    console.log("fail to validate River Size: 1 of the Depth text field is empty");
+                    return false;
+            }
+        }else if(this.state.selectedRiverSize == "CrossSectionalArea"){
+            // validate if the user enter positive numbers for min and max Cross Sectional Area
+            if(this.state.crossSectionalArea_Max > 0 && this.state.crossSectionalArea_Min > 0){
+                  console.log("validated Cross Sectional Area");
+                  return true;
+            }else{
+                  console.log("fail to validate Cross Sectional Area: 1 of the Area text field is empty");
+                  return false;
+            }
+        }
+    }else{
+      console.log("failed to validate River Inputs: radio box NOT selected");
+      return false;
     }
   }
 
   // validate if the user enter positive numbers for min and max Cross Sectional Area
-  validateCrossSectionalAreaInputs(){
-    if(this.state.crossSectionalArea_Max > 0 && this.state.crossSectionalArea_Min > 0){
-            console.log("validated Cross Sectional Area");
+  validatePrecisionInputs(){
+    if(this.state.selectedPrecision !== ""){
+            console.log("validated Precision");
             return true;
     }else{
-            console.log("fail to validate Cross Sectional Area");
+            console.log("fail to validate Precision: radio box NOT selected");
             return false;
     }
   }
@@ -176,31 +210,14 @@ class TBDApproach extends Component{
   //Encapsulating Validate inputs that check for all fields
   validateInputs(){
     // check if users choose ALL 3 big Radio Buttons
-    if(this.state.selectedClimate !== "" &&
-       this.state.selectedRiverSize !== "" &&
-       this.state.selectedPrecision !== ""
+    if(this.validateClimateInputs() &&
+      this.validateDrainageInputs() &&
+      this.validateRiverInputs() &&
+      this.validatePrecisionInputs()
     ){
-          // check if Users select either of the SELECT dropdown menus
-          if(this.state.selectedFirstOrder !== "" ||
-             this.state.selectedKoppen !== ""
-          ){
-                  // validate the numerical inputs in 4 text fields
-                  if(
-                    this.validateDrainageInputs() &&
-                    ( this.validateRiverDepthInputs() || this.validateCrossSectionalAreaInputs())
-                  ){
-                          console.log("successfully Validate Inputs");
-                          return true;
-                  }else{
-                          console.log("invalid Text inputs");
-                          return false;
-                  }
-          }else{
-                  console.log("User did not choose SELECT");
-                  return false;
-          }
+          return true;
     }else{
-          console.log("One of the radio checkbox is unchecked");
+          console.log("validateInputs() failed");
           return false;
     }
   }
@@ -501,6 +518,11 @@ class TBDApproach extends Component{
     this.setState( (prevState) => ({displayedResult: !prevState.displayedResult}) );
   }
 
+  //toggle the state to display Form OR Result
+  toggleSubmitted = () => {
+    this.setState( (prevState) => ({submitted: !prevState.submitted}) );
+  }
+
   //onChange function for Precision Radio Button Group
   setPrecisionSelectedOption = (value) => {
     this.setState({
@@ -560,19 +582,17 @@ class TBDApproach extends Component{
               Please enter correct values for inputs...
             </div>}
 
-            {!this.props.submitNotNeeded &&
-              <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
-                Submit
-              </button>
-             }
 
+            <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
+              Submit
+            </button>
 
           </form>
         }
 
-        {!this.state.submitted &&
+        {this.state.submitted &&
           <div>
-            <button>
+            <button onClick={this.toggleSubmitted}>
               Back
             </button>
 
