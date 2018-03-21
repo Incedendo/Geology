@@ -43,6 +43,12 @@ class TBDApproach extends Component{
     data: [],
   }
 
+  componentDidMount(){
+    this.setState({
+      submitted: false,
+    })
+  }
+
   // componentDidMount() {
   postTBD = () =>{
     const JimPostTBDUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TBD';
@@ -252,12 +258,14 @@ class TBDApproach extends Component{
              >
                <RadioButton
                  value="FirstOrder"
-                 pointColor="green">
+                 pointColor="green"
+                 selected={this.state.selectedClimate==="FirstOrder"}>
                  First Order
                </RadioButton>
                <RadioButton
                  value="KoppenClassification"
-                 pointColor="green">
+                 pointColor="green"
+                 selected={this.state.selectedClimate==="KoppenClassification"}>
                  Koppen Classification
                </RadioButton>
              </RadioGroup>
@@ -314,19 +322,31 @@ class TBDApproach extends Component{
               Min: <input type="textbox"
                 name="drainage_low"
                 onBlur={this.setRangeValues}
-
+                value={this.state.drainage_low}
+                onChange={this.updateFieldValue}
               />
             </div>
             <div className="inline-no-right-margin">
               Max: <input type="textbox"
                 name="drainage_high"
                 onBlur={this.setRangeValues}
+                value={this.state.drainage_high}
+                onChange={this.updateFieldValue}
               />
             </div>
          </Col>
       </Grid>
     </div>
   )
+
+  updateFieldValue = (e) => {
+
+    const {name, value} = e.target;
+
+    this.setState(() => ({
+      [name]: value
+    }));
+  }
 
   renderRiverSize = () => (
     <div className="enclosing-border">
@@ -378,12 +398,16 @@ class TBDApproach extends Component{
               Min: <input type="textbox"
                 name="riverDepth_Min"
                 onBlur={this.setRangeValues}
+                onChange={this.updateFieldValue}
+                value={this.state.riverDepth_Min}
               />
             </div>
             <div className="inline-no-right-margin">
               Max: <input type="textbox"
                 name="riverDepth_Max"
                 onBlur={this.setRangeValues}
+                onChange={this.updateFieldValue}
+                value={this.state.riverDepth_Max}
               />
             </div>
           </div>
@@ -395,12 +419,16 @@ class TBDApproach extends Component{
               Min: <input type="textbox"
                 name="crossSectionalArea_Min"
                 onBlur={this.setRangeValues}
+                onChange={this.updateFieldValue}
+                value={this.state.crossSectionalArea_Min}
               />
             </div>
             <div className="inline-no-right-margin">
               Max: <input type="textbox"
                 name="crossSectionalArea_Max"
                 onBlur={this.setRangeValues}
+                onChange={this.updateFieldValue}
+                value={this.state.crossSectionalArea_Max}
               />
             </div>
           </div>
