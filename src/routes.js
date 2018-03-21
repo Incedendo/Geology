@@ -14,14 +14,14 @@ export default [
   {
     component: Base,
     routes: [
+      // {
+      //   path: '/',
+      //   exact: true,
+      //   component: LandingPage,
+      //   name: "Home"
+      // },
       {
         path: '/',
-        exact: true,
-        component: LandingPage,
-        name: "Home"
-      },
-      {
-        path: '/home',
         exact: true,
         component: Home,
         name: "Home"

@@ -422,7 +422,7 @@ class FulcrumApproach extends Component {
 
             <div className="">
                {!this.state.submitted
-                 ? <Link to="/home">Back</Link>
+                 ? <Link to="/">Back</Link>
                  : <button onClick={this.toggleDisplayedResult}>Return</button>
                }
             </div>

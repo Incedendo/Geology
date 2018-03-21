@@ -213,7 +213,7 @@ class TBDApproach extends Component{
             Climate:
         </Col>
 
-        <Col sm={4} md={10} className="leftAlignedText">
+        <Col sm={4} md={9} className="leftAlignedText">
           {/* <input
               type="radio"
               name="selectedClimate"
@@ -229,21 +229,23 @@ class TBDApproach extends Component{
              checked={this.state.selectedClimate === 'KoppenClassification'}  onChange={this.setSelectedOption}
              className=""
            /> Koppen Classification */}
+           <div >
+             <RadioGroup
+               onChange={ this.setClimateSelectedOption } horizontal
+             >
+               <RadioButton
+                 value="FirstOrder"
+                 pointColor="green">
+                 First Order
+               </RadioButton>
+               <RadioButton
+                 value="KoppenClassification"
+                 pointColor="green">
+                 Koppen Classification
+               </RadioButton>
+             </RadioGroup>
+           </div>
 
-           <RadioGroup
-             onChange={ this.setClimateSelectedOption } horizontal
-           >
-             <RadioButton
-               value="FirstOrder"
-               pointColor="green">
-               First Order
-             </RadioButton>
-             <RadioButton
-               value="KoppenClassification"
-               pointColor="green">
-               Koppen Classification
-             </RadioButton>
-           </RadioGroup>
         </Col>
       </Grid>
 
@@ -315,7 +317,7 @@ class TBDApproach extends Component{
         <Col sm={4} md={2} className="leftAlignedText-Title">
             River Size:
         </Col>
-        <Col sm={4} md={10} className="leftAlignedText">
+        <Col sm={4} md={9} className="leftAlignedText">
           {/* <input
               type="radio"
               name="selectedRiverSize"
@@ -352,7 +354,7 @@ class TBDApproach extends Component{
 
         </Col>
 
-        <Col sm={4} md={10} className="leftAlignedText">
+        <Col sm={4} md={9} className="leftAlignedText">
           {this.state.selectedRiverSize === "RiverDepth" &&
           <div>
             <div className="inline-with-right-margin">
@@ -392,7 +394,7 @@ class TBDApproach extends Component{
       <div>
         <Grid>
           <Col sm={4} md={2}></Col>
-          <Col sm={4} md={10}>
+          <Col sm={4} md={9}>
             <input
               type="checkbox"
               onChange={this.toggleRiverWidthAttr}
@@ -410,7 +412,7 @@ class TBDApproach extends Component{
         <Col sm={4} md={2} className="leftAlignedText-Title">
             Precision:
         </Col>
-        <Col sm={4} md={10} className="leftAlignedText">
+        <Col sm={4} md={9} className="leftAlignedText">
 
           <RadioGroup
             onChange={ this.setPrecisionSelectedOption } horizontal
@@ -537,7 +539,7 @@ class TBDApproach extends Component{
           <form onSubmit={this.handleSubmit}>
             <div>
               <div className='inline-back-button'>
-                 <Link to="/home">Back</Link>
+                 <Link to="/">Back</Link>
               </div>
 
               <h1 className='inline-page-title'>

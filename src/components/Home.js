@@ -3,6 +3,7 @@ import '../assets/scss/include.scss';
 import HomeForm from './HomeForm';
 import HomeLinkComponent from './HomeLinkComponent';
 
+
 class Home extends Component {
   renderHeader = () => (
     <div>
@@ -14,7 +15,7 @@ class Home extends Component {
 
   render() {
     return(
-      <div>
+      <div >
         {this.renderHeader()}
 
         <HomeForm />

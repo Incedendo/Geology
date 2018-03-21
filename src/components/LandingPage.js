@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 const LandingPage = () => (
-  <div className="leftAlignedText">
+  <div className="leftAlignedText" >
     <h3>
       R.A.F.T.E.R
     </h3>
@@ -50,13 +50,13 @@ const LandingPage = () => (
       </ul>
     </div>
 
-    <Link to={{
+    {/* <Link to={{
       pathname: "/home"
     }}
       className=""
     >
       Next
-    </Link>
+    </Link> */}
   </div>
 )
 

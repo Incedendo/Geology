@@ -11,9 +11,23 @@
   margin-left: auto;
 }
 
-.enclosing-border-home{
+.enclosing-border-separate-approach{
+  border: 1px solid;
+  margin: 20px 10px 10px 20px;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.enclosing-border-helpful-links{
   border: 1px solid;
   margin: 30px 700px 30px 30px;
   padding: 30px;
+  border-radius: 15px;
+}
+
+.enclosing-border-intro{
+  border: 1px solid;
+  margin: 30px 30px 30px 30px;
+  padding: 20px;
   border-radius: 15px;
 }

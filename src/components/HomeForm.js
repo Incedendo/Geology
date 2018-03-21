@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../assets/scss/include.scss';
 import HomeLinkComponent from './HomeLinkComponent';
 import { Grid, Row, Col } from 'react-bootstrap';
+import LandingPage from './LandingPage';
 
 class HomeForm extends Component {
   state = {
@@ -30,36 +31,70 @@ class HomeForm extends Component {
   render() {
     return (
       <div>
-        <div className="enclosing-border-home">
-          <HomeLinkComponent
-            pathname='/FulcrumApproach'
-            linkTitle= 'Fulcrum'
-          />
-          <div>
-            this is the explaination of Fulcrum Apprach
-          </div>
+        {/*-----------------------------------
+           the intro tag to the page
+           ----------------------------------*/}
+        <div className="enclosing-border-intro">
+            <LandingPage />
         </div>
 
-        <div className="enclosing-border-home">
-          <HomeLinkComponent
-            pathname='/TBDApproach'
-            linkTitle= 'TBD'
-          />
-          <div>
-            this is the explaination of {this.TBDSubscript()} Apprach
-          </div>
-        </div>
 
-        <div className="enclosing-border-home">
-          <HomeLinkComponent
-            pathname='/AnalogChannels'
-            linkTitle= 'Analog Channel'
-          />
-          <div>
-            Allow users to search for Analog Streams
-          </div>
-        </div>
+        {/*-----------------------------------
+           Second div containing the feature links
+         ----------------------------------*/}
+        <div >
+          <Grid>
+            <Col md={6}>
+              {/*-----------------------------------
+                 Fulcrum
+               ----------------------------------*/}
+              <div className="enclosing-border-separate-approach">
+                <HomeLinkComponent
+                  pathname='/FulcrumApproach'
+                  linkTitle= 'Fulcrum'
+                />
+                <div>
+                  this is the explaination of Fulcrum Apprach
+                </div>
+              </div>
 
+              {/*-----------------------------------
+                 TBD
+               ----------------------------------*/}
+              <div className="enclosing-border-separate-approach">
+                <HomeLinkComponent
+                  pathname='/TBDApproach'
+                  linkTitle= 'TBD'
+                />
+                <div>
+                  this is the explaination of {this.TBDSubscript()} Apprach
+                </div>
+              </div>
+
+              {/*-----------------------------------
+                 Analog
+               ----------------------------------*/}
+              <div className="enclosing-border-separate-approach">
+                <HomeLinkComponent
+                  pathname='/AnalogChannels'
+                  linkTitle= 'Analog Channel'
+                />
+                <div>
+                  Allow users to search for Analog Streams
+                </div>
+              </div>
+            </Col>
+
+            <Col md={6}>
+              <div className="
+                enclosing-border-helpful-links
+                inline
+                ">
+
+              </div>
+            </Col>
+          </Grid>
+        </div>
       </div>
     )
   }
