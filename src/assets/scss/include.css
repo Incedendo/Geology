@@ -262,6 +262,12 @@
 .title-error {
   color: red; }
 
+.error-color-First-order {
+  border: 1px solid red; }
+
+.error-color-Koppen {
+  border: 1px solid red; }
+
 .back-button-link {
   text-decoration: none !important;
   border: 2px solid;

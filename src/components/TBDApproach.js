@@ -18,10 +18,12 @@ class TBDApproach extends Component{
 
   state = {
     selectedClimate: "", // set when Climate radio buttons are clicked
+    // selectedFirstOrder: "", // send selectedFirstOrder.value
+    // selectedKoppen: "", // send selectedKoppen.value
+    climateFromDropdown: "",
+
     selectedRiverSize: "", // set when river size radio buttons are clicked
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
-    selectedFirstOrder: '', // send selectedFirstOrder.value
-    selectedKoppen: '',
 
     //boolean state:
     enabledFirstOrderDropdown: false,
@@ -52,7 +54,7 @@ class TBDApproach extends Component{
 
   // componentDidMount() {
   postTBD = () =>{
-    const JimPostTBDUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TBD';
+    const JimPostTBDUrl = 'https://g2dn2m2b1g.execute-api.us-east-1.amazonaws.com/Prod/api/main/TBD';
 
     const postRequestData = {
       method: 'POST',
@@ -69,8 +71,8 @@ class TBDApproach extends Component{
         JSON.stringify({
           "isFulcrum": true,
           "isMetric": false,
-          "isRiverAnalogue" : true,
-          "isTBD": false,
+          "isRiverAnalogue" : false,
+          "isTBD": true,
           "TBD": {
           "isCrossSection": true,
             "isWithin10": true,
@@ -117,19 +119,19 @@ class TBDApproach extends Component{
       router.transitionTo('/some/new/location')
   }
 
-  handleFirstOrderSelectionChange = (value) => {
+  handleClimateSelectionChangeDropDown = (value) => {
     this.setState({
-      selectedFirstOrder: value,
+      climateFromDropdown: value,
     })
-    console.log(this.state.selectedFirstOrder.value);
+    console.log(this.state.climateFromDropdown.value);
   }
 
-  handleKoppenSelectionChange = (value) => {
-    this.setState({
-      selectedKoppen: value,
-    })
-    console.log(value.value);
-  }
+  // handleKoppenSelectionChange = (value) => {
+  //   this.setState({
+  //     climateFromDropdown: value,
+  //   })
+  //   console.log(value.value);
+  // }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -153,9 +155,10 @@ class TBDApproach extends Component{
   validateClimateInputs(){
     if(this.state.selectedClimate !== ""){
         if(this.state.selectedFirstOrder !== "" || this.state.selectedKoppen !== ""){
-            console.log("validated Cross selectedClimate");
+            console.log("validated selectedClimate: ");
             return true;
         }else{
+            console.log("did not choose an item in the dropdown: ");
             return false;
         }
     }else{
@@ -236,6 +239,11 @@ class TBDApproach extends Component{
       "title-error": this.state.submitClicked && this.state.selectedClimate === ""
     })
 
+    var selectColorError = classNames({
+      "error-color-First-order": this.state.submitClicked && this.state.selectedFirstOrder === "",
+      "error-color-Koppen": this.state.submitClicked &&  this.state.selectedKoppen === "",
+    })
+
     return(
       <div className="enclosing-border">
         <Grid className="padding-grid">
@@ -291,8 +299,9 @@ class TBDApproach extends Component{
                 {this.state.enabledFirstOrderDropdown &&
                   <Select
                     name="first-order"
-                    value={this.state.selectedFirstOrder && this.state.selectedFirstOrder.value}
-                    onChange={this.handleFirstOrderSelectionChange}
+                    value={this.state.climateFromDropdown && this.state.climateFromDropdown.value}
+                    // className={selectColorError}
+                    onChange={this.handleClimateSelectionChangeDropDown}
                     autoFocus
                     autoBlur
                     searchable
@@ -309,11 +318,12 @@ class TBDApproach extends Component{
                {this.state.enabledKoppenDropdown &&
                  <Select
                    name="first-order"
-                   value={this.state.selectedKoppen && this.state.selectedKoppen.value}
-                   onChange={this.handleKoppenSelectionChange}
-                  //  autoFocus
-                  //  autoBlur
-                  //  searchable
+                   value={this.state.climateFromDropdown && this.state.climateFromDropdown.value}
+                   onChange={this.handleClimateSelectionChangeDropDown}
+                  //  className={selectColorError}
+                   autoFocus
+                   autoBlur
+                   searchable
                    options={[
                      { value: 'Af', label: 'Tropical Rainforest - Af' },
                      { value: 'Am', label: 'Tropical Monsoon - Am' },
