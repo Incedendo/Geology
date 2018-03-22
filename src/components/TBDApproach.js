@@ -20,7 +20,7 @@ class TBDApproach extends Component{
     selectedClimate: "", // set when Climate radio buttons are clicked
     selectedRiverSize: "", // set when river size radio buttons are clicked
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
-    selectedFirstOrder: '',
+    selectedFirstOrder: '', // send selectedFirstOrder.value
     selectedKoppen: '',
 
     //boolean state:
@@ -119,16 +119,16 @@ class TBDApproach extends Component{
 
   handleFirstOrderSelectionChange = (value) => {
     this.setState({
-      selectedFirstOrder: value.value,
+      selectedFirstOrder: value,
     })
-    console.log(this.state.selectedFirstOrder);
+    console.log(this.state.selectedFirstOrder.value);
   }
 
   handleKoppenSelectionChange = (value) => {
     this.setState({
-      selectedKoppen: value.value,
+      selectedKoppen: value,
     })
-    console.log(value);
+    console.log(value.value);
   }
 
   handleSubmit = (e) => {
@@ -297,9 +297,11 @@ class TBDApproach extends Component{
                     autoBlur
                     searchable
                     options={[
-                      { value: 'monsoon', label: 'Monsoon' },
-                      { value: 'cold', label: 'Cold' },
-                      { value: 'arid', label: 'Arid'},
+                      { value: 'A', label: 'Tropical - A' },
+                      { value: 'B', label: 'Arid - B' },
+                      { value: 'C', label: 'Temperate - C' },
+                      { value: 'D', label: 'Cold - D' },
+                      { value: 'E', label: 'Polar - E' },
                     ]}
                   />
                 }
@@ -309,12 +311,46 @@ class TBDApproach extends Component{
                    name="first-order"
                    value={this.state.selectedKoppen && this.state.selectedKoppen.value}
                    onChange={this.handleKoppenSelectionChange}
-                   autoFocus
-                   autoBlur
-                   searchable
+                  //  autoFocus
+                  //  autoBlur
+                  //  searchable
                    options={[
-                     { value: 'monsoon', label: 'Monsoon' },
-                     { value: 'cold', label: 'Cold' },
+                     { value: 'Af', label: 'Tropical Rainforest - Af' },
+                     { value: 'Am', label: 'Tropical Monsoon - Am' },
+                     { value: 'Aw', label: 'Tropical Savannah - Aw' },
+                     { value: 'BSh', label: 'Arid,Steppe,Hot - BSh' },
+                     { value: 'BSk', label: 'Arid,Steppe,Cold - BSk' },
+
+                     { value: 'BWh', label: 'Arid,Desert,Hot - BWh' },
+                     { value: 'BWk', label: 'Arid,Desert,Cold - BWk' },
+                     { value: 'Cfa', label: 'Temperate,Without dry season,Hot Summer - Cfa' },
+                     { value: 'Cfb', label: 'Temperate,Without dry season,Warm Summer - Cfb' },
+                     { value: 'Cfc', label: 'Temperate,Without dry season,Cool Summer - Cfc' },
+
+                     { value: 'Csa', label: 'Temperate,Dry Summer,Hot Summer - Csa' },
+                     { value: 'Csb', label: 'Temperate,Dry Summer,Warm Summer - Csb' },
+                     { value: 'Csc', label: 'Temperate,Dry Summer,Cool Summer - Csc' },
+                     { value: 'Cwa', label: 'Temperate,Dry Winter,Hot Summer - Cwa' },
+                     { value: 'Cwb', label: 'Temperate,Dry Winter,Warm Summer - Cwb' },
+
+                     { value: 'Cwc', label: 'Temperate,Dry Winter,Cool Summer - Cwc' },
+                     { value: 'Dfa', label: 'Cold,Without dry season,Hot Summer - Dfa' },
+                     { value: 'Dfb', label: 'Cold,Without dry season,Warm Summer - Dfb' },
+                     { value: 'Dfc', label: 'Cold,Without dry season,Cool Summer - Dfc' },
+                     { value: 'Dfd', label: 'Cold,Without dry season,Very Cold Winter - Dfd' },
+
+                     { value: 'Dsa', label: 'Cold,Dry Summer,Hot Summer - Dsa' },
+                     { value: 'Dsb', label: 'Cold,Dry Summer,Warm Summer - Dsb' },
+                     { value: 'Dsc', label: 'Cold,Dry Summer,Cool Summer - Dsc' },
+                     { value: 'Dsd', label: 'Cold,Dry Summer,Very Cold Winter - Dsd' },
+                     { value: 'Dwa', label: 'Cold,Dry Winter,Hot Summer - Dwa' },
+
+                     { value: 'Dwb', label: 'Cold,Dry Winter,Warm Summer - Dwb' },
+                     { value: 'Dwc', label: 'Cold,Dry Winter,Cool Summer - Dwc' },
+                     { value: 'Dwd', label: 'Cold,Dry Winter,Very Cold Winter - Dwd' },
+                     { value: 'EF', label: 'Polar,,Frost - EF' },
+                     { value: 'ET', label: 'Polar,,Tundra - ET' },
+
                    ]}
                  />
                }

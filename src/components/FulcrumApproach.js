@@ -59,8 +59,8 @@ class FulcrumApproach extends Component {
       totalBankfullSuspendedSedimentDischarge_WrightParker: 0,
       totalCombinedSedimentVolumeDischargePerYear_VanRijn: 0,
       totalCombinedSedimentVolumeDischargePerYear_WrightParker:0,
-      totalSuspendedSedimentVolumeDischargePerYear_VanRjin: 0,
-      totalSuspendedSedimentVolumeDischargePerYear_WrightParker: 0,
+      totalSuspendedSedimentVolumeDischargedPerYear_VanRijn: 0,
+      totalSuspendedSedimentVolumeDischargedPerYear_WrightParker: 0,
     },
   };
 
@@ -90,14 +90,14 @@ class FulcrumApproach extends Component {
       body:
         JSON.stringify({
           "isFulcrum": true,
-          "isMetric": this.state.isMetric,
+          "isMetric": false,
           "isRiverAnalogue" : this.state.isRiverAnalogue,
           "isTBD": false,
           "TBD": {
-          "isCrossSection": true,
-            "isWithin10": true,
-            "isWithin20": true,
-            "climate": "B",
+          "isCrossSection": false,
+            "isWithin10": false,
+            "isWithin20": false,
+            "climate": "",
             "drainage_low": null,
             "drainage_high": null,
             "riverSize_low": null,
@@ -128,9 +128,12 @@ class FulcrumApproach extends Component {
     ).then( data => {
       console.log(data);
       console.log(data.slope);
+      console.log(data.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn);
       this.setState({
         response: data,
       });
+
+      console.log(this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn);
     });
   }
 
@@ -400,11 +403,11 @@ class FulcrumApproach extends Component {
       },
       {
         title: "Total Suspended Sediment Volume Discharge Per Year (Van Rijn)",
-        returnedData: this.state.response.totalSuspendedSedimentVolumeDischargePerYear_VanRjin,
+        returnedData: this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn,
       },
       {
         title: "Total Suspended Sediment Volume Discharge Per Year (Wright Parker)",
-        returnedData: this.state.response.totalSuspendedSedimentVolumeDischargePerYear_WrightParker,
+        returnedData: this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_WrightParker,
       }
     ];
 
