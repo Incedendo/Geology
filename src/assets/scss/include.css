@@ -193,6 +193,15 @@
 .margin-10 {
   margin: 10px; }
 
+.form {
+  position: relative;
+  margin-top: -10px; }
+
+.back-button-div-fulcrum {
+  position: absolute;
+  margin-top: 0px;
+  margin-left: 40px; }
+
 .rightAlignedText {
   text-align: right; }
 
@@ -204,8 +213,8 @@
   font-size: 20px; }
 
 .padding-grid {
-  padding: 10px;
-  margin-left: 0px; }
+  padding-top: 20px;
+  padding-bottom: 20px; }
 
 .margin-10 {
   margin: 10px; }
@@ -217,9 +226,14 @@
 .inline {
   display: inline-block; }
 
-.inline-back-button {
-  display: inline-block;
-  margin-left: 0px; }
+.form {
+  position: relative;
+  margin-top: -10px; }
+
+.back-button-div-tbd {
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 40px; }
 
 .inline-page-title {
   display: inline-block;
@@ -236,8 +250,10 @@
 .enclosing-border {
   border: 0.5px solid;
   margin: 20px 60px 20px 100px;
-  padding: 20px;
   border-radius: 15px; }
+
+.select-padding {
+  padding-top: 20px; }
 
 .text-field-error {
   border-color: red;
@@ -245,3 +261,13 @@
 
 .title-error {
   color: red; }
+
+.back-button-link {
+  text-decoration: none !important;
+  border: 2px solid;
+  text-transform: uppercase;
+  margin: 1rem auto;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 5px; }

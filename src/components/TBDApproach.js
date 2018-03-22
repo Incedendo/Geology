@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
-
-import { RiverChannelsTable } from "./Utils";
-
+//import RadioButton package
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
 //import Select package
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import classNames from 'classnames';
 
-//import RadioButton package
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
-
+//import other components
+import { RiverChannelsTable } from "./Utils";
 import TBDResult from './TBD/TBDResult';
 
 import '../assets/scss/include.scss';
@@ -241,82 +239,89 @@ class TBDApproach extends Component{
     return(
       <div className="enclosing-border">
         <Grid className="padding-grid">
+          <Row>
+            <Col sm={4} md={2} className={title}>
+                Climate:
+            </Col>
 
-          <Col sm={4} md={2} className={title}>
-              Climate:
-          </Col>
+            <Col sm={4} md={9} className="leftAlignedText">
+              {/* <input
+                  type="radio"
+                  name="selectedClimate"
+                  value="FirstOrder"
+                  checked={this.state.selectedClimate === 'FirstOrder'}
+                  onChange={this.setSelectedOption}
+                  className=""
+                /> First Order
+               <input
+                 type="radio"
+                 name="selectedClimate"
+                 value="KoppenClassification"
+                 checked={this.state.selectedClimate === 'KoppenClassification'}  onChange={this.setSelectedOption}
+                 className=""
+               /> Koppen Classification */}
+               <div >
+                 <RadioGroup
+                   onChange={ this.setClimateSelectedOption } horizontal
+                 >
+                   <RadioButton
+                     value="FirstOrder"
+                     pointColor="green"
+                     selected={this.state.selectedClimate==="FirstOrder"}>
+                     First Order
+                   </RadioButton>
+                   <RadioButton
+                     value="KoppenClassification"
+                     pointColor="green"
+                     selected={this.state.selectedClimate==="KoppenClassification"}>
+                     Koppen Classification
+                   </RadioButton>
+                 </RadioGroup>
+               </div>
 
-          <Col sm={4} md={9} className="leftAlignedText">
-            {/* <input
-                type="radio"
-                name="selectedClimate"
-                value="FirstOrder"
-                checked={this.state.selectedClimate === 'FirstOrder'}
-                onChange={this.setSelectedOption}
-                className=""
-              /> First Order
-             <input
-               type="radio"
-               name="selectedClimate"
-               value="KoppenClassification"
-               checked={this.state.selectedClimate === 'KoppenClassification'}  onChange={this.setSelectedOption}
-               className=""
-             /> Koppen Classification */}
-             <div >
-               <RadioGroup
-                 onChange={ this.setClimateSelectedOption } horizontal
-               >
-                 <RadioButton
-                   value="FirstOrder"
-                   pointColor="green"
-                   selected={this.state.selectedClimate==="FirstOrder"}>
-                   First Order
-                 </RadioButton>
-                 <RadioButton
-                   value="KoppenClassification"
-                   pointColor="green"
-                   selected={this.state.selectedClimate==="KoppenClassification"}>
-                   Koppen Classification
-                 </RadioButton>
-               </RadioGroup>
-             </div>
+            </Col>
+          </Row>
 
-          </Col>
+          <Row>
+            <Col sm={4} md={2} >
+
+            </Col>
+            <Col sm={4} md={9} >
+              <div className="select-padding">
+                {this.state.enabledFirstOrderDropdown &&
+                  <Select
+                    name="first-order"
+                    value={this.state.selectedFirstOrder && this.state.selectedFirstOrder.value}
+                    onChange={this.handleFirstOrderSelectionChange}
+                    autoFocus
+                    autoBlur
+                    searchable
+                    options={[
+                      { value: 'monsoon', label: 'Monsoon' },
+                      { value: 'cold', label: 'Cold' },
+                      { value: 'arid', label: 'Arid'},
+                    ]}
+                  />
+                }
+
+               {this.state.enabledKoppenDropdown &&
+                 <Select
+                   name="first-order"
+                   value={this.state.selectedKoppen && this.state.selectedKoppen.value}
+                   onChange={this.handleKoppenSelectionChange}
+                   autoFocus
+                   autoBlur
+                   searchable
+                   options={[
+                     { value: 'monsoon', label: 'Monsoon' },
+                     { value: 'cold', label: 'Cold' },
+                   ]}
+                 />
+               }
+              </div>
+            </Col>
+          </Row>
         </Grid>
-
-        <div className="climate_select">
-          {this.state.enabledFirstOrderDropdown &&
-            <Select
-              name="first-order"
-              value={this.state.selectedFirstOrder && this.state.selectedFirstOrder.value}
-              onChange={this.handleFirstOrderSelectionChange}
-              autoFocus
-              autoBlur
-              searchable
-              options={[
-                { value: 'monsoon', label: 'Monsoon' },
-                { value: 'cold', label: 'Cold' },
-                { value: 'arid', label: 'Arid'},
-              ]}
-            />
-          }
-
-         {this.state.enabledKoppenDropdown &&
-           <Select
-             name="first-order"
-             value={this.state.selectedKoppen && this.state.selectedKoppen.value}
-             onChange={this.handleKoppenSelectionChange}
-             autoFocus
-             autoBlur
-             searchable
-             options={[
-               { value: 'monsoon', label: 'Monsoon' },
-               { value: 'cold', label: 'Cold' },
-             ]}
-           />
-         }
-        </div>
-
 
       </div>
     )
@@ -481,7 +486,7 @@ class TBDApproach extends Component{
 
             {this.state.selectedRiverSize === "CrossSectionalArea" &&
             <div>
-              <div className="inline">
+              <div className="inline-with-right-margin">
                 Min: <input type="textbox"
                   name="crossSectionalArea_Min"
                   className={textfieldAreaMin}
@@ -637,13 +642,18 @@ class TBDApproach extends Component{
   //A function that set the max/min values for either the drainage_low/ drainage_high, crossSectionalArea_Min/ crossSectionalArea_Max, riverDepth_Min/ riverDepth_Max
   setRangeValues = (e) => {
     const {name, value}  = e.target;
-
     if(value.length !== 0){
       if(!isNaN(value)){
-        this.setState(() => ({
-          [name]: value,
-        }));
-        console.log("set "+ name + " to " + value);
+        if(value <= 0){
+          this.setState(() => ({
+            [name]: "(positive number only)",
+          }));
+        }else{
+          this.setState(() => ({
+            [name]: value,
+          }));
+          console.log("set "+ name + " to " + value);
+        }
       }else{
         console.log(name + "is not a valid number");
         this.setState(() => ({
@@ -659,20 +669,18 @@ class TBDApproach extends Component{
   }
 
   render(){
-
     return(
       <div>
         {!this.state.submitted &&
-          <form onSubmit={this.handleSubmit}>
-            <div>
-              <div className='inline-back-button'>
-                 <Link to="/">Back</Link>
-              </div>
+          <form onSubmit={this.handleSubmit} className="form">
 
-              <h1 className='inline-page-title'>
-                TBD Approach
-              </h1>
+            <div className='back-button-div-tbd'>
+               <Link to="/" className=" back-button-link back-button-effect">Back</Link>
             </div>
+
+            <h1 className='inline-page-title'>
+              TBD Approach
+            </h1>
 
             {this.renderClimateOrders()}
 
@@ -686,7 +694,6 @@ class TBDApproach extends Component{
             <div>
               Please enter correct values for inputs...
             </div>}
-
 
             <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
               Submit
@@ -703,10 +710,8 @@ class TBDApproach extends Component{
 
             <RiverChannelsTable />
           </div>
-
         }
       </div>
-
 
     )
   }

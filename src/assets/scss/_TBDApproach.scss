@@ -1,3 +1,9 @@
+// $btn-width: 250px !default;
+// $btn-height: 80px !default;
+// $btn-full: $btn-height+$btn-width !default;
+// $btn-half: $btn-full/2 !default;
+// $bg-color: #eeeeee !default;
+
 .rightAlignedText{
   text-align: right;
 }
@@ -12,9 +18,8 @@
 }
 
 .padding-grid{
-  padding: 10px;
-  //margin-right: 0px !important;
-  margin-left: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .margin-10{
@@ -30,10 +35,79 @@
   display: inline-block;
 }
 
-.inline-back-button {
-  display: inline-block;
-  margin-left: 0px;
+.form{
+  position: relative;
+  margin-top: -10px;
 }
+
+.back-button-div-tbd {
+  position: absolute;;
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+// .a-tag {
+//   text-decoration: none;
+//   line-height: $btn-height;
+//   color: black;
+// }
+//
+// *:before,
+// *:after {
+//   z-index: -1;
+// }
+//
+// html {
+//   //padding-top: 50px;
+//   //font-family: 'Open Sans', Helvetica, arial, sans-serif;
+//   text-align: center;
+//   //background-color: $bg-color;
+//
+//   *,
+//   *:before,
+//   *:after {
+//     box-sizing: border-box;
+//     transition: 0.5s ease-in-out;
+//   }
+//
+//   i,em,
+//   b,strong,
+//   // span {
+//   //   transition: none;
+//   // }
+// }
+//
+// [class^="back-button-"] {
+//   position: relative;
+//   display: block;
+//   overflow: hidden;
+//   @include size(100%, $btn-height);
+//   max-width: $btn-width;
+//   margin: 1rem auto;
+//   text-transform: uppercase;
+//   border: 1px solid currentColor;
+// }
+//
+// .back-button-effect {
+//   $btn-color: random-color($max:200);
+//   $btn-color-dark: shade($btn-color, 40%);
+//   color: tint($btn-color);
+//
+//   &:before {
+//     content: '';
+//     @include absolute(0,0,0,0);
+//     background-color: $btn-color-dark;
+//     transform: translateX(-100%);
+//   }
+//
+//   &:hover {
+//     color: tint($btn-color, 75%);
+//
+//     &:before {
+//       transform: translateX(0);
+//     }
+//   }
+// }
 
 .inline-page-title {
   display: inline-block;
@@ -54,8 +128,13 @@
 .enclosing-border{
   border: 0.5px solid;
   margin: 20px 60px 20px 100px; //top right bottom left
-  padding: 20px;
+  // padding-top: : 20px;
+  // padding-bottom: 20px;
   border-radius: 15px;
+}
+
+.select-padding{
+  padding-top: 20px;
 }
 
 .radio-button-error{

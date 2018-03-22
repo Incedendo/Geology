@@ -126,7 +126,8 @@ class FulcrumApproach extends Component {
         }
       }
     ).then( data => {
-      console.log(data.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn);
+      console.log(data);
+      console.log(data.slope);
       this.setState({
         response: data,
       });
@@ -209,12 +210,18 @@ class FulcrumApproach extends Component {
 
     //if the inputs is a valid number
     if(!isNaN(value)){
-      if(Number(value) !== 0){
+      if(Number(value) > 0){
         this.setState(() => ({
           [name]: value,
           [test]: true,
         }));
         console.log("checked for " + name);
+      }else{
+        console.log("not a number...");
+        this.setState(() => ({
+          [name]: "(positive number only)",
+          [test]: false,
+        }))
       }
     }else{
       console.log("not a number...");
@@ -260,7 +267,9 @@ class FulcrumApproach extends Component {
   }
 
   printResponse = () => {
-    console.log(this.state.response);
+    console.log(this.state.response.totalSuspendedSedimentVolumeDischargePerYear_WrightParker);
+    console.log(this.state.response.totalSuspendedSedimentVolumeDischargePerYear_VanRjin);
+    console.log(this.state.response.totalCombinedSedimentVolumeDischargePerYear_WrightParker);
   }
 
   render() {
@@ -400,7 +409,16 @@ class FulcrumApproach extends Component {
     ];
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="form">
+
+        <div className="back-button-div-fulcrum">
+           {!this.state.submitted
+             ? <Link to="/"
+             className="back-button-link back-button-effect">Back</Link>
+             : <button onClick={this.toggleDisplayedResult}>Return</button>
+           }
+        </div>
+
         <h1>
           Fulcrum Approach
         </h1>
@@ -421,12 +439,7 @@ class FulcrumApproach extends Component {
               ]}
             /> */}
 
-            <div className="">
-               {!this.state.submitted
-                 ? <Link to="/">Back</Link>
-                 : <button onClick={this.toggleDisplayedResult}>Return</button>
-               }
-            </div>
+
 
             {fieldInputs.map(
               (fieldObject,index) => (
