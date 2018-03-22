@@ -414,7 +414,9 @@ class FulcrumApproach extends Component {
         <div className="back-button-div-fulcrum">
            {!this.state.submitted
              ? <Link to="/"
-             className="back-button-link back-button-effect">Back</Link>
+             className="back-button-link">
+                 Back
+               </Link>
              : <button onClick={this.toggleDisplayedResult}>Return</button>
            }
         </div>
