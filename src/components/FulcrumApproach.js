@@ -66,14 +66,15 @@ class FulcrumApproach extends Component {
 
   postFulcrum = () => {
 
-    const JimGetUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TestReturn';
+    // const JimGetUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TestReturn';
 
-    const JimPostUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum';
+    // const JimPostUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum';
+    const JimPostUrl = 'https://g2dn2m2b1g.execute-api.us-east-1.amazonaws.com/Prod/api/main/Fulcrum';
 
-    const getRequestData = {
-      method: 'GET',
-      Origin:'https://powerful-cliffs-45352.herokuapp.com',
-    }
+    // const getRequestData = {
+    //   method: 'GET',
+    //   Origin:'https://powerful-cliffs-45352.herokuapp.com',
+    // }
 
     const postRequestData = {
       method: 'POST',

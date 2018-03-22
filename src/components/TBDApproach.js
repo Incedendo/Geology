@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+
 import { RiverChannelsTable } from "./Utils";
 
 //import Select package
@@ -15,6 +17,7 @@ import TBDResult from './TBD/TBDResult';
 import '../assets/scss/include.scss';
 
 class TBDApproach extends Component{
+
   state = {
     selectedClimate: "", // set when Climate radio buttons are clicked
     selectedRiverSize: "", // set when river size radio buttons are clicked
@@ -228,116 +231,146 @@ class TBDApproach extends Component{
     }
   }
 
-  renderClimateOrders = () => (
-    <div className="enclosing-border">
-      <Grid className="padding-grid">
+  renderClimateOrders = () => {
 
-        <Col sm={4} md={2} className="leftAlignedText-Title">
-            Climate:
-        </Col>
+    var title = classNames({
+      "leftAlignedText-Title": true,
+      "title-error": this.state.submitClicked && this.state.selectedClimate === ""
+    })
 
-        <Col sm={4} md={9} className="leftAlignedText">
-          {/* <input
-              type="radio"
-              name="selectedClimate"
-              value="FirstOrder"
-              checked={this.state.selectedClimate === 'FirstOrder'}
-              onChange={this.setSelectedOption}
-              className=""
-            /> First Order
-           <input
-             type="radio"
-             name="selectedClimate"
-             value="KoppenClassification"
-             checked={this.state.selectedClimate === 'KoppenClassification'}  onChange={this.setSelectedOption}
-             className=""
-           /> Koppen Classification */}
-           <div >
-             <RadioGroup
-               onChange={ this.setClimateSelectedOption } horizontal
-             >
-               <RadioButton
-                 value="FirstOrder"
-                 pointColor="green"
-                 selected={this.state.selectedClimate==="FirstOrder"}>
-                 First Order
-               </RadioButton>
-               <RadioButton
-                 value="KoppenClassification"
-                 pointColor="green"
-                 selected={this.state.selectedClimate==="KoppenClassification"}>
-                 Koppen Classification
-               </RadioButton>
-             </RadioGroup>
-           </div>
+    return(
+      <div className="enclosing-border">
+        <Grid className="padding-grid">
 
-        </Col>
-      </Grid>
-
-      <div className="climate_select">
-        {this.state.enabledFirstOrderDropdown &&
-          <Select
-            name="first-order"
-            value={this.state.selectedFirstOrder && this.state.selectedFirstOrder.value}
-            onChange={this.handleFirstOrderSelectionChange}
-            autoFocus
-            autoBlur
-            searchable
-            options={[
-              { value: 'monsoon', label: 'Monsoon' },
-              { value: 'cold', label: 'Cold' },
-              { value: 'arid', label: 'Arid'},
-            ]}
-          />
-        }
-
-       {this.state.enabledKoppenDropdown &&
-         <Select
-           name="first-order"
-           value={this.state.selectedKoppen && this.state.selectedKoppen.value}
-           onChange={this.handleKoppenSelectionChange}
-           autoFocus
-           autoBlur
-           searchable
-           options={[
-             { value: 'monsoon', label: 'Monsoon' },
-             { value: 'cold', label: 'Cold' },
-           ]}
-         />
-       }
-      </div>
-
-
-    </div>
-  )
-
-  renderDrainageArea = () => (
-    <div className="enclosing-border">
-      <Grid className="padding-grid">
-          <Col sm={4} md={2} className="leftAlignedText-Title">
-              Drainage Area:
+          <Col sm={4} md={2} className={title}>
+              Climate:
           </Col>
-          <Col sm={4} md={10} className="leftAlignedText">
-            <div className="inline-with-right-margin">
-              Min: <input type="textbox"
-                name="drainage_low"
-                onBlur={this.setRangeValues}
-                value={this.state.drainage_low}
-                onChange={this.updateFieldValue}
-              />
-            </div>
-            <div className="inline-no-right-margin">
-              Max: <input type="textbox"
-                name="drainage_high"
-                onBlur={this.setRangeValues}
-                value={this.state.drainage_high}
-                onChange={this.updateFieldValue}
-              />
-            </div>
-         </Col>
-      </Grid>
-    </div>
-  )
+
+          <Col sm={4} md={9} className="leftAlignedText">
+            {/* <input
+                type="radio"
+                name="selectedClimate"
+                value="FirstOrder"
+                checked={this.state.selectedClimate === 'FirstOrder'}
+                onChange={this.setSelectedOption}
+                className=""
+              /> First Order
+             <input
+               type="radio"
+               name="selectedClimate"
+               value="KoppenClassification"
+               checked={this.state.selectedClimate === 'KoppenClassification'}  onChange={this.setSelectedOption}
+               className=""
+             /> Koppen Classification */}
+             <div >
+               <RadioGroup
+                 onChange={ this.setClimateSelectedOption } horizontal
+               >
+                 <RadioButton
+                   value="FirstOrder"
+                   pointColor="green"
+                   selected={this.state.selectedClimate==="FirstOrder"}>
+                   First Order
+                 </RadioButton>
+                 <RadioButton
+                   value="KoppenClassification"
+                   pointColor="green"
+                   selected={this.state.selectedClimate==="KoppenClassification"}>
+                   Koppen Classification
+                 </RadioButton>
+               </RadioGroup>
+             </div>
+
+          </Col>
+        </Grid>
+
+        <div className="climate_select">
+          {this.state.enabledFirstOrderDropdown &&
+            <Select
+              name="first-order"
+              value={this.state.selectedFirstOrder && this.state.selectedFirstOrder.value}
+              onChange={this.handleFirstOrderSelectionChange}
+              autoFocus
+              autoBlur
+              searchable
+              options={[
+                { value: 'monsoon', label: 'Monsoon' },
+                { value: 'cold', label: 'Cold' },
+                { value: 'arid', label: 'Arid'},
+              ]}
+            />
+          }
+
+         {this.state.enabledKoppenDropdown &&
+           <Select
+             name="first-order"
+             value={this.state.selectedKoppen && this.state.selectedKoppen.value}
+             onChange={this.handleKoppenSelectionChange}
+             autoFocus
+             autoBlur
+             searchable
+             options={[
+               { value: 'monsoon', label: 'Monsoon' },
+               { value: 'cold', label: 'Cold' },
+             ]}
+           />
+         }
+        </div>
+
+
+      </div>
+    )
+  }
+
+  renderDrainageArea = () => {
+    var textfieldMin = classNames({
+      'text-field-error': this.state.submitClicked && (this.state.drainage_low <= 0 || this.state.drainage_low === "(positive number only)"),
+    });
+
+    var textfieldMax = classNames({
+      'text-field-error': this.state.submitClicked && (this.state.drainage_high <= 0 || this.state.drainage_low === "(positive number only)"),
+    });
+
+    var title = classNames({
+      "leftAlignedText-Title": true,
+      "title-error": this.state.submitClicked &&
+      (
+        this.state.drainage_low <= 0 || this.state.drainage_high <= 0 ||
+        this.state.drainage_low === "(positive number only)" ||
+        this.state.drainage_high === "(positive number only)"
+      )
+    })
+
+    return(
+      <div className="enclosing-border">
+        <Grid className="padding-grid">
+            <Col sm={4} md={2} className={title}>
+                Drainage Area:
+            </Col>
+            <Col sm={4} md={10} className="leftAlignedText">
+              <div className="inline-with-right-margin">
+                Min: <input type="textbox"
+                  name="drainage_low"
+                  className={textfieldMin}
+                  onBlur={this.setRangeValues}
+                  value={this.state.drainage_low}
+                  onChange={this.updateFieldValue}
+                />
+              </div>
+              <div className="inline-no-right-margin">
+                Max: <input type="textbox"
+                  name="drainage_high"
+                  className={textfieldMax}
+                  onBlur={this.setRangeValues}
+                  value={this.state.drainage_high}
+                  onChange={this.updateFieldValue}
+                />
+              </div>
+           </Col>
+        </Grid>
+      </div>
+    )
+  }
 
   updateFieldValue = (e) => {
 
@@ -348,149 +381,192 @@ class TBDApproach extends Component{
     }));
   }
 
-  renderRiverSize = () => (
-    <div className="enclosing-border">
-      <Grid className="padding-grid">
-        <Col sm={4} md={2} className="leftAlignedText-Title">
-            River Size:
-        </Col>
-        <Col sm={4} md={9} className="leftAlignedText">
-          {/* <input
-              type="radio"
-              name="selectedRiverSize"
-              value="RiverDepth"
-              checked={this.state.selectedRiverSize==='RiverDepth'}
-              onChange={this.setSelectedOption}
-              className=""
-            /> River Depth
-           <input
-             type="radio"
-             name="selectedRiverSize"
-             value="CrossSectionalArea"
-             checked={this.state.selectedRiverSize==='CrossSectionalArea'} onChange={this.setSelectedOption}
-             className=""
-           /> Cross Sectional Area */}
+  renderRiverSize = () => {
+    var textfieldDepthMin = classNames({
+      'text-field-error': this.state.submitClicked && this.state.riverDepth_Min <= 0,
+    });
 
-           <RadioGroup
-             onChange={ this.setRiverSizeSelectedOption } horizontal
-           >
-             <RadioButton value="RiverDepth"
-               pointColor="green">
-               River Depth
-             </RadioButton>
-             <RadioButton value="CrossSectionalArea"
-               pointColor="green">
-               Cross Sectional Area
-             </RadioButton>
-           </RadioGroup>
-         </Col>
-      </Grid>
+    var textfieldDepthMax = classNames({
+      'text-field-error': this.state.submitClicked && this.state.riverDepth_Max <= 0,
+    });
 
-      <Grid className="padding-grid">
-        <Col sm={4} md={2} className="rightAlignedText">
+    var textfieldAreaMin = classNames({
+      'text-field-error': this.state.submitClicked && this.state.crossSectionalArea_Min <= 0,
+    });
 
-        </Col>
+    var textfieldAreaMax = classNames({
+      'text-field-error': this.state.submitClicked && this.state.crossSectionalArea_Max <= 0,
+    });
 
-        <Col sm={4} md={9} className="leftAlignedText">
-          {this.state.selectedRiverSize === "RiverDepth" &&
-          <div>
-            <div className="inline-with-right-margin">
-              Min: <input type="textbox"
-                name="riverDepth_Min"
-                onBlur={this.setRangeValues}
-                onChange={this.updateFieldValue}
-                value={this.state.riverDepth_Min}
-              />
+    var title = classNames({
+      "leftAlignedText-Title": true,
+      "title-error": this.state.submitClicked &&
+      (
+        this.state.selectedRiverSize === "" ||
+        this.state.riverDepth_Min <= 0 || this.state.riverDepth_Max <= 0 ||
+        this.state.riverDepth_Min === "(positive number only)" ||
+        this.state.riverDepth_Max === "(positive number only)" ||
+        this.state.crossSectionalArea_Min <= 0 || this.state.crossSectionalArea_Max <= 0 ||
+        this.state.crossSectionalArea_Min === "(positive number only)" ||
+        this.state.crossSectionalArea_Max === "(positive number only)"
+      )
+    })
+
+    return(
+      <div className="enclosing-border">
+        <Grid className="padding-grid">
+          <Col sm={4} md={2} className={title}>
+              River Size:
+          </Col>
+          <Col sm={4} md={9} className="leftAlignedText">
+            {/* <input
+                type="radio"
+                name="selectedRiverSize"
+                value="RiverDepth"
+                checked={this.state.selectedRiverSize==='RiverDepth'}
+                onChange={this.setSelectedOption}
+                className=""
+              /> River Depth
+             <input
+               type="radio"
+               name="selectedRiverSize"
+               value="CrossSectionalArea"
+               checked={this.state.selectedRiverSize==='CrossSectionalArea'} onChange={this.setSelectedOption}
+               className=""
+             /> Cross Sectional Area */}
+
+             <RadioGroup
+               onChange={ this.setRiverSizeSelectedOption } horizontal
+             >
+               <RadioButton value="RiverDepth"
+                 pointColor="green">
+                 River Depth
+               </RadioButton>
+               <RadioButton value="CrossSectionalArea"
+                 pointColor="green">
+                 Cross Sectional Area
+               </RadioButton>
+             </RadioGroup>
+           </Col>
+        </Grid>
+
+        <Grid className="padding-grid">
+          <Col sm={4} md={2} className="rightAlignedText">
+
+          </Col>
+
+          <Col sm={4} md={9} className="leftAlignedText">
+            {this.state.selectedRiverSize === "RiverDepth" &&
+            <div>
+              <div className="inline-with-right-margin">
+                Min: <input type="textbox"
+                  name="riverDepth_Min"
+                  className={textfieldDepthMin}
+                  onBlur={this.setRangeValues}
+                  onChange={this.updateFieldValue}
+                  value={this.state.riverDepth_Min}
+                />
+              </div>
+              <div className="inline-no-right-margin">
+                Max: <input type="textbox"
+                  name="riverDepth_Max"
+                  className={textfieldDepthMax}
+                  onBlur={this.setRangeValues}
+                  onChange={this.updateFieldValue}
+                  value={this.state.riverDepth_Max}
+                />
+              </div>
             </div>
-            <div className="inline-no-right-margin">
-              Max: <input type="textbox"
-                name="riverDepth_Max"
-                onBlur={this.setRangeValues}
-                onChange={this.updateFieldValue}
-                value={this.state.riverDepth_Max}
-              />
-            </div>
-          </div>
-          }
+            }
 
-          {this.state.selectedRiverSize === "CrossSectionalArea" &&
-          <div>
-            <div className="inline">
-              Min: <input type="textbox"
-                name="crossSectionalArea_Min"
-                onBlur={this.setRangeValues}
-                onChange={this.updateFieldValue}
-                value={this.state.crossSectionalArea_Min}
-              />
+            {this.state.selectedRiverSize === "CrossSectionalArea" &&
+            <div>
+              <div className="inline">
+                Min: <input type="textbox"
+                  name="crossSectionalArea_Min"
+                  className={textfieldAreaMin}
+                  onBlur={this.setRangeValues}
+                  onChange={this.updateFieldValue}
+                  value={this.state.crossSectionalArea_Min}
+                />
+              </div>
+              <div className="inline-no-right-margin">
+                Max: <input type="textbox"
+                  name="crossSectionalArea_Max"
+                  className={textfieldAreaMax}
+                  onBlur={this.setRangeValues}
+                  onChange={this.updateFieldValue}
+                  value={this.state.crossSectionalArea_Max}
+                />
+              </div>
             </div>
-            <div className="inline-no-right-margin">
-              Max: <input type="textbox"
-                name="crossSectionalArea_Max"
-                onBlur={this.setRangeValues}
-                onChange={this.updateFieldValue}
-                value={this.state.crossSectionalArea_Max}
-              />
-            </div>
-          </div>
-          }
-        </Col>
-      </Grid>
+            }
+          </Col>
+        </Grid>
 
-      <div>
-        <Grid>
-          <Col sm={4} md={2}></Col>
-          <Col sm={4} md={9}>
-            <input
-              type="checkbox"
-              onChange={this.toggleRiverWidthAttr}
-              className="leftAlignedText"
-            /> Derive Width from River Depth (optional)
+        <div>
+          <Grid>
+            <Col sm={4} md={2}></Col>
+            <Col sm={4} md={9}>
+              <input
+                type="checkbox"
+                onChange={this.toggleRiverWidthAttr}
+                className="leftAlignedText"
+              /> Derive Width from River Depth (optional)
+            </Col>
+          </Grid>
+        </div>
+      </div>
+    )
+  }
+
+  renderTBDPrecision = () =>{
+    var title = classNames({
+      "leftAlignedText-Title": true,
+      "title-error": this.state.submitClicked && this.state.selectedPrecision === ""
+    })
+
+    return(
+      <div className="enclosing-border">
+        <Grid className="padding-grid">
+          <Col sm={4} md={2} className={title}>
+              Precision:
+          </Col>
+          <Col sm={4} md={9} className="leftAlignedText">
+
+            <RadioGroup
+              onChange={ this.setPrecisionSelectedOption } horizontal
+            >
+              <RadioButton value="10%"
+                pointColor="green">
+                10%
+              </RadioButton>
+              <RadioButton value="20%"
+                pointColor="green">
+                20%
+              </RadioButton>
+            </RadioGroup>
+
+            {/* <input
+                type="radio"
+                name="selectedPrecision"
+                value="10%"
+                checked={this.state.selectedPrecision==='10%'}
+                onChange={this.setSelectedOption}
+                className=""
+              /> Within 10%
+             <input
+               type="radio"
+               name="selectedPrecision"
+               value="20%"
+               checked={this.state.selectedPrecision==='20%'} onChange={this.setSelectedOption}
+               className=""
+             /> Within 20% */}
           </Col>
         </Grid>
       </div>
-    </div>
-  )
-
-  renderTBDPrecision = () => (
-    <div className="enclosing-border">
-      <Grid className="padding-grid">
-        <Col sm={4} md={2} className="leftAlignedText-Title">
-            Precision:
-        </Col>
-        <Col sm={4} md={9} className="leftAlignedText">
-
-          <RadioGroup
-            onChange={ this.setPrecisionSelectedOption } horizontal
-          >
-            <RadioButton value="10%"
-              pointColor="green">
-              10%
-            </RadioButton>
-            <RadioButton value="20%"
-              pointColor="green">
-              20%
-            </RadioButton>
-          </RadioGroup>
-
-          {/* <input
-              type="radio"
-              name="selectedPrecision"
-              value="10%"
-              checked={this.state.selectedPrecision==='10%'}
-              onChange={this.setSelectedOption}
-              className=""
-            /> Within 10%
-           <input
-             type="radio"
-             name="selectedPrecision"
-             value="20%"
-             checked={this.state.selectedPrecision==='20%'} onChange={this.setSelectedOption}
-             className=""
-           /> Within 20% */}
-        </Col>
-      </Grid>
-    </div>
-  )
+    )
+  }
 
   setSelectedOption = (e) => {
     const {name, value} = e.target;
@@ -571,18 +647,19 @@ class TBDApproach extends Component{
       }else{
         console.log(name + "is not a valid number");
         this.setState(() => ({
-          [name]: -1,
+          [name]: "(positive number only)",
         }));
       }
     }else{
       console.log(name + "is empty");
       this.setState({
-        [name]: -1,
+        [name]: "(positive number only)",
       })
     }
   }
 
   render(){
+
     return(
       <div>
         {!this.state.submitted &&

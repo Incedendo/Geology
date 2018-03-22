@@ -25,7 +25,9 @@ class HomeForm extends Component {
   }
 
   TBDSubscript(){
-    return("T" + "BD".sub());
+    const tbd = "BD";
+    console.log(tbd.sub());
+    return "T" + tbd.sub();
   }
 
   render() {
@@ -67,7 +69,7 @@ class HomeForm extends Component {
                   linkTitle= 'TBD'
                 />
                 <div>
-                  this is the explaination of {this.TBDSubscript()} Apprach
+                  this is the explaination of {this.TBDSubscript()} Approach
                 </div>
               </div>
 

@@ -238,3 +238,10 @@
   margin: 20px 60px 20px 100px;
   padding: 20px;
   border-radius: 15px; }
+
+.text-field-error {
+  border-color: red;
+  color: red; }
+
+.title-error {
+  color: red; }

@@ -12,8 +12,9 @@ class FulcrumAddedTBDComponent extends Component{
     TBDMode: "",
     selectedClimate: "FirstOrder",
     selectedRiverSize: "RiverDepth",
-    selectedPrecision: "10%"
+    selectedPrecision: "10%",
   }
+
 
   resetOptions = () => {
     this.setState({
