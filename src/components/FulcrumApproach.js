@@ -431,7 +431,8 @@ class FulcrumApproach extends Component {
         {!this.state.submitted &&
 
 
-          <div>
+          <div >
+            <div className="enclosing-border">
             {/* <Select
               value={this.state.measuringSystem && this.state.measuringSystem.value}
               onChange={this.setMeasureSystem}
@@ -461,42 +462,47 @@ class FulcrumApproach extends Component {
               )
             )}
 
-            <div>
+            </div>
 
-              {
-                !this.state.defaultTBD && !this.state.customizedTBD &&
 
-                <div>
+            <div className="enclosing-border">
 
-                  <RadioGroup
-                    onChange={ this.setSelectedTBDMode } horizontal
-                  >
-                    <RadioButton
-                      value="default"
-                      pointColor="green">
-                      Default TBD [default value]
-                    </RadioButton>
-                    <RadioButton
-                      value="customized"
-                      pointColor="green">
-                      Customized TDB
-                    </RadioButton>
-                  </RadioGroup>
-                </div>
-              }
+              <div className="TBD-div">
+                  {
+                    !this.state.defaultTBD && !this.state.customizedTBD &&
+                    <div>
 
-              {this.state.TBDMode === "Default" &&
-                <div>
-                  TBD will be calculated using Default value of [...]
-                </div>
-              }
+                      <RadioGroup
+                        onChange={ this.setSelectedTBDMode } horizontal
+                      >
+                        <RadioButton
+                          value="default"
+                          pointColor="green">
+                          Default TBD [default value]
+                        </RadioButton>
+                        <RadioButton
+                          value="customized"
+                          pointColor="green">
+                          Customized TDB
+                        </RadioButton>
+                      </RadioGroup>
+                    </div>
+                  }
 
-              {this.state.TBDMode === "Customized" &&
-                <TBDApproach
-                  submitNotNeeded={true}
-                />
-              }
 
+                  {this.state.TBDMode === "Default" &&
+                    <div>
+                      TBD will be calculated using Default value of [...]
+                    </div>
+                  }
+
+                  {this.state.TBDMode === "Customized" &&
+                    <TBDApproach
+                      submitNotNeeded={true}
+                    />
+                  }
+
+              </div>
             </div>
 
             {!this.state.inputs_validated &&
@@ -504,10 +510,13 @@ class FulcrumApproach extends Component {
               Please check the inputs and make sure you have entered all correct values!
             </div>}
 
-            {/* SUBMIT BUTTON */}
-            <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
-              Submit
-            </button>
+            <div>
+              {/* SUBMIT BUTTON */}
+              <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
+                Submit
+              </button>
+            </div>
+
           </div>
         }
 
