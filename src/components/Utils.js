@@ -8,8 +8,6 @@ import DetailedChannelView from './DetailedChannelView';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-const googleAPIKey = "AIzaSyAcAGysbpE7x7klvwHFeSDeIvphABOKsP0";
-
 const range = len => {
   const arr = [];
   for (let i = 0; i < len; i++) {
@@ -55,174 +53,109 @@ function makeData(len = 5553) {
   });
 }
 
-export const RiverChannelsTable = () => (
-  <ReactTable
-    data={makeData()}
-    columns={[
-      {
-        Header: "Site ID",
-        accessor: "siteID",
-        Cell: cellInfo => (
-          <div>
-            <Link
-              to={{
-                pathname: `/DetailedChannelView/`,
-                state: {
-                  siteID: cellInfo.row.siteID,
-                  latitude: cellInfo.row.latitude,
-                  longitude: cellInfo.row.longitude,
-                  drainageArea: cellInfo.row.drainageArea,
-                  channelWidth: cellInfo.row.channelWidth,
-                  channelDepth: cellInfo.row.channelDepth,
-                  country: cellInfo.row.country,
-                  // climateID:
-                  // climateDescription:
-                  // estimatedBnkfullDischarge:
-                  // reference:
-                }
-              }}
-            >
-              {cellInfo.row.siteID}
-            </Link>
-          </div>
-        )
-      },
-      {
-        Header: "Site Name",
-        accessor: "siteName",
-      },
-      {
-        Header: "Latitude",
-        accessor: "latitude",
-      },
-      {
-        Header: "Longitude",
-        accessor: "longitude",
-      },
-      {
-        Header: "Drainage Area",
-        accessor: "drainageArea",
-      },
-      {
-        Header: "Channel Width",
-        accessor: "channelWidth",
-      },
-      {
-        Header: "Channel Depth",
-        accessor: "channelDepth",
-      },
-      {
-        Header: "Country",
-        accessor: "country",
-      },
 
-    ]}
-    defaultPageSize={10}
-    className="-striped -highlight"
-  />
-)
 
-export const ChannelLocation = () => (
-  <ReactTable
-    data={makeData()}
-    columns={[
-      {
-        Header: "Site ID",
-        accessor: "siteID",
-      },
-      {
-        Header: "Site Name",
-        accessor: "siteName",
-      },
-      {
-        Header: "Latitude",
-        accessor: "latitude",
-      },
-      {
-        Header: "Longitude",
-        accessor: "longitude",
-      },
-    ]}
-    defaultPageSize={1}
-    className="-striped -highlight"
-  />
-)
-
-export const ChannelAttributes = () => (
-  <ReactTable
-    data={makeData()}
-    columns={[
-      {
-        Header: "Drainage Area",
-        accessor: "siteID",
-      },
-      {
-        Header: "Channel Width",
-        accessor: "siteName",
-      },
-      {
-        Header: "Channel Height",
-        accessor: "latitude",
-      },
-      {
-        Header: "Source",
-        accessor: "latitude",
-      }
-    ]}
-    defaultPageSize={1}
-    className="-striped -highlight"
-  />
-)
-
-export const ClimateInformation = () => (
-  <ReactTable
-    data={makeData()}
-    columns={[
-      {
-        Header: "Climate ID",
-        accessor: "siteID",
-      },
-      {
-        Header: "Climate Description",
-        accessor: "siteName",
-      }
-    ]}
-    defaultPageSize={1}
-    className="-striped -highlight"
-  />
-)
-
-export const ChannelReference = () => (
-  <ReactTable
-    data={makeData()}
-    columns={[
-      {
-        Header: "Estimated Bankful Discharge",
-        accessor: "siteID",
-      },
-      {
-        Header: "Reference",
-        accessor: "siteName",
-      }
-    ]}
-    defaultPageSize={1}
-    className="-striped -highlight"
-  />
-)
-
-export const Logo = () =>
-  <div style={{ margin: '1rem auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
-    For more examples, visit {''}
-  <br />
-    <a href="https://github.com/react-tools/react-table" target="_blank">
-      <img
-        src="https://github.com/react-tools/media/raw/master/logo-react-table.png"
-        style={{ width: `150px`, margin: ".5em auto .3em" }}
-      />
-    </a>
-  </div>;
-
-export const Tips = () =>
-  <div style={{ textAlign: "center" }}>
-    <em>Tip: Hold shift when sorting to multi-sort!</em>
-  </div>;
+// export const ChannelLocation = () => (
+//   <ReactTable
+//     data={makeData()}
+//     columns={[
+//       {
+//         Header: "Site ID",
+//         accessor: "siteID",
+//       },
+//       {
+//         Header: "Site Name",
+//         accessor: "siteName",
+//       },
+//       {
+//         Header: "Latitude",
+//         accessor: "latitude",
+//       },
+//       {
+//         Header: "Longitude",
+//         accessor: "longitude",
+//       },
+//     ]}
+//     defaultPageSize={1}
+//     className="-striped -highlight"
+//   />
+// )
+//
+// export const ChannelAttributes = () => (
+//   <ReactTable
+//     data={makeData()}
+//     columns={[
+//       {
+//         Header: "Drainage Area",
+//         accessor: "siteID",
+//       },
+//       {
+//         Header: "Channel Width",
+//         accessor: "siteName",
+//       },
+//       {
+//         Header: "Channel Height",
+//         accessor: "latitude",
+//       },
+//       {
+//         Header: "Source",
+//         accessor: "latitude",
+//       }
+//     ]}
+//     defaultPageSize={1}
+//     className="-striped -highlight"
+//   />
+// )
+//
+// export const ClimateInformation = () => (
+//   <ReactTable
+//     data={makeData()}
+//     columns={[
+//       {
+//         Header: "Climate ID",
+//         accessor: "siteID",
+//       },
+//       {
+//         Header: "Climate Description",
+//         accessor: "siteName",
+//       }
+//     ]}
+//     defaultPageSize={1}
+//     className="-striped -highlight"
+//   />
+// )
+//
+// export const ChannelReference = () => (
+//   <ReactTable
+//     data={makeData()}
+//     columns={[
+//       {
+//         Header: "Estimated Bankful Discharge",
+//         accessor: "siteID",
+//       },
+//       {
+//         Header: "Reference",
+//         accessor: "siteName",
+//       }
+//     ]}
+//     defaultPageSize={1}
+//     className="-striped -highlight"
+//   />
+// )
+//
+// export const Logo = () =>
+//   <div style={{ margin: '1rem auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
+//     For more examples, visit {''}
+//   <br />
+//     <a href="https://github.com/react-tools/react-table" target="_blank">
+//       <img
+//         src="https://github.com/react-tools/media/raw/master/logo-react-table.png"
+//         style={{ width: `150px`, margin: ".5em auto .3em" }}
+//       />
+//     </a>
+//   </div>;
+//
+// export const Tips = () =>
+//   <div style={{ textAlign: "center" }}>
+//     <em>Tip: Hold shift when sorting to multi-sort!</em>
+//   </div>;

@@ -780,7 +780,7 @@ class TBDApproach extends Component{
     return(
       <div>
         <TBDAnalogFrame
-          componentTitle="Analog"
+          componentTitle="TBD Approach"
           displayedPresicion={true}
         />
       </div>

@@ -78,7 +78,7 @@ class FulcrumApproach extends Component {
 
     const postRequestData = {
       method: 'POST',
-      Origin:'https://powerful-cliffs-45352.herokuapp.com',
+      Origin:'http://geology-ui.surge.sh',
       mode: "cors",
       headers: {
         // 'Content-Type': 'text/plain',

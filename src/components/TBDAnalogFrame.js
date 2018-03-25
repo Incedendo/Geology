@@ -9,8 +9,7 @@ import 'react-select/dist/react-select.css';
 import classNames from 'classnames';
 
 //import other components
-import { RiverChannelsTable } from "./Utils";
-import TBDResult from './TBD/TBDResult';
+import RiverChannelsTable  from "./TBD/RiverChannelsTable";
 
 import '../assets/scss/include.scss';
 
@@ -47,11 +46,10 @@ class TBDAnalogFrame extends Component{
     submitClicked: false,
     submitted: false,
 
-
     normal_Border: '',
     error_Border: 'red',
 
-    data: [],
+    tableData: [],
   }
 
   componentDidMount(){
@@ -66,7 +64,7 @@ class TBDAnalogFrame extends Component{
 
     const postRequestData = {
       method: 'POST',
-      Origin:'https://powerful-cliffs-45352.herokuapp.com',
+      Origin:'http://geology-ui.surge.sh',
       mode: "cors",
       headers: {
         // 'Content-Type': 'text/plain',
@@ -84,7 +82,7 @@ class TBDAnalogFrame extends Component{
 
           "TBD": {
             //climate:
-              "climate": this.state.climateFromDropdown,
+              "climate": this.state.climateFromDropdown.value,
 
             //drainage:
               "drainageLow": this.state.drainage_low,
@@ -92,7 +90,6 @@ class TBDAnalogFrame extends Component{
 
             //river size:
                 "isCrossSection": this.state.isCrossSection,
-
                 "riverSizeLow": this.state.riverLow,
                 "riverSizeHigh": this.state.riverHigh,
 
@@ -127,12 +124,10 @@ class TBDAnalogFrame extends Component{
     ).then( data => {
       console.log("expecting returned data");
       console.log(data);
+      this.setState({
+        tableData: data.streams,
+      })
     });
-  }
-
-  navigate() {
-      const { router } = this.context
-      router.transitionTo('/some/new/location')
   }
 
   handleClimateSelectionChangeDropDown = (value) => {
@@ -170,8 +165,8 @@ class TBDAnalogFrame extends Component{
   // validate if the user enter positive numbers for min and max Cross Sectional Area
   validateClimateInputs(){
     if(this.state.selectedClimate !== ""){
-        if(this.state.selectedFirstOrder !== "" || this.state.selectedKoppen !== ""){
-            console.log("validated selectedClimate: ");
+        if(this.state.climateFromDropdown !== ""){
+            console.log("validated selectedClimate: ", this.state.climateFromDropdown.value);
             return true;
         }else{
             console.log("did not choose an item in the dropdown: ");
@@ -186,7 +181,7 @@ class TBDAnalogFrame extends Component{
   // validate if the user enter positive numbers for min and max drainage area
   validateDrainageInputs(){
     if(this.state.drainage_low > 0 &&  this.state.drainage_high > 0){
-            console.log("successfully Validate drainage Inputs");
+            console.log("successfully Validate drainage Inputs: Low: "+ this.state.drainage_low + " , High:  "+ this.state.drainage_high);
             return true;
     }else{
             console.log("fail to validate drainage inputs");
@@ -194,28 +189,15 @@ class TBDAnalogFrame extends Component{
     }
   }
 
-
   validateRiverInputs(){
     if(this.state.selectedRiverSize !== ""){
-        if(this.state.selectedRiverSize == "RiverDepth"){
-            // validate if the user enter positive numbers for min and max River Depth
-            if(this.state.riverDepth_Max > 0 && this.state.riverDepth_Min > 0){
-                    console.log("validated River Size");
-                    return true;
-            }else{
-                    console.log("fail to validate River Size: 1 of the Depth text field is empty");
-                    return false;
-            }
-        }else if(this.state.selectedRiverSize == "CrossSectionalArea"){
-            // validate if the user enter positive numbers for min and max Cross Sectional Area
-            if(this.state.crossSectionalArea_Max > 0 && this.state.crossSectionalArea_Min > 0){
-                  console.log("validated Cross Sectional Area");
-                  return true;
-            }else{
-                  console.log("fail to validate Cross Sectional Area: 1 of the Area text field is empty");
-                  return false;
-            }
-        }
+      if(this.state.riverLow > 0 && this.state.riverHigh > 0){
+              console.log("validated River Size: Low: "+ this.state.riverLow + " , High:  "+ this.state.riverHigh);
+              return true;
+      }else{
+              console.log("fail to validate River Size: 1 of the Depth text field is empty");
+              return false;
+      }
     }else{
       console.log("failed to validate River Inputs: radio box NOT selected");
       return false;
@@ -225,7 +207,7 @@ class TBDAnalogFrame extends Component{
   // validate if the user enter positive numbers for min and max Cross Sectional Area
   validatePrecisionInputs(){
     if(this.state.selectedPrecision !== ""){
-            console.log("validated Precision");
+            console.log("validated Precision: " + this.state.selectedPrecision);
             return true;
     }else{
             console.log("fail to validate Precision: radio box NOT selected");
@@ -241,6 +223,7 @@ class TBDAnalogFrame extends Component{
       this.validateRiverInputs() &&
       this.validatePrecisionInputs()
     ){
+          console.log("validate ALL inputs");
           return true;
     }else{
           console.log("validateInputs() failed");
@@ -374,8 +357,8 @@ class TBDAnalogFrame extends Component{
                      { value: 'Dwb', label: 'Cold,Dry Winter,Warm Summer - Dwb' },
                      { value: 'Dwc', label: 'Cold,Dry Winter,Cool Summer - Dwc' },
                      { value: 'Dwd', label: 'Cold,Dry Winter,Very Cold Winter - Dwd' },
-                     { value: 'EF', label: 'Polar,,Frost - EF' },
-                     { value: 'ET', label: 'Polar,,Tundra - ET' },
+                     { value: 'EF', label: 'Polar,Frost - EF' },
+                     { value: 'ET', label: 'Polar,Tundra - ET' },
 
                    ]}
                  />
@@ -793,8 +776,16 @@ class TBDAnalogFrame extends Component{
               Back
             </button>
 
-            <RiverChannelsTable />
+            <RiverChannelsTable
+              data={this.state.tableData}
+            />
+
+            <div>
+              {this.state.selectedClimate}
+            </div>
+
           </div>
+
         }
       </div>
     )
