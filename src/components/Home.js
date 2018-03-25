@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../assets/scss/include.scss';
-import HomeForm from './HomeForm';
+import LandingPage from './LandingPage';
 import HomeLinkComponent from './HomeLinkComponent';
 
 
@@ -18,7 +18,8 @@ class Home extends Component {
       <div >
         {this.renderHeader()}
 
-        <HomeForm />
+        {/* <HomeForm /> */}
+        <LandingPage />
 
         <HomeLinkComponent
           pathname='/helpfullinks'

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import HomeLinkComponent from './HomeLinkComponent';
 
 const LandingPage = () => (
   <div className="leftAlignedText" >
@@ -12,7 +13,10 @@ const LandingPage = () => (
     </h3>
 
     <h3>
-      Fulcrum Approach
+      <HomeLinkComponent
+        pathname='/FulcrumApproach'
+        linkTitle= 'Fulcrum Approach'
+      />
     </h3>
 
     <div>
@@ -27,7 +31,10 @@ const LandingPage = () => (
     </div>
 
     <h3>
-      Bankfull Duration (tbd)
+      <HomeLinkComponent
+        pathname='/TBDApproach'
+        linkTitle= 'Bankfull Duration (tbd)'
+      />
     </h3>
 
     <div>
@@ -39,7 +46,10 @@ const LandingPage = () => (
     </div>
 
     <h3>
-      River AnalogueSearch
+      <HomeLinkComponent
+        pathname='/AnalogChannels'
+        linkTitle= 'River Analogue Search'
+      />
     </h3>
 
     <div>
