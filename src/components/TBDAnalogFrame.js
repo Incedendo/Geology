@@ -21,8 +21,23 @@ class TBDAnalogFrame extends Component{
     // selectedKoppen: "", // send selectedKoppen.value
     climateFromDropdown: "",
 
+    // 6 inputs for the text fields:
+    drainage_low: 0,
+    drainage_high: 0,
+
     selectedRiverSize: "", // set when river size radio buttons are clicked
+    isCrossSection: null,
+    riverLow: 0,
+    riverHigh: 0,
+
+    // riverDepth_Min: 0,
+    // riverDepth_Max: 0,
+    // crossSectionalArea_Min: 0,
+    // crossSectionalArea_Max: 0,
+
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
+    "isWithin10": null,
+    "isWithin20": null,
 
     //boolean state:
     enabledFirstOrderDropdown: false,
@@ -32,13 +47,6 @@ class TBDAnalogFrame extends Component{
     submitClicked: false,
     submitted: false,
 
-    // 6 inputs for the text fields:
-    drainage_low: 0,
-    drainage_high: 0,
-    riverDepth_Min: 0,
-    riverDepth_Max: 0,
-    crossSectionalArea_Min: 0,
-    crossSectionalArea_Max: 0,
 
     normal_Border: '',
     error_Border: 'red',
@@ -73,16 +81,24 @@ class TBDAnalogFrame extends Component{
           "isMetric": false,
           "isRiverAnalogue" : false,
           "isTBD": true,
+
           "TBD": {
-          "isCrossSection": true,
-            "isWithin10": true,
-            "isWithin20": true,
-            "climate": this.state.climateFromDropdown,
-            "drainage_low": this.state.drainage_low,
-            "drainage_high": this.state.drainage_high,
-            "selectedRiverSize": this.state.selectedRiverSize
-            // "riverSize_low": this.state.,
-            // "riverSize_high": this.state.,
+            //climate:
+              "climate": this.state.climateFromDropdown,
+
+            //drainage:
+              "drainageLow": this.state.drainage_low,
+              "drainageHigh": this.state.drainage_high,
+
+            //river size:
+                "isCrossSection": this.state.isCrossSection,
+
+                "riverSizeLow": this.state.riverLow,
+                "riverSizeHigh": this.state.riverHigh,
+
+            //precision:
+              "isWithin10": this.state.isWithin10,
+              "isWithin20": this.state.isWithin20,
           },
           "Fulcrum": {
             "avgBankfullDepth": 9,
@@ -108,10 +124,9 @@ class TBDAnalogFrame extends Component{
           console.log('TBD Failure!', response.status);
         }
       }
-    ).then(function (json) {
-      var responseBody = json;
-      console.log("POST CORS works");
-      console.log(typeof responseBody, responseBody);
+    ).then( data => {
+      console.log("expecting returned data");
+      console.log(data);
     });
   }
 
@@ -512,7 +527,7 @@ class TBDAnalogFrame extends Component{
             <div>
               <div className="inline-with-right-margin">
                 Min: <input type="textbox"
-                  name="riverDepth_Min"
+                  name="riverLow"
                   className={textfieldDepthMin}
                   onBlur={this.setRangeValues}
                   onChange={this.updateFieldValue}
@@ -521,7 +536,7 @@ class TBDAnalogFrame extends Component{
               </div>
               <div className="inline-no-right-margin">
                 Max: <input type="textbox"
-                  name="riverDepth_Max"
+                  name="riverHigh"
                   className={textfieldDepthMax}
                   onBlur={this.setRangeValues}
                   onChange={this.updateFieldValue}
@@ -535,7 +550,7 @@ class TBDAnalogFrame extends Component{
             <div>
               <div className="inline-with-right-margin">
                 Min: <input type="textbox"
-                  name="crossSectionalArea_Min"
+                  name="riverLow"
                   className={textfieldAreaMin}
                   onBlur={this.setRangeValues}
                   onChange={this.updateFieldValue}
@@ -544,7 +559,7 @@ class TBDAnalogFrame extends Component{
               </div>
               <div className="inline-no-right-margin">
                 Max: <input type="textbox"
-                  name="crossSectionalArea_Max"
+                  name="riverHigh"
                   className={textfieldAreaMax}
                   onBlur={this.setRangeValues}
                   onChange={this.updateFieldValue}
@@ -655,7 +670,17 @@ class TBDAnalogFrame extends Component{
   setRiverSizeSelectedOption = (value) => {
     this.setState({
       selectedRiverSize: value,
-    })
+    });
+
+    if(value === "RiverDepth"){
+      this.setState({
+        isCrossSection: false,
+      })
+    }else{
+      this.setState({
+        isCrossSection: true,
+      })
+    }
   }
 
   //calculate River Depth based on the provided River Width using Scientific Formula
@@ -684,6 +709,17 @@ class TBDAnalogFrame extends Component{
     this.setState({
       selectedPrecision: value,
     })
+    if(value === "10%"){
+      this.setState({
+        isWithin10: true,
+        isWithin20: false,
+      })
+    }else{
+      this.setState({
+        isWithin10: false,
+        isWithin20: true,
+      })
+    }
   }
 
   //A function that set the max/min values for either the drainage_low/ drainage_high, crossSectionalArea_Min/ crossSectionalArea_Max, riverDepth_Min/ riverDepth_Max
