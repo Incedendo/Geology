@@ -70,70 +70,98 @@ class RiverChannelsTable extends Component{
   render(){
 
     return(
-      <ReactTable
-        //data={this.props.data}
-        data={fakeData}
-        columns={[
-          {
-            Header: "Site ID",
-            accessor: "sitE_ID",
-            Cell: cellInfo => (
-              <div>
-                <Link
-                  to={{
-                    pathname: `/DetailedChannelView/`,
-                    state: {
-                      siteID: cellInfo.row.sitE_ID,
-                      latitude: cellInfo.row.latitude,
-                      longitude: cellInfo.row.longitude,
-                      drainageArea: cellInfo.row.drainageArea,
-                      channelWidth: cellInfo.row.channelWidth,
-                      channelDepth: cellInfo.row.channelDepth,
-                      country: cellInfo.row.country,
-                      // climateID:
-                      // climateDescription:
-                      // estimatedBnkfullDischarge:
-                      // reference:
-                    }
-                  }}
-                >
-                  {cellInfo.row.sitE_ID}
-                </Link>
-              </div>
-            )
-          },
-          {
-            Header: "Site Name",
-            accessor: "sitE_NAME",
-          },
-          {
-            Header: "Latitude",
-            accessor: "latitude",
-          },
-          {
-            Header: "Longitude",
-            accessor: "longitude",
-          },
-          {
-            Header: "Drainage Area (km)",
-            accessor: "drainagE_AREA_KM",
-          },
-          {
-            Header: "Channel Width (m)",
-            accessor: "channeL_WIDTH_M",
-          },
-          {
-            Header: "Channel Depth (m)",
-            accessor: "channeL_DEPTH_M",
-          },
-          {
-            Header: "Country",
-            accessor: "countrY_NAME",
-          },
-        ]}
-        defaultPageSize={2}
-        className="-striped -highlight"
-      />
+      <div>
+        <div className="enclosing-border inline" style={{
+          width: "40%",
+          "margin-left": "20px",
+          "margin-right": "20px",
+          "margin-bottom": "30px"
+        }}>
+          <table>
+            <tr>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Age</th>
+            </tr>
+            <tr>
+              <td>Jill</td>
+              <td>Smith</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>Eve</td>
+              <td>Jackson</td>
+              <td>94</td>
+            </tr>
+          </table>
+        </div>
+
+        <ReactTable
+          //data={this.props.data}
+          data={fakeData}
+          columns={[
+            {
+              Header: "Site ID",
+              accessor: "sitE_ID",
+              Cell: cellInfo => (
+                <div>
+                  <Link
+                    to={{
+                      pathname: `/DetailedChannelView/`,
+                      state: {
+                        siteID: cellInfo.row.sitE_ID,
+                        latitude: cellInfo.row.latitude,
+                        longitude: cellInfo.row.longitude,
+                        drainageArea: cellInfo.row.drainageArea,
+                        channelWidth: cellInfo.row.channelWidth,
+                        channelDepth: cellInfo.row.channelDepth,
+                        country: cellInfo.row.country,
+                        // climateID:
+                        // climateDescription:
+                        // estimatedBnkfullDischarge:
+                        // reference:
+                      }
+                    }}
+                  >
+                    {cellInfo.row.sitE_ID}
+                  </Link>
+                </div>
+              )
+            },
+            {
+              Header: "Site Name",
+              accessor: "sitE_NAME",
+            },
+            {
+              Header: "Latitude",
+              accessor: "latitude",
+            },
+            {
+              Header: "Longitude",
+              accessor: "longitude",
+            },
+            {
+              Header: "Drainage Area (km)",
+              accessor: "drainagE_AREA_KM",
+            },
+            {
+              Header: "Channel Width (m)",
+              accessor: "channeL_WIDTH_M",
+            },
+            {
+              Header: "Channel Depth (m)",
+              accessor: "channeL_DEPTH_M",
+            },
+            {
+              Header: "Country",
+              accessor: "countrY_NAME",
+            },
+          ]}
+          defaultPageSize={2}
+          className="-striped -highlight"
+        />
+      </div>
+
     )
    }
  }

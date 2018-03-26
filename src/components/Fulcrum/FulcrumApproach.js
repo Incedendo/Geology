@@ -6,6 +6,8 @@ import FulcrumResultComponent from './FulcrumResultComponent';
 // import FulcrumAddedTBDComponent from './FulcrumAddedTBDComponent';
 import TBDApproach from '../TBD/TBDApproach';
 import '../../assets/scss/include.scss';
+//import other components
+import RiverChannelsTable  from "../TBD/RiverChannelsTable";
 
 //import Select package
 import Select from 'react-select';
@@ -83,16 +85,7 @@ class FulcrumApproach extends Component {
   };
 
   postFulcrum = () => {
-
-    // const JimGetUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/TestReturn';
-
-    // const JimPostUrl = 'https://geologymiddlewarerafter.azurewebsites.net/api/main/fulcrum';
     const JimPostUrl = 'https://g2dn2m2b1g.execute-api.us-east-1.amazonaws.com/Prod/api/main/Fulcrum';
-
-    // const getRequestData = {
-    //   method: 'GET',
-    //   Origin:'https://powerful-cliffs-45352.herokuapp.com',
-    // }
 
     const postRequestData = {
       method: 'POST',
@@ -169,21 +162,6 @@ class FulcrumApproach extends Component {
     this.setState( (prevState) => ({submitted: !prevState.submitted}) );
   }
 
-  //Switches the isMetric state according to the dropdown option chosen on the Measuing System
-  // setMeasureSystem = (value) => {
-  //   console.log(value);
-  //   if(value === "imperial"){
-  //     this.setState({
-  //       isMetric: false,
-  //       measuringSystem: "Imperial",
-  //     })
-  //   }else{
-  //     this.setState({
-  //       isMetric: true,
-  //       measuringSystem: "Metric",
-  //     })
-  //   }
-  // }
 
   // Switches the isAnalog state whenever the checkbox is clicked/unclicked
   toggleIsAnalog = () => {
@@ -207,7 +185,7 @@ class FulcrumApproach extends Component {
     console.log("set selected TBD modes");
   }
 
-  validateInputs() {
+  validateAllInputsFulcrum() {
       if(this.state.valid_AvgBkflDpt &&
           this.state.valid_BkflChanWdt &&
           this.state.valid_HydrolicRad &&
@@ -271,14 +249,25 @@ class FulcrumApproach extends Component {
       } = this.state;
 
       //make sure the form's inputs are validated before proceed to send the post request to the server.
-      if(this.validateInputs()){
-        this.setState({
-          submitted: true,
-          submitClicked: true,
-          inputs_validated: true,
-        });
-        this.postFulcrum();
-        console.log(this.state.submitted);
+      if(this.validateAllInputsFulcrum()){
+        if(this.state.TBDMode === "Default"){
+          this.setState({
+            submitted: true,
+            submitClicked: true,
+            inputs_validated: true,
+          });
+          this.postFulcrum();
+          console.log(this.state.submitted);
+        }else{
+          //do TBD Component Validation
+          this.setState({
+            submitted: true,
+            submitClicked: true,
+            inputs_validated: true,
+          });
+          this.postFulcrum();
+          console.log(this.state.submitted);
+        }
       }else{
         this.setState({
           submitClicked: true,
@@ -548,9 +537,7 @@ class FulcrumApproach extends Component {
 
             <div className="">
                <button onClick={this.toggleSubmitted}>Return</button>
-
             </div>
-
 
             {FetchedResults.map(
               (fieldObject,index) =>
@@ -560,6 +547,16 @@ class FulcrumApproach extends Component {
                 returnedData = {fieldObject.returnedData}
               />
             )}
+
+            {this.state.TBDMode==="Customized" &&
+              <div>
+                TBD result will be displayed here
+
+                <RiverChannelsTable
+                  data={this.state.tableData}
+                />
+              </div>
+            }
           </div>
         }
 
