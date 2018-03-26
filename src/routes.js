@@ -2,11 +2,12 @@ import Base from './Base';
 import Home from './components/Home';
 import HelpfulLinkModal from './components/HelpfulLinkModal';
 import NotFound from './components/NotFound';
-import FulcrumApproach from './components/FulcrumApproach';
-import TBDApproach from './components/TBDApproach';
-import AnalogComponent from './components/AnalogComponent';
+import FulcrumApproach from './components/Fulcrum/FulcrumApproach';
+import TBDApproach from './components/TBD/TBDApproach';
+import DetailedChannelView from './components/TBD/DetailedChannelView';
+import AnalogComponent from './components/Analog/AnalogComponent';
 import LandingPage from './components/LandingPage';
-import DetailedChannelView from './components/DetailedChannelView';
+
 import { RiverChannelsTable } from "./components/Utils";
 // import TBDResult from './components/TBDResult';
 

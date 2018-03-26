@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import '../assets/scss/include.scss';
-import MapContainer from './GoogleAPIScripts/MapContainer';
+import '../../assets/scss/include.scss';
+import MapContainer from '../GoogleAPIScripts/MapContainer';
 import { Link } from 'react-router-dom';
-import { ChannelLocation, ChannelAttributes, ClimateInformation, ChannelReference } from "./Utils";
-import '../assets/scss/include.scss';
+import '../../assets/scss/include.scss';
 
 class DetailedChannelView extends Component{
    state = {

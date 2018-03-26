@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
-import '../assets/scss/include.scss';
+import '../../assets/scss/include.scss';
 
 const FulcrumInputComponent = ( { title, name, state, isValid, submitted, update, validate } ) => (
   <Grid key={title}>

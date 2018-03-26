@@ -1,7 +1,7 @@
 import React from "react";
 import namor from "namor";
 import { Link, Route } from 'react-router-dom';
-import DetailedChannelView from './DetailedChannelView';
+// import DetailedChannelView from './DetailedChannelView';
 // import "./index.css";
 
 // Import React Table

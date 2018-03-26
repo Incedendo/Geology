@@ -3,10 +3,9 @@ import fetch from 'isomorphic-fetch';
 import { Link } from 'react-router-dom';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
-import AnalogComponent from './AnalogComponent';
 // import FulcrumAddedTBDComponent from './FulcrumAddedTBDComponent';
-import TBDApproach from './TBDApproach';
-import '../assets/scss/include.scss';
+import TBDApproach from '../TBD/TBDApproach';
+import '../../assets/scss/include.scss';
 
 //import Select package
 import Select from 'react-select';
@@ -42,10 +41,28 @@ class FulcrumApproach extends Component {
     submitted: false,
     submitClicked: false,
     inputs_validated: true,
-    isRiverAnalogue: false,
     displayedResult: false,
 
-    TBDMode: "",
+    isRiverAnalogue: false,
+    isTBD: false,
+    TBDMode: "", // "Default" or "Customized"
+
+    //Customized TBD parameters:
+        climateFromDropdown: "",
+
+        // 6 inputs for the text fields:
+        drainage_low: 0,
+        drainage_high: 0,
+
+        selectedRiverSize: "", // set when river size radio buttons are clicked
+        isCrossSection: null,
+        riverLow: 0,
+        riverHigh: 0,
+
+        selectedPrecision: "", // set when Precision Radio Buttons are clicked
+        "isWithin10": null,
+        "isWithin20": null,
+
 
     response: {
       slope: 0,
@@ -61,6 +78,7 @@ class FulcrumApproach extends Component {
       totalCombinedSedimentVolumeDischargePerYear_WrightParker:0,
       totalSuspendedSedimentVolumeDischargedPerYear_VanRijn: 0,
       totalSuspendedSedimentVolumeDischargedPerYear_WrightParker: 0,
+      data: [],
     },
   };
 
@@ -92,7 +110,7 @@ class FulcrumApproach extends Component {
           "isFulcrum": true,
           "isMetric": false,
           "isRiverAnalogue" : this.state.isRiverAnalogue,
-          "isTBD": false,
+          "isTBD": this.state.isTBD,
           "TBD": {
           "isCrossSection": false,
             "isWithin10": false,
@@ -177,10 +195,12 @@ class FulcrumApproach extends Component {
     if(value === "default"){
       this.setState({
         TBDMode: "Default",
+        isTBD: true,
       });
     }else{
       this.setState({
         TBDMode: "Customized",
+        isTBD: true,
       });
     }
 
@@ -362,19 +382,19 @@ class FulcrumApproach extends Component {
         returnedData: this.state.response.slope,
       },
       {
-        title: "Mean Slope Velocity",
+        title: "Mean Flow Velocity (m/s)",
         returnedData: this.state.response.meanSlopeVelocity,
       },
       {
-        title: "Channel Bankful Discharge",
+        title: "Channel Bankful Discharge (m^3/s)",
         returnedData: this.state.response.channelBankfullDischarge,
       },
       {
-        title: "Total BedLoad Discharge",
+        title: "Total BedLoad Discharge (m^3/s)",
         returnedData: this.state.response.totalBedloadDischarge,
       },
       {
-        title: "Total Bedload Volume Sediment Discharge",
+        title: "Total Bedload Volume Sediment Discharge (m^3/s)",
         returnedData: this.state.response.totalBedloadVolumeSedimentDischarge,
       },
       {
@@ -386,27 +406,27 @@ class FulcrumApproach extends Component {
         returnedData: this.state.response.tbdWithin20,
       },
       {
-        title: "Total Bankful Suspended Sediment Discharge (Van Rijn)",
+        title: "Total Bankful Suspended Sediment Discharge (Van Rijn) (m^3/s)",
         returnedData: this.state.response.totalBankfullSuspendedSedimentDischarge_VanRijn,
       },
       {
-        title: "Total Bankful Suspended Sediment Discharge (Wright Parker)",
+        title: "Total Bankful Suspended Sediment Discharge (Wright Parker) (m^3/s)",
         returnedData: this.state.response.totalBankfullSuspendedSedimentDischarge_WrightParker,
       },
       {
-        title: "Total Combined Sediment Volume Discharge Per Year (Van Rijn)",
+        title: "Total Combined Sediment Volume Discharge Per Year (Van Rijn) (m^3/yr)",
         returnedData: this.state.response.totalCombinedSedimentVolumeDischargePerYear_VanRijn,
       },
       {
-        title: "Total Combined Sediment Volume Discharge Per Year (Wright Parker)",
+        title: "Total Combined Sediment Volume Discharge Per Year (Wright Parker) (m^3/yr)",
         returnedData: this.state.response.totalCombinedSedimentVolumeDischargePerYear_WrightParker,
       },
       {
-        title: "Total Suspended Sediment Volume Discharge Per Year (Van Rijn)",
+        title: "Total Suspended Sediment Volume Discharge Per Year (Van Rijn) (m^3/yr)",
         returnedData: this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn,
       },
       {
-        title: "Total Suspended Sediment Volume Discharge Per Year (Wright Parker)",
+        title: "Total Suspended Sediment Volume Discharge Per Year (Wright Parker) (m^3/yr)",
         returnedData: this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_WrightParker,
       }
     ];
@@ -415,12 +435,12 @@ class FulcrumApproach extends Component {
       <form onSubmit={this.handleSubmit} className="form">
 
         <div className="back-button-div-fulcrum">
-           {!this.state.submitted
-             ? <Link to="/"
+           {!this.state.submitted &&
+             <Link to="/"
              className="back-button-link">
                  Back
-               </Link>
-             : <button onClick={this.toggleDisplayedResult}>Return</button>
+              </Link>
+
            }
         </div>
 
@@ -498,7 +518,7 @@ class FulcrumApproach extends Component {
 
                   {this.state.TBDMode === "Customized" &&
                     <TBDApproach
-                      submitNotNeeded={true}
+                      displayedSubmitButton={false}
                     />
                   }
 
@@ -522,13 +542,13 @@ class FulcrumApproach extends Component {
 
         {this.state.submitted &&
           <div>
-            <button onClick={this.printResponse}>
+            {/* <button onClick={this.printResponse}>
               DISPLAY RESPONSE
-            </button>
+            </button> */}
 
             <div className="">
-                 <button onClick={this.toggleSubmitted}>Return</button>
-               }
+               <button onClick={this.toggleSubmitted}>Return</button>
+
             </div>
 
 

@@ -8,7 +8,7 @@ class Home extends Component {
   renderHeader = () => (
     <div>
       <h1 className="center greenText">
-          Welcome to Our Senior Design Project Prototype
+          R.A.F.T.E.R
       </h1>
     </div>
   )

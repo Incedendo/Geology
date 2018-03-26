@@ -16,8 +16,6 @@ import '../assets/scss/include.scss';
 class TBDAnalogFrame extends Component{
   state = {
     selectedClimate: "", // set when Climate radio buttons are clicked
-    // selectedFirstOrder: "", // send selectedFirstOrder.value
-    // selectedKoppen: "", // send selectedKoppen.value
     climateFromDropdown: "",
 
     // 6 inputs for the text fields:
@@ -28,11 +26,6 @@ class TBDAnalogFrame extends Component{
     isCrossSection: null,
     riverLow: 0,
     riverHigh: 0,
-
-    // riverDepth_Min: 0,
-    // riverDepth_Max: 0,
-    // crossSectionalArea_Min: 0,
-    // crossSectionalArea_Max: 0,
 
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
     "isWithin10": null,
@@ -218,16 +211,29 @@ class TBDAnalogFrame extends Component{
   //Encapsulating Validate inputs that check for all fields
   validateInputs(){
     // check if users choose ALL 3 big Radio Buttons
-    if(this.validateClimateInputs() &&
-      this.validateDrainageInputs() &&
-      this.validateRiverInputs() &&
-      this.validatePrecisionInputs()
-    ){
-          console.log("validate ALL inputs");
-          return true;
+    if(this.props.displayedPresicion){
+      if(this.validateClimateInputs() &&
+        this.validateDrainageInputs() &&
+        this.validateRiverInputs() &&
+        this.validatePrecisionInputs()
+      ){
+            console.log("validate ALL inputs");
+            return true;
+      }else{
+            console.log("validateInputs() failed");
+            return false;
+      }
     }else{
-          console.log("validateInputs() failed");
-          return false;
+      if(this.validateClimateInputs() &&
+        this.validateDrainageInputs() &&
+        this.validateRiverInputs()
+      ){
+            console.log("validate ALL inputs");
+            return true;
+      }else{
+            console.log("validateInputs() failed");
+            return false;
+      }
     }
   }
 
@@ -395,7 +401,7 @@ class TBDAnalogFrame extends Component{
       <div className="enclosing-border">
         <Grid className="padding-grid">
             <Col sm={4} md={2} className={title}>
-                Drainage Area:
+                Drainage Area (meter squared):
             </Col>
             <Col sm={4} md={10} className="leftAlignedText">
               <div className="inline-with-right-margin">
@@ -488,13 +494,17 @@ class TBDAnalogFrame extends Component{
              <RadioGroup
                onChange={ this.setRiverSizeSelectedOption } horizontal
              >
-               <RadioButton value="RiverDepth"
-                 pointColor="green">
-                 River Depth
+               <RadioButton
+                 value="RiverDepth"
+                 pointColor="green"
+               >
+                 River Depth (km)
                </RadioButton>
-               <RadioButton value="CrossSectionalArea"
-                 pointColor="green">
-                 Cross Sectional Area
+               <RadioButton
+                 value="CrossSectionalArea"
+                 pointColor="green"
+               >
+                 Cross Sectional Area (km squared)
                </RadioButton>
              </RadioGroup>
            </Col>
@@ -618,13 +628,13 @@ class TBDAnalogFrame extends Component{
     )
   }
 
-  setSelectedOption = (e) => {
-    const {name, value} = e.target;
-    this.setState(() => ({
-      [name]: value,
-    }));
-    console.log("set " + name + " to " + value);
-  }
+  // setSelectedOption = (e) => {
+  //   const {name, value} = e.target;
+  //   this.setState(() => ({
+  //     [name]: value,
+  //   }));
+  //   console.log("set " + name + " to " + value);
+  // }
 
   //onChange function for Climate Radio Button Group
   setClimateSelectedOption = (value) => {
@@ -763,7 +773,8 @@ class TBDAnalogFrame extends Component{
               Please enter correct values for inputs...
             </div>}
 
-            <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
+            <button
+              type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
               Submit
             </button>
 

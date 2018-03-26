@@ -769,11 +769,8 @@
 
 import React, { Component } from 'react';
 //import other components
-
-import { RiverChannelsTable } from "./Utils";
-import TBDResult from './TBD/TBDResult';
-import TBDAnalogFrame from './TBDAnalogFrame';
-import '../assets/scss/include.scss';
+import TBDAnalogFrame from '../TBDAnalogFrame';
+import '../../assets/scss/include.scss';
 
 class TBDApproach extends Component{
   render(){
@@ -782,6 +779,7 @@ class TBDApproach extends Component{
         <TBDAnalogFrame
           componentTitle="TBD Approach"
           displayedPresicion={true}
+
         />
       </div>
     )

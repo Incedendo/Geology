@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import TBDApproach from './TBDApproach';
+import TBDApproach from '../TBD/TBDApproach';
 //import RadioButton package
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import '../assets/scss/include.scss';
+import '../../assets/scss/include.scss';
 
 class FulcrumAddedTBDComponent extends Component{
 
@@ -14,7 +14,6 @@ class FulcrumAddedTBDComponent extends Component{
     selectedRiverSize: "RiverDepth",
     selectedPrecision: "10%",
   }
-
 
   resetOptions = () => {
     this.setState({

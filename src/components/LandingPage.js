@@ -4,12 +4,10 @@ import HomeLinkComponent from './HomeLinkComponent';
 
 const LandingPage = () => (
   <div className="leftAlignedText" >
-    <h3>
-      R.A.F.T.E.R
-    </h3>
 
-    <h3>
-      River AnalogueFulcrum Theory Estimate Repository
+
+    <h3 style={{"text-align": "center"}}>
+      River Analogue Fulcrum Theory Estimate Repository
     </h3>
 
     <h3>
