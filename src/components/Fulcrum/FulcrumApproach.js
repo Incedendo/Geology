@@ -5,8 +5,6 @@ import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
 // import FulcrumAddedTBDComponent from './FulcrumAddedTBDComponent';
 import TBDApproach from '../TBD/TBDApproach';
-import '../../assets/scss/include.scss';
-//import other components
 import RiverChannelsTable  from "../TBD/RiverChannelsTable";
 
 //import Select package
@@ -15,6 +13,12 @@ import 'react-select/dist/react-select.css';
 
 //import RadioButton package
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
+
+//import TBD Components
+import { ClimateOrders, DrainageArea, RiverSize, TBDPrecision } from '../TBD/TBDComponents';
+
+import '../../assets/scss/include.scss';
+//import other components
 
 class FulcrumApproach extends Component {
 
@@ -62,9 +66,9 @@ class FulcrumApproach extends Component {
         riverHigh: 0,
 
         selectedPrecision: "", // set when Precision Radio Buttons are clicked
-        "isWithin10": null,
-        "isWithin20": null,
-
+        isWithin10: null,
+        isWithin20: null,
+        toggleRiverWidthAttr: false,
 
     response: {
       slope: 0,
@@ -283,6 +287,118 @@ class FulcrumApproach extends Component {
     console.log(this.state.response.totalSuspendedSedimentVolumeDischargePerYear_VanRjin);
     console.log(this.state.response.totalCombinedSedimentVolumeDischargePerYear_WrightParker);
   }
+
+
+  //----------------------------------------------
+  // TBD COMPONENTS Subroutines
+  //----------------------------------------------
+
+  //onChange function for Climate Radio Button Group
+  setClimateSelectedOption = (value) => {
+    this.setState({
+      selectedClimate: value,
+    })
+
+    if(value === "FirstOrder"){
+      //when user chooses First Order option
+      this.setState({
+        enabledFirstOrderDropdown: true, //disable the radio for first order
+        selectedKoppen: '', //set the state to nil for error checking
+        enabledKoppenDropdown: false,
+      })
+    }else{
+      //when user chooses Koppen options
+      this.setState({
+        enabledKoppenDropdown: true,
+        selectedFirstOrder: '', //set the state to nil to for error checking
+        enabledFirstOrderDropdown: false,
+      })
+    }
+  }
+
+  handleClimateSelectionChangeDropDown = (value) => {
+    this.setState({
+      climateFromDropdown: value,
+    })
+    console.log(this.state.climateFromDropdown.value);
+  }
+
+  //A function that set the max/min values for either the drainage_low/ drainage_high, crossSectionalArea_Min/ crossSectionalArea_Max, riverDepth_Min/ riverDepth_Max
+  setRangeValues = (e) => {
+    const {name, value}  = e.target;
+    if(value.length !== 0){
+      if(!isNaN(value)){
+        if(value <= 0){
+          this.setState(() => ({
+            [name]: "(positive number only)",
+          }));
+        }else{
+          this.setState(() => ({
+            [name]: value,
+          }));
+          console.log("set "+ name + " to " + value);
+        }
+      }else{
+        console.log(name + "is not a valid number");
+        this.setState(() => ({
+          [name]: "(positive number only)",
+        }));
+      }
+    }else{
+      console.log(name + "is empty");
+      this.setState({
+        [name]: "(positive number only)",
+      })
+    }
+  }
+
+  updateFieldValue = (e) => {
+    const {name, value} = e.target;
+    this.setState(() => ({
+      [name]: value
+    }));
+  }
+
+  //onChange function for River Size Radio Button Group
+  setRiverSizeSelectedOption = (value) => {
+    this.setState({
+      selectedRiverSize: value,
+    });
+
+    if(value === "RiverDepth"){
+      this.setState({
+        isCrossSection: false,
+      })
+    }else{
+      this.setState({
+        isCrossSection: true,
+      })
+    }
+    console.log(this.state.selectedRiverSize);
+  }
+
+  //onChange function for Precision Radio Button Group
+  setPrecisionSelectedOption = (value) => {
+    this.setState({
+      selectedPrecision: value,
+    })
+    if(value === "10%"){
+      this.setState({
+        isWithin10: true,
+        isWithin20: false,
+      })
+    }else{
+      this.setState({
+        isWithin10: false,
+        isWithin20: true,
+      })
+    }
+    console.log(this.state.selectedPrecision);
+  }
+
+  //----------------------------------------------
+  // TBD COMPONENTS Subroutines
+  //----------------------------------------------
 
   render() {
     const {
@@ -506,9 +622,47 @@ class FulcrumApproach extends Component {
                   }
 
                   {this.state.TBDMode === "Customized" &&
-                    <TBDApproach
-                      displayedSubmitButton={false}
-                    />
+                    <div>
+                      <ClimateOrders
+                        submitClicked = {this.state.submitClicked}
+                        selectedClimate = {this.state.selectedClimate}
+                        selectedFirstOrder = {this.state.selectedFirstOrder}
+                        selectedKoppen = {this.state.selectedKoppen}
+                        enabledFirstOrderDropdown = {this.state.enabledFirstOrderDropdown}
+                        enabledKoppenDropdown = {this.state.enabledKoppenDropdown}
+                        climateFromDropdown = {this.state.climateFromDropdown}
+                        setClimateSelectedOption = {this.setClimateSelectedOption}
+                        handleClimateSelectionChangeDropDown = {this.handleClimateSelectionChangeDropDown}
+                      />
+
+                      <DrainageArea
+                        submitClicked = {this.state.submitClicked}
+                        drainage_low = {this.state.drainage_low}
+                        drainage_high = {this.state.drainage_high}
+                        setRangeValues={this.setRangeValues}
+                        updateFieldValue={this.updateFieldValue}
+                      />
+
+                      <RiverSize
+                        submitClicked = {this.state.submitClicked}
+                        riverDepth_Min = {this.state.riverLow}
+                        riverDepth_Max = {this.state.riverHigh}
+                        crossSectionalArea_Min = {this.state.riverHigh}
+                        crossSectionalArea_Max = {this.state.riverHigh}
+                        selectedRiverSize = {this.state.selectedRiverSize}
+                        setRiverSizeSelectedOption= {this.setRiverSizeSelectedOption}
+                        setRangeValues = {this.setRangeValues}
+                        updateFieldValue = {this.updateFieldValue}
+                        toggleRiverWidthAttr = {this.state.toggleRiverWidthAttr}
+                      />
+
+                      <TBDPrecision
+                        submitClicked = {this.state.submitClicked}
+                        selectedPrecision = {this.state.selectedPrecision}
+                        setPrecisionSelectedOption= {this.setPrecisionSelectedOption}
+                      />
+
+                    </div>
                   }
 
               </div>
@@ -550,8 +704,6 @@ class FulcrumApproach extends Component {
 
             {this.state.TBDMode==="Customized" &&
               <div>
-                TBD result will be displayed here
-
                 <RiverChannelsTable
                   data={this.state.tableData}
                 />
