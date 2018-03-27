@@ -79,20 +79,12 @@ class RiverChannelsTable extends Component{
         }}>
           <table>
             <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Age</th>
+              <th>TBD Value</th>
             </tr>
             <tr>
-              <td>Jill</td>
-              <td>Smith</td>
-              <td>50</td>
+              <td>100</td>
             </tr>
-            <tr>
-              <td>Eve</td>
-              <td>Jackson</td>
-              <td>94</td>
-            </tr>
+
           </table>
         </div>
 
@@ -161,7 +153,6 @@ class RiverChannelsTable extends Component{
           className="-striped -highlight"
         />
       </div>
-
     )
    }
  }

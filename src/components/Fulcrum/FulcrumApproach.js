@@ -64,11 +64,12 @@ class FulcrumApproach extends Component {
         isCrossSection: null,
         riverLow: 0,
         riverHigh: 0,
+        toggleRiverWidthAttr: false,
+        calculatedDepthUsingWidth: false,
 
         selectedPrecision: "", // set when Precision Radio Buttons are clicked
         isWithin10: null,
         isWithin20: null,
-        toggleRiverWidthAttr: false,
 
     response: {
       slope: 0,
@@ -148,7 +149,7 @@ class FulcrumApproach extends Component {
         response: data,
       });
 
-      console.log(this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn);
+      console.log("post successful!!!");
     });
   }
 
@@ -174,6 +175,7 @@ class FulcrumApproach extends Component {
 
   //for the added TBD components
   setSelectedTBDMode = (value) => {
+    console.log("tbd val: "+ value);
     if(value === "default"){
       this.setState({
         TBDMode: "Default",
@@ -186,7 +188,7 @@ class FulcrumApproach extends Component {
       });
     }
 
-    console.log("set selected TBD modes");
+    console.log("selected TBD mode: " + this.state.TBDMode);
   }
 
   validateAllInputsFulcrum() {
@@ -254,23 +256,27 @@ class FulcrumApproach extends Component {
 
       //make sure the form's inputs are validated before proceed to send the post request to the server.
       if(this.validateAllInputsFulcrum()){
-        if(this.state.TBDMode === "Default"){
-          this.setState({
-            submitted: true,
-            submitClicked: true,
-            inputs_validated: true,
-          });
-          this.postFulcrum();
-          console.log(this.state.submitted);
-        }else{
-          //do TBD Component Validation
-          this.setState({
-            submitted: true,
-            submitClicked: true,
-            inputs_validated: true,
-          });
-          this.postFulcrum();
-          console.log(this.state.submitted);
+        console.log("in validate Fulcrum: " + this.state.TBDMode);
+        if(this.state.TBDMode === "Default"){
+            console.log("about to POST Fulcrum....");
+            this.setState({
+              submitted: true,
+              submitClicked: true,
+              inputs_validated: true,
+            });
+            this.postFulcrum();
+            console.log("Done: "+this.state.submitted);
+        }else if(this.state.TBDMode === "Customized"){
+            if(this.validateTBDInputs()){
+              //do TBD Component Validation
+              this.setState({
+                submitted: true,
+                submitClicked: true,
+                inputs_validated: true,
+              });
+              this.postFulcrum();
+              console.log(this.state.submitted);
+            }
         }
       }else{
         this.setState({
@@ -278,7 +284,6 @@ class FulcrumApproach extends Component {
           inputs_validated: false,
         });
         console.log("unable to post bc inputs are invalid...");
-
       }
   }
 
@@ -377,6 +382,12 @@ class FulcrumApproach extends Component {
     console.log(this.state.selectedRiverSize);
   }
 
+  toggleRiverWidthAttr = () => {
+    this.setState( (prevState) => ({calculatedDepthUsingWidth: !prevState.calculatedDepthUsingWidth}) );
+
+    console.log("calculated depth using width:",this.state.calculatedDepthUsingWidth);
+  }
+
   //onChange function for Precision Radio Button Group
   setPrecisionSelectedOption = (value) => {
     this.setState({
@@ -394,6 +405,75 @@ class FulcrumApproach extends Component {
       })
     }
     console.log(this.state.selectedPrecision);
+  }
+
+  // validate if the user enter positive numbers for min and max Cross Sectional Area
+  validateClimateInputs = () => {
+    if(this.state.selectedClimate !== ""){
+        if(this.state.climateFromDropdown !== ""){
+            console.log("validated selectedClimate: ", this.state.climateFromDropdown.value);
+            return true;
+        }else{
+            console.log("did not choose an item in the dropdown: ");
+            return false;
+        }
+    }else{
+            console.log("fail to validate selectedClimate: radio box NOT selected");
+            return false;
+    }
+  }
+
+  // validate if the user enter positive numbers for min and max drainage area
+  validateDrainageInputs = () => {
+    if(this.state.drainage_low > 0 &&  this.state.drainage_high > 0){
+            console.log("successfully Validate drainage Inputs: Low: "+ this.state.drainage_low + " , High:  "+ this.state.drainage_high);
+            return true;
+    }else{
+            console.log("fail to validate drainage inputs");
+            return false;
+    }
+  }
+
+  validateRiverInputs = () => {
+    if(this.state.selectedRiverSize !== ""){
+      if(this.state.riverLow > 0 && this.state.riverHigh > 0){
+              console.log("validated River Size: Low: "+ this.state.riverLow + " , High:  "+ this.state.riverHigh);
+              return true;
+      }else{
+              console.log("fail to validate River Size: 1 of the Depth text field is empty");
+              return false;
+      }
+    }else{
+      console.log("failed to validate River Inputs: radio box NOT selected");
+      return false;
+    }
+  }
+
+  // validate if the user enter positive numbers for min and max Cross Sectional Area
+  validatePrecisionInputs = () => {
+    if(this.state.selectedPrecision !== ""){
+            console.log("validated Precision: " + this.state.selectedPrecision);
+            return true;
+    }else{
+            console.log("fail to validate Precision: radio box NOT selected");
+            return false;
+    }
+  }
+
+  //Encapsulating Validate inputs that check for all fields
+  validateTBDInputs = () => {
+    // check if users choose ALL 3 big Radio Buttons
+    if(this.validateClimateInputs() &&
+      this.validateDrainageInputs() &&
+      this.validateRiverInputs() &&
+      this.validatePrecisionInputs()
+    ){
+          console.log("validate ALL inputs");
+          return true;
+    }else{
+          console.log("validateInputs() failed");
+          return false;
+    }
   }
 
   //----------------------------------------------

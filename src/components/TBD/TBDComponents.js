@@ -406,98 +406,12 @@ const TBDComponents = () => {
   //   }
   // }
 
-  // validate if the user enter positive numbers for min and max Cross Sectional Area
-  const validateClimateInputs = () => {
-    if(this.state.selectedClimate !== ""){
-        if(this.state.climateFromDropdown !== ""){
-            console.log("validated selectedClimate: ", this.state.climateFromDropdown.value);
-            return true;
-        }else{
-            console.log("did not choose an item in the dropdown: ");
-            return false;
-        }
-    }else{
-            console.log("fail to validate selectedClimate: radio box NOT selected");
-            return false;
-    }
-  }
 
-  // validate if the user enter positive numbers for min and max drainage area
-  const validateDrainageInputs = () => {
-    if(this.state.drainage_low > 0 &&  this.state.drainage_high > 0){
-            console.log("successfully Validate drainage Inputs: Low: "+ this.state.drainage_low + " , High:  "+ this.state.drainage_high);
-            return true;
-    }else{
-            console.log("fail to validate drainage inputs");
-            return false;
-    }
-  }
-
-  const validateRiverInputs = () => {
-    if(this.state.selectedRiverSize !== ""){
-      if(this.state.riverLow > 0 && this.state.riverHigh > 0){
-              console.log("validated River Size: Low: "+ this.state.riverLow + " , High:  "+ this.state.riverHigh);
-              return true;
-      }else{
-              console.log("fail to validate River Size: 1 of the Depth text field is empty");
-              return false;
-      }
-    }else{
-      console.log("failed to validate River Inputs: radio box NOT selected");
-      return false;
-    }
-  }
-
-  // validate if the user enter positive numbers for min and max Cross Sectional Area
-  const validatePrecisionInputs = () => {
-    if(this.state.selectedPrecision !== ""){
-            console.log("validated Precision: " + this.state.selectedPrecision);
-            return true;
-    }else{
-            console.log("fail to validate Precision: radio box NOT selected");
-            return false;
-    }
-  }
-
-  //Encapsulating Validate inputs that check for all fields
-  const validateInputs = () => {
-    // check if users choose ALL 3 big Radio Buttons
-    if(this.props.displayedPresicion){
-      if(this.validateClimateInputs() &&
-        this.validateDrainageInputs() &&
-        this.validateRiverInputs() &&
-        this.validatePrecisionInputs()
-      ){
-            console.log("validate ALL inputs");
-            return true;
-      }else{
-            console.log("validateInputs() failed");
-            return false;
-      }
-    }else{
-      if(this.validateClimateInputs() &&
-        this.validateDrainageInputs() &&
-        this.validateRiverInputs()
-      ){
-            console.log("validate ALL inputs");
-            return true;
-      }else{
-            console.log("validateInputs() failed");
-            return false;
-      }
-    }
-  }
 
 
   //calculate River Depth based on the provided River Width using Scientific Formula
   const deriveRiverDepthFromWidth = () => {
     return 0;
-  }
-
-  const toggleRiverWidthAttr = () => {
-    this.setState( (prevState) => ({calculatedDepthUsingWidth: !prevState.calculatedDepthUsingWidth}) );
-
-    console.log("calculated depth using width:",this.state.calculatedDepthUsingWidth);
   }
 
   //toggle the state to display Form OR Result
@@ -506,10 +420,9 @@ const TBDComponents = () => {
   }
 
   //toggle the state to display Form OR Result
-const toggleSubmitted = () => {
+  const toggleSubmitted = () => {
     this.setState( (prevState) => ({submitted: !prevState.submitted}) );
   }
-
 
 }
 
