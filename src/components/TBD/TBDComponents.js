@@ -26,7 +26,7 @@ export const ClimateOrders = (props) => {
   })
 
   return(
-    <div className="enclosing-border">
+    <div className="">
       <Grid className="padding-grid">
         <Row>
           <Col sm={4} md={2} className={title}>
@@ -159,7 +159,7 @@ export const DrainageArea = (props) => {
   })
 
   return(
-    <div className="enclosing-border">
+    <div className="">
       <Grid className="padding-grid">
           <Col sm={4} md={2} className={title}>
               Drainage Area (meter squared):
@@ -221,7 +221,7 @@ export const RiverSize = (props) => {
   })
 
   return(
-    <div className="enclosing-border">
+    <div className="">
       <Grid className="padding-grid">
         <Col sm={4} md={2} className={title}>
             River Size:
@@ -324,7 +324,7 @@ export const TBDPrecision = (props) =>{
   })
 
   return(
-    <div className="enclosing-border">
+    <div className="">
       <Grid className="padding-grid">
         <Col sm={4} md={2} className={title}>
             Precision:
@@ -348,82 +348,3 @@ export const TBDPrecision = (props) =>{
     </div>
   )
 }
-
-const TBDComponents = () => {
-  // state = {
-  //   selectedClimate: "", // set when Climate radio buttons are clicked
-  //   climateFromDropdown: "",
-  //
-  //   // 6 inputs for the text fields:
-  //   drainage_low: 0,
-  //   drainage_high: 0,
-  //
-  //   selectedRiverSize: "", // set when river size radio buttons are clicked
-  //   isCrossSection: null,
-  //   riverLow: 0,
-  //   riverHigh: 0,
-  //
-  //   selectedPrecision: "", // set when Precision Radio Buttons are clicked
-  //   "isWithin10": null,
-  //   "isWithin20": null,
-  //
-  //   //boolean state:
-  //   enabledFirstOrderDropdown: false,
-  //   enabledKoppenDropdown: false,
-  //   calculatedDepthUsingWidth: false,
-  //   inputs_validated: true,
-  //   submitClicked: false,
-  //   submitted: false,
-  //
-  //   normal_Border: '',
-  //   error_Border: 'red',
-  //
-  //   tableData: [],
-  // }
-
-  // componentDidMount(){
-  //   this.setState({
-  //     submitted: false,
-  //   })
-  // }
-
-
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if(this.validateInputs()){
-  //     this.setState({
-  //       inputs_validated: true,
-  //       submitClicked: true,
-  //       submitted: true,
-  //     });
-  //     this.postTBD();
-  //   }else{
-  //     this.setState({
-  //       submitClicked: true,
-  //       inputs_validated: false,
-  //     });
-  //     console.log("unable to post bc inputs are invalid...");
-  //   }
-  // }
-
-
-
-
-  //calculate River Depth based on the provided River Width using Scientific Formula
-  const deriveRiverDepthFromWidth = () => {
-    return 0;
-  }
-
-  //toggle the state to display Form OR Result
-  const toggleDisplayedResult = () => {
-    this.setState( (prevState) => ({displayedResult: !prevState.displayedResult}) );
-  }
-
-  //toggle the state to display Form OR Result
-  const toggleSubmitted = () => {
-    this.setState( (prevState) => ({submitted: !prevState.submitted}) );
-  }
-
-}
-
-export default TBDComponents;

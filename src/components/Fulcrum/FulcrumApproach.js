@@ -693,6 +693,7 @@ class FulcrumApproach extends Component {
                       </RadioGroup>
                     </div>
                   }
+              </div>
 
 
                   {this.state.TBDMode === "Default" &&
@@ -727,7 +728,7 @@ class FulcrumApproach extends Component {
                         submitClicked = {this.state.submitClicked}
                         riverDepth_Min = {this.state.riverLow}
                         riverDepth_Max = {this.state.riverHigh}
-                        crossSectionalArea_Min = {this.state.riverHigh}
+                        crossSectionalArea_Min = {this.state.riveriverLow}
                         crossSectionalArea_Max = {this.state.riverHigh}
                         selectedRiverSize = {this.state.selectedRiverSize}
                         setRiverSizeSelectedOption= {this.setRiverSizeSelectedOption}
@@ -745,7 +746,7 @@ class FulcrumApproach extends Component {
                     </div>
                   }
 
-              </div>
+
             </div>
 
             {!this.state.inputs_validated &&
