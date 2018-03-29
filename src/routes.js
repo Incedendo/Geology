@@ -7,9 +7,8 @@ import TBDApproach from './components/TBD/TBDApproach';
 import DetailedChannelView from './components/TBD/DetailedChannelView';
 import AnalogComponent from './components/Analog/AnalogComponent';
 import LandingPage from './components/LandingPage';
-
 import { RiverChannelsTable } from "./components/Utils";
-// import TBDResult from './components/TBDResult';
+import TestView from './components/Link/TestView';
 
 export default [
   {
@@ -52,14 +51,17 @@ export default [
       //   name: "TBDResult"
       // },
       {
-        path: '/DetailedChannelView',
-        exact: true,
+        path: '/DetailedChannelView/:id/:lat/:long',
         component: DetailedChannelView,
         name: "DetailedChannelView"
       },
       { path: '/helpfullinks',
         component: HelpfulLinkModal,
         name: 'Helpful Link Modal'
+      },
+      { path: '/TestView/:id/:siteName/:lat/:long',
+        component: TestView,
+        name: 'Test View',
       },
       {
         component: NotFound,

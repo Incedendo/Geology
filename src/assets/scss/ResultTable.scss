@@ -1,0 +1,39 @@
+.testView-enclosing-border-margin{
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.testView-map-margin{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.table-margin{
+  margin-bottom: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+}
+
+th {
+    height: 35px;
+    font-size: 18px;
+    text-align: center !important;
+    padding: 5px;
+}
+
+td {
+  height: 30px;
+  text-align: center;
+}
+
+table, th, td {
+   border: 2px solid black;
+   border-radius: 5px;
+}

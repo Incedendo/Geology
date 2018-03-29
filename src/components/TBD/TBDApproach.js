@@ -779,7 +779,7 @@ class TBDApproach extends Component{
         <TBDAnalogFrame
           componentTitle="TBD Approach"
           displayedPresicion={true}
-
+          origin="/TBDApproach"
         />
       </div>
     )

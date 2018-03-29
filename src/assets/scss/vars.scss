@@ -1,0 +1,108 @@
+// vars.scss =======================
+@import './colors.scss';
+
+// Font Variables
+$futura-heavy:                          'futura-heavy', helvetica, arial, sans-serif;
+$futura-medium:                         'futura-medium', helvetica, arial, sans-serif;
+$futura:                                'futura', helvetica, arial, sans-serif;
+$source-sans:                           'Source Sans Pro', helvetica, arial, sans-serif;
+$fontsDirectory:                        '../fonts';
+
+// Font Weights
+$font-light:                           300;
+$font-normal:                          400;
+$font-bold:                            700;
+
+// Base 8 Grid
+$base1: 0.5rem; // 8px
+$base2: 1.0rem; // 16px
+$base3: 1.5rem; // 24px
+$base4: 2.0rem; // 32px
+$base5: 2.5rem; // 40px
+$base6: 4.0rem; // 64px
+
+// Body
+$body-background-color:                $snow-light;
+$body-font-family:                     $source-sans;
+$body-font-size:                       1.0rem;
+$body-line-height:                     1.5rem;
+$body-letter-spacing:                  0.02rem;
+$body-font-weight:                     $font-normal;
+$body-font-color:                      $slate-dark;
+
+//Heading
+$heading-letter-spacing:               0.0625rem;
+
+// Font Extensions
+%ss-bold {
+  font-family: $source-sans;
+  font-weight: $font-bold;
+}
+%ss-normal {
+  font-family: $source-sans;
+  font-weight: $font-normal;
+}
+%ss-light {
+  font-family: $source-sans;
+  font-weight: $font-light;
+}
+%button-text-bold {
+  font-family: $futura-heavy;
+  text-transform: uppercase;
+}
+%heading-font {
+  font-family: $source-sans;
+  font-weight: $font-light;
+  color: $body-font-color;
+}
+%hero-font {
+  font-family: $source-sans;
+  font-weight: $font-bold;
+}
+.font-futura{
+  font-family: $futura-heavy;
+  font-weight: $font-normal;
+}
+.section-organizer{
+  font-family: $futura-heavy;
+  font-weight: $font-normal; font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+// Layout
+$block-padding:                        70px;
+$nav-bg-color:                         $sky;
+$radius:                               0.0rem;
+$border:                               1px;
+$transition-speed-fast:                0.1s;
+$transition-speed:                     0.18s;
+$transition-speed-slow:                0.25s;
+$large-color-block:                    $sky;
+
+// Buttons
+$button-bg-color:                       $sky;
+$button-font-color:                     $snow-light;
+$button-text-style:                     uppercase;
+
+// Inputs
+$input-radius:                          $radius;
+
+// Forms (Checkbox, Radio, Inputs)
+$selected-border:                      2px;
+$unselected-border:                    1px;
+
+// Links
+$link-color:                            $royal;
+
+// Grid Widths
+$container-mobile: 480px;
+$container-tablet: 768px;
+$container-desktop: 960px;
+$container-tv: 1400px;
+$column-gutter: 30px;
+
+// Border Radius
+$border-radius1: 5px;
+$border-radius2: 7px;
+$border-radius3: 25px;
+$border-radius4: 50px;

@@ -1,5 +1,6 @@
 .rightAlignedText{
   text-align: right;
+  font-weight: bold;
 }
 
 .leftAlignedText{
@@ -26,4 +27,10 @@
   margin-right: auto;
   padding: 20px;
   // margin-right: 20%;
+}
+
+.input:focus {
+    outline: none !important;
+    border: 1px solid red;
+    box-shadow: 0 0 10px #719ECE;
 }

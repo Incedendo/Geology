@@ -15,21 +15,21 @@ import '../assets/scss/include.scss';
 
 class TBDAnalogFrame extends Component{
   state = {
-    selectedClimate: "", // set when Climate radio buttons are clicked
-    climateFromDropdown: "",
+    selectedClimate: "FirstOrder", // set when Climate radio buttons are clicked
+    climateFromDropdown: "A",
 
     // 6 inputs for the text fields:
-    drainage_low: 0,
-    drainage_high: 0,
+    drainage_low: 5,
+    drainage_high: 5,
 
-    selectedRiverSize: "", // set when river size radio buttons are clicked
-    isCrossSection: null,
-    riverLow: 0,
-    riverHigh: 0,
+    selectedRiverSize: "RiverDepth", // set when river size radio buttons are clicked
+    isCrossSection: true,
+    riverLow: 5,
+    riverHigh: 10,
 
-    selectedPrecision: "", // set when Precision Radio Buttons are clicked
-    "isWithin10": null,
-    "isWithin20": null,
+    selectedPrecision: "10%", // set when Precision Radio Buttons are clicked
+    "isWithin10": true,
+    "isWithin20": true,
 
     //boolean state:
     enabledFirstOrderDropdown: false,
@@ -241,7 +241,7 @@ class TBDAnalogFrame extends Component{
 
     var title = classNames({
       "leftAlignedText-Title": true,
-      "title-error": this.state.submitClicked && this.state.selectedClimate === ""
+      "title-error": this.state.submitClicked && (this.state.selectedClimate === "" || this.state.climateFromDropdown === "")
     })
 
     var selectColorError = classNames({
@@ -438,20 +438,12 @@ class TBDAnalogFrame extends Component{
   }
 
   renderRiverSize = () => {
-    var textfieldDepthMin = classNames({
-      'text-field-error': this.state.submitClicked && this.state.riverDepth_Min <= 0,
+    var textfieldRiverLow = classNames({
+      'text-field-error': this.state.submitClicked && this.state.riverLow <= 0,
     });
 
-    var textfieldDepthMax = classNames({
-      'text-field-error': this.state.submitClicked && this.state.riverDepth_Max <= 0,
-    });
-
-    var textfieldAreaMin = classNames({
-      'text-field-error': this.state.submitClicked && this.state.crossSectionalArea_Min <= 0,
-    });
-
-    var textfieldAreaMax = classNames({
-      'text-field-error': this.state.submitClicked && this.state.crossSectionalArea_Max <= 0,
+    var textfieldRiverHigh = classNames({
+      'text-field-error': this.state.submitClicked && this.state.riverHigh <= 0,
     });
 
     var title = classNames({
@@ -521,19 +513,19 @@ class TBDAnalogFrame extends Component{
               <div className="inline-with-right-margin">
                 Min: <input type="textbox"
                   name="riverLow"
-                  className={textfieldDepthMin}
+                  className={textfieldRiverLow}
                   onBlur={this.setRangeValues}
                   onChange={this.updateFieldValue}
-                  value={this.state.riverDepth_Min}
+                  value={this.state.riverLow}
                 />
               </div>
               <div className="inline-no-right-margin">
                 Max: <input type="textbox"
                   name="riverHigh"
-                  className={textfieldDepthMax}
+                  className={textfieldRiverHigh}
                   onBlur={this.setRangeValues}
                   onChange={this.updateFieldValue}
-                  value={this.state.riverDepth_Max}
+                  value={this.state.riverHigh}
                 />
               </div>
             </div>
@@ -544,19 +536,19 @@ class TBDAnalogFrame extends Component{
               <div className="inline-with-right-margin">
                 Min: <input type="textbox"
                   name="riverLow"
-                  className={textfieldAreaMin}
+                  className={textfieldRiverLow}
                   onBlur={this.setRangeValues}
                   onChange={this.updateFieldValue}
-                  value={this.state.crossSectionalArea_Min}
+                  value={this.state.riverLow}
                 />
               </div>
               <div className="inline-no-right-margin">
                 Max: <input type="textbox"
                   name="riverHigh"
-                  className={textfieldAreaMax}
+                  className={textfieldRiverHigh}
                   onBlur={this.setRangeValues}
                   onChange={this.updateFieldValue}
-                  value={this.state.crossSectionalArea_Max}
+                  value={this.state.riverHigh}
                 />
               </div>
             </div>
@@ -627,14 +619,6 @@ class TBDAnalogFrame extends Component{
       </div>
     )
   }
-
-  // setSelectedOption = (e) => {
-  //   const {name, value} = e.target;
-  //   this.setState(() => ({
-  //     [name]: value,
-  //   }));
-  //   console.log("set " + name + " to " + value);
-  // }
 
   //onChange function for Climate Radio Button Group
   setClimateSelectedOption = (value) => {
@@ -789,6 +773,7 @@ class TBDAnalogFrame extends Component{
 
             <RiverChannelsTable
               data={this.state.tableData}
+              origin={this.props.origin}
             />
 
             <div>

@@ -3,7 +3,6 @@ import fetch from 'isomorphic-fetch';
 import { Link } from 'react-router-dom';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
-// import FulcrumAddedTBDComponent from './FulcrumAddedTBDComponent';
 import TBDApproach from '../TBD/TBDApproach';
 import RiverChannelsTable  from "../TBD/RiverChannelsTable";
 
@@ -89,6 +88,8 @@ class FulcrumApproach extends Component {
     },
   };
 
+  // send a POST request to the Middelware with all the parameters of the Fulcrum (AND TBD) approach.
+  // Update stateDisplay response correspondingly
   postFulcrum = () => {
     const JimPostUrl = 'https://g2dn2m2b1g.execute-api.us-east-1.amazonaws.com/Prod/api/main/Fulcrum';
 
@@ -110,14 +111,21 @@ class FulcrumApproach extends Component {
           "isRiverAnalogue" : this.state.isRiverAnalogue,
           "isTBD": this.state.isTBD,
           "TBD": {
-          "isCrossSection": false,
-            "isWithin10": false,
-            "isWithin20": false,
-            "climate": "",
-            "drainage_low": null,
-            "drainage_high": null,
-            "riverSize_low": null,
-            "riverSize_high": null,
+            //climate:
+              "climate": this.state.climateFromDropdown.value,
+
+            //drainage:
+              "drainageLow": this.state.drainage_low,
+              "drainageHigh": this.state.drainage_high,
+
+            //river size:
+                "isCrossSection": this.state.isCrossSection,
+                "riverSizeLow": this.state.riverLow,
+                "riverSizeHigh": this.state.riverHigh,
+
+            //precision:
+              "isWithin10": this.state.isWithin10,
+              "isWithin20": this.state.isWithin20,
           },
           "Fulcrum": {
             "avgBankfullDepth": this.state.AvgBkflDpt,
@@ -185,6 +193,7 @@ class FulcrumApproach extends Component {
       this.setState({
         TBDMode: "Customized",
         isTBD: true,
+        submitClicked: false,
       });
     }
 
@@ -294,9 +303,11 @@ class FulcrumApproach extends Component {
   }
 
 
-  //----------------------------------------------
-  // TBD COMPONENTS Subroutines
-  //----------------------------------------------
+  //----------------------------------------------------------------------
+  //
+  //                   *** TBD COMPONENTS Subroutines ***
+  //
+  //----------------------------------------------------------------------
 
   //onChange function for Climate Radio Button Group
   setClimateSelectedOption = (value) => {
@@ -476,9 +487,135 @@ class FulcrumApproach extends Component {
     }
   }
 
-  //----------------------------------------------
-  // TBD COMPONENTS Subroutines
-  //----------------------------------------------
+  //----------------------------------------------------------------------
+  //
+  //                       *** Render Subroutines ***
+  //
+  //----------------------------------------------------------------------
+
+  renderBackBtn = () => (
+    <div className="back-button-div-fulcrum">
+       {!this.state.submitted &&
+         <Link to="/"
+         className="back-button-link">
+             Back
+          </Link>
+       }
+    </div>
+  )
+
+  renderSubmitBtn = () => (
+    <div>
+      {/* SUBMIT BUTTON */}
+      <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
+        Submit
+      </button>
+    </div>
+  )
+
+  //render the customized TBD Approach within Fulcrum
+  renderTBD = () => (
+    <div className="enclosing-border">
+
+      <div className="TBD-div">
+          {!this.state.defaultTBD && !this.state.customizedTBD &&
+            <div>
+              <RadioGroup
+                onChange={ this.setSelectedTBDMode } horizontal
+              >
+                <RadioButton
+                  value="default"
+                  pointColor="green">
+                  Default TBD [default value]
+                </RadioButton>
+                <RadioButton
+                  value="customized"
+                  pointColor="green">
+                  Customized TDB
+                </RadioButton>
+              </RadioGroup>
+            </div>
+          }
+      </div>
+
+
+      {this.state.TBDMode === "Default" &&
+        <div>
+          TBD will be calculated using Default value of [...]
+        </div>
+      }
+
+      {this.state.TBDMode === "Customized" &&
+        this.renderTBDComponents()
+      }
+
+    </div>
+  )
+
+  // render Climate, Drainage Area, River Size and Precision Components
+  renderTBDComponents = () => (
+    <div>
+      <ClimateOrders
+        submitClicked = {this.state.submitClicked}
+        selectedClimate = {this.state.selectedClimate}
+        selectedFirstOrder = {this.state.selectedFirstOrder}
+        selectedKoppen = {this.state.selectedKoppen}
+        enabledFirstOrderDropdown = {this.state.enabledFirstOrderDropdown}
+        enabledKoppenDropdown = {this.state.enabledKoppenDropdown}
+        climateFromDropdown = {this.state.climateFromDropdown}
+        setClimateSelectedOption = {this.setClimateSelectedOption}
+        handleClimateSelectionChangeDropDown = {this.handleClimateSelectionChangeDropDown}
+      />
+
+      <DrainageArea
+        submitClicked = {this.state.submitClicked}
+        drainage_low = {this.state.drainage_low}
+        drainage_high = {this.state.drainage_high}
+        setRangeValues={this.setRangeValues}
+        updateFieldValue={this.updateFieldValue}
+      />
+
+      <RiverSize
+        submitClicked = {this.state.submitClicked}
+        riverDepth_Min = {this.state.riverLow}
+        riverDepth_Max = {this.state.riverHigh}
+        crossSectionalArea_Min = {this.state.riverLow}
+        crossSectionalArea_Max = {this.state.riverHigh}
+        selectedRiverSize = {this.state.selectedRiverSize}
+        setRiverSizeSelectedOption= {this.setRiverSizeSelectedOption}
+        setRangeValues = {this.setRangeValues}
+        updateFieldValue = {this.updateFieldValue}
+        toggleRiverWidthAttr = {this.state.toggleRiverWidthAttr}
+      />
+
+      <TBDPrecision
+        submitClicked = {this.state.submitClicked}
+        selectedPrecision = {this.state.selectedPrecision}
+        setPrecisionSelectedOption= {this.setPrecisionSelectedOption}
+      />
+
+    </div>
+  )
+
+  renderRiverChannelTable = () => (
+    <div>
+      {this.state.TBDMode==="Customized" &&
+        <div>
+          <RiverChannelsTable
+            data={this.state.tableData}
+            origin="/FulcrumApproach"
+          />
+        </div>
+      }
+    </div>
+  )
+
+
+  //----------------------------------------------------------------------
+  //
+  //                              Main
+  //
+  //----------------------------------------------------------------------
 
   render() {
     const {
@@ -619,157 +756,46 @@ class FulcrumApproach extends Component {
     return (
       <form onSubmit={this.handleSubmit} className="form">
 
-        <div className="back-button-div-fulcrum">
-           {!this.state.submitted &&
-             <Link to="/"
-             className="back-button-link">
-                 Back
-              </Link>
-
-           }
-        </div>
+        {this.renderBackBtn()}
 
         <h1>
           Fulcrum Approach
         </h1>
 
         {!this.state.submitted &&
-
-
           <div >
-            <div className="enclosing-border">
-            {/* <Select
-              value={this.state.measuringSystem && this.state.measuringSystem.value}
-              onChange={this.setMeasureSystem}
-              autoFocus
-              autoBlur
-              searchable
-              options={[
-                { value: 'metric', label: 'Metric' },
-                { value: 'imperial', label: 'Imperial' },
-              ]}
-            /> */}
-
-
-
-            {fieldInputs.map(
-              (fieldObject,index) => (
-                <FulcrumInputComponent
-                  key={fieldObject.title}
-                  title = {fieldObject.title}
-                  name = {fieldObject.name}
-                  state = {fieldObject.state}
-                  isValid = {fieldObject.isValid}
-                  submitted = {this.state.submitClicked}
-                  update = {this.updateFieldValue}
-                  validate = {this.validateInputFulcrum}
-                />
-              )
-            )}
-
-            </div>
-
 
             <div className="enclosing-border">
-
-              <div className="TBD-div">
-                  {
-                    !this.state.defaultTBD && !this.state.customizedTBD &&
-                    <div>
-
-                      <RadioGroup
-                        onChange={ this.setSelectedTBDMode } horizontal
-                      >
-                        <RadioButton
-                          value="default"
-                          pointColor="green">
-                          Default TBD [default value]
-                        </RadioButton>
-                        <RadioButton
-                          value="customized"
-                          pointColor="green">
-                          Customized TDB
-                        </RadioButton>
-                      </RadioGroup>
-                    </div>
-                  }
-              </div>
-
-
-                  {this.state.TBDMode === "Default" &&
-                    <div>
-                      TBD will be calculated using Default value of [...]
-                    </div>
-                  }
-
-                  {this.state.TBDMode === "Customized" &&
-                    <div>
-                      <ClimateOrders
-                        submitClicked = {this.state.submitClicked}
-                        selectedClimate = {this.state.selectedClimate}
-                        selectedFirstOrder = {this.state.selectedFirstOrder}
-                        selectedKoppen = {this.state.selectedKoppen}
-                        enabledFirstOrderDropdown = {this.state.enabledFirstOrderDropdown}
-                        enabledKoppenDropdown = {this.state.enabledKoppenDropdown}
-                        climateFromDropdown = {this.state.climateFromDropdown}
-                        setClimateSelectedOption = {this.setClimateSelectedOption}
-                        handleClimateSelectionChangeDropDown = {this.handleClimateSelectionChangeDropDown}
-                      />
-
-                      <DrainageArea
-                        submitClicked = {this.state.submitClicked}
-                        drainage_low = {this.state.drainage_low}
-                        drainage_high = {this.state.drainage_high}
-                        setRangeValues={this.setRangeValues}
-                        updateFieldValue={this.updateFieldValue}
-                      />
-
-                      <RiverSize
-                        submitClicked = {this.state.submitClicked}
-                        riverDepth_Min = {this.state.riverLow}
-                        riverDepth_Max = {this.state.riverHigh}
-                        crossSectionalArea_Min = {this.state.riveriverLow}
-                        crossSectionalArea_Max = {this.state.riverHigh}
-                        selectedRiverSize = {this.state.selectedRiverSize}
-                        setRiverSizeSelectedOption= {this.setRiverSizeSelectedOption}
-                        setRangeValues = {this.setRangeValues}
-                        updateFieldValue = {this.updateFieldValue}
-                        toggleRiverWidthAttr = {this.state.toggleRiverWidthAttr}
-                      />
-
-                      <TBDPrecision
-                        submitClicked = {this.state.submitClicked}
-                        selectedPrecision = {this.state.selectedPrecision}
-                        setPrecisionSelectedOption= {this.setPrecisionSelectedOption}
-                      />
-
-                    </div>
-                  }
-
-
+              {fieldInputs.map(
+                (fieldObject,index) => (
+                  <FulcrumInputComponent
+                    key={fieldObject.title}
+                    title = {fieldObject.title}
+                    name = {fieldObject.name}
+                    state = {fieldObject.state}
+                    isValid = {fieldObject.isValid}
+                    submitted = {this.state.submitClicked}
+                    update = {this.updateFieldValue}
+                    validate = {this.validateInputFulcrum}
+                  />
+                )
+              )}
             </div>
+
+            {this.renderTBD()}
 
             {!this.state.inputs_validated &&
             <div>
               Please check the inputs and make sure you have entered all correct values!
             </div>}
 
-            <div>
-              {/* SUBMIT BUTTON */}
-              <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
-                Submit
-              </button>
-            </div>
+            {this.renderSubmitBtn()}
 
           </div>
         }
 
         {this.state.submitted &&
           <div>
-            {/* <button onClick={this.printResponse}>
-              DISPLAY RESPONSE
-            </button> */}
-
             <div className="">
                <button onClick={this.toggleSubmitted}>Return</button>
             </div>
@@ -783,13 +809,8 @@ class FulcrumApproach extends Component {
               />
             )}
 
-            {this.state.TBDMode==="Customized" &&
-              <div>
-                <RiverChannelsTable
-                  data={this.state.tableData}
-                />
-              </div>
-            }
+            {this.renderRiverChannelTable()}
+
           </div>
         }
 

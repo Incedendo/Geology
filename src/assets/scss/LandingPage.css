@@ -1,0 +1,39 @@
+.enclosing-border-landing-page {
+  border: 1px solid;
+  margin: 30px 30px 30px 30px;
+  padding: 20px;
+  border-radius: 15px; }
+
+.approach {
+  text-align: center; }
+
+.btn-go-fulcrum {
+  position: absolute;
+  bottom: 170px;
+  right: 60px; }
+
+.btn-go-tbd {
+  position: absolute;
+  bottom: 170px;
+  right: 60px; }
+
+.btn-go-analog {
+  position: absolute;
+  bottom: 40px;
+  right: 60px; }
+
+.background-img {
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 7px;
+  width: 650px;
+  background-image: url("https://www.google.com/search?q=mountain&safe=active&source=lnms&tbm=isch&sa=X&ved=0ahUKEwispumkw5DaAhVR7qwKHduVA-MQ_AUICigB&biw=1920&bih=983&dpr=1#imgrc=hrG1Cy6D5QX5PM"); }
+
+.flipcard-div {
+  size: 100%; }
+
+.div-fulcrum-approach {
+  margin-bottom: 180px; }
+
+.div-TBD-approach {
+  margin-bottom: 140px; }

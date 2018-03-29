@@ -6,11 +6,6 @@ import '../../assets/scss/include.scss';
 
 class DetailedChannelView extends Component{
    state = {
-     address: 'London, United Kingdom',
-     position: {
-       latitude: 51.5085300,
-       longitude: -0.1257400
-     },
      initial_map_zoom_level: 8,
    };
 
@@ -22,13 +17,12 @@ class DetailedChannelView extends Component{
      console.log(this.props);
      return(
        <div>
-         <div className="back-button-div-general">
-            <Link to="/TBDApproach"
+         {/* <div className="back-button-div-general">
+            <Link to={this.props.location.state.origin}
               className="back-button-link">
                   Back
             </Link>
-
-         </div>
+         </div> */}
 
          <div className="enclosing-border">
 
@@ -52,7 +46,7 @@ class DetailedChannelView extends Component{
                "margin-right": "20px",
                "margin-bottom": "30px"
              }}>
-               <table>
+               <table className="table-margin">
                  <tr>
                    <th>Firstname</th>
                    <th>Lastname</th>
@@ -72,12 +66,12 @@ class DetailedChannelView extends Component{
              </div>
 
              <div className="enclosing-border inline" style={{
-               width: "40%",
+               width: "60%",
                "margin-left": "20px",
                "margin-right": "20px",
                "margin-bottom": "30px"
              }}>
-               <table>
+               <table className="table-margin">
                  <tr>
                    <th>Firstname</th>
                    <th>Lastname</th>
@@ -104,7 +98,7 @@ class DetailedChannelView extends Component{
                "margin-right": "20px",
                "margin-bottom": "30px"
              }}>
-               <table>
+               <table className="table-margin">
                  <tr>
                    <th>Firstname</th>
                    <th>Lastname</th>
@@ -129,7 +123,7 @@ class DetailedChannelView extends Component{
                "margin-right": "20px",
                "margin-bottom": "30px"
              }}>
-               <table>
+               <table className="table-margin">
                  <tr>
                    <th>Firstname</th>
                    <th>Lastname</th>
@@ -166,45 +160,3 @@ class DetailedChannelView extends Component{
 }
 
 export default DetailedChannelView;
-
-
-// <div
-//   style={{
-//     width: "40%",
-//     "margin-left": "20px",
-//     "margin-right": "20px",
-//     "margin-bottom": "30px"
-//   }}
-//   className="inline"
-// ><ChannelLocation/></div>
-//
-// <div
-//   style={{
-//     width: "40%",
-//     "margin-left": "20px",
-//     "margin-right": "20px",
-//     "margin-bottom": "30px"
-//   }}
-// className="inline"
-// ><ChannelAttributes/></div>
-//
-// <div
-//   style={{
-//     width: "40%",
-//     "margin-left": "20px",
-//     "margin-right": "20px",
-//     "margin-bottom": "30px"
-//   }}
-//   className="inline"
-// ><ClimateInformation/></div>
-//
-// <div
-//   style={{
-//     width: "40%",
-//     "margin-left": "20px",
-//     "margin-right": "20px",
-//     "margin-bottom": "30px"
-//   }}
-//   className="inline"
-// ><ChannelReference/></div>
-//

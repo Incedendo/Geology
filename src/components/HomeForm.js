@@ -5,24 +5,24 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import LandingPage from './LandingPage';
 
 class HomeForm extends Component {
-  state = {
-      fulcrumApproach: false,
-      tbd: false,
-  };
+  // state = {
+  //     fulcrumApproach: false,
+  //     tbd: false,
+  // };
 
-  toggleFulcrum = () => {
-    // console.log("posting Fulcrum")
-    this.setState((prevState) => ({fulcrumApproach: !prevState.fulcrumApproach}))
-
-    console.log("Fulcrum state: " + this.state.fulcrumApproach)
-  }
-
-  toggleTBD = () => {
-    // console.log("posting TBD")
-    this.setState((prevState) => ({tbd: !prevState.tbd}))
-
-    console.log("TBD state: " + this.state.tbd)
-  }
+  // toggleFulcrum = () => {
+  //   // console.log("posting Fulcrum")
+  //   this.setState((prevState) => ({fulcrumApproach: !prevState.fulcrumApproach}))
+  //
+  //   console.log("Fulcrum state: " + this.state.fulcrumApproach)
+  // }
+  //
+  // toggleTBD = () => {
+  //   // console.log("posting TBD")
+  //   this.setState((prevState) => ({tbd: !prevState.tbd}))
+  //
+  //   console.log("TBD state: " + this.state.tbd)
+  // }
 
   TBDSubscript(){
     const tbd = "BD";

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Grid, Row, Col } from 'react-bootstrap';
+import '../assets/scss/LandingPage.css';
 import '../assets/scss/include.scss';
 import LandingPage from './LandingPage';
 import HomeLinkComponent from './HomeLinkComponent';
@@ -10,6 +12,10 @@ class Home extends Component {
       <h1 className="center greenText">
           R.A.F.T.E.R
       </h1>
+
+      <h3 style={{"text-align": "center"}}>
+        River Analogue Fulcrum Theory Estimate Repository
+      </h3>
     </div>
   )
 
@@ -18,14 +24,22 @@ class Home extends Component {
       <div >
         {this.renderHeader()}
 
+        <Grid>
+          <Col md={8}>
+            <LandingPage />
+          </Col>
+
+          <Col md={4}>
+            <div className="enclosing-border-landing-page">
+              <HomeLinkComponent
+                pathname='/helpfullinks'
+                linkTitle= 'Research Documents/ White papers'
+              />
+            </div>
+          </Col>
+        </Grid>
+
         {/* <HomeForm /> */}
-        <LandingPage />
-
-        <HomeLinkComponent
-          pathname='/helpfullinks'
-          linkTitle= 'Research Documents/ White papers'
-        />
-
       </div>
     )
   }

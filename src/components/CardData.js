@@ -1,10 +1,10 @@
 export const topMenuOverlay = {
     overlay : {
       position          : 'fixed',
-      top               : "30%",
-      left              : "30%",
-      right             : "30%",
-      bottom            : "30%",
+      top               : "5%",
+      left              : "5%",
+      right             : "5%",
+      bottom            : "5%",
       backgroundColor   : 'rgba(255, 255, 255, 0.75)',
       zIndex            : 200,
     },
@@ -15,7 +15,7 @@ export const topMenuOverlay = {
       right                      : '0px',
       bottom                     : '0px',
       border                     : '1px solid #ccc',
-      background                 : '#000080',
+      background                 : 'gray',
       color                      : 'white',
       overflow                   : 'auto',
       WebkitOverflowScrolling    : 'touch',

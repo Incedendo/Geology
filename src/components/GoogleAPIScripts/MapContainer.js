@@ -8,10 +8,9 @@ export class MapContainer extends Component {
   }
 
   render() {
-
     const style = {
-      width: '50%',
-      height: '50%'
+      width: '60%',
+      height: '70%',
     }
 
     return (
@@ -19,8 +18,8 @@ export class MapContainer extends Component {
         google={this.props.google}
         style={style}
           initialCenter={{
-            lat: 40.854885,
-            lng: -88.081807
+            lat: this.props.lat,
+            lng: this.props.long,
           }}
         zoom={15}
       >
@@ -30,7 +29,7 @@ export class MapContainer extends Component {
 
         <InfoWindow onClose={this.onInfoWindowClose}>
             <div>
-              <h1>{this.state.selectedPlace.name}</h1>
+              <h1>???</h1>
             </div>
         </InfoWindow>
       </Map>

@@ -10,6 +10,7 @@ class AnalogComponent extends Component{
         <TBDAnalogFrame
           componentTitle="Analog"
           displayedPresicion={false}
+          origin="/AnalogChannels"
         />
       </div>
     )
