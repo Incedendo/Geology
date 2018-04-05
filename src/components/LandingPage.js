@@ -54,7 +54,7 @@ class LandingPage extends Component{
 
   renderFulcrumContent = () => (
     <div className="background-img">
-      Fulcrum Approach:
+      <span className="green-text">Fulcrum Approach:</span>
       <ul>
         <li>
           Leverage the Fulcrum approach to estimate source-to-sink sediment flux calculations using readily available data in the rock record of channel fill thickness and grainsize.
@@ -70,7 +70,7 @@ class LandingPage extends Component{
 
   renderTBDContent = () => (
     <div className="background-img">
-      TBD Approach:
+      <span className="green-text">TBD Approach:</span>
       <ul>
         <li>
           Query a database of over 500 streams, selecting stream specific attributes of climate, drainage area and/or channel size to calculate an average annual days at bankfull duration (tbd) value.
@@ -83,7 +83,7 @@ class LandingPage extends Component{
 
   renderAnalogContent = () => (
     <div className="background-img">
-      Analog Approach:
+      <span className="green-text">Analog Approach:</span>
       <ul>
         <li>
           Select parameters of climate, drainage area and/or channel size to query a database of over 600 streams and return all analogous rivers based on the designated attributes.
@@ -105,150 +105,6 @@ class LandingPage extends Component{
     </div>
   )
 
-  renderFulcrumOnClick = () => (
-    <div className="enclosing-border-landing-page">
-      {/* <h3 className="approach">
-        <a onClick={this.toggleDisplayFulcrum}>
-          Fulcrum Approach
-        </a>
-      </h3>
-
-      {this.state.displayedFulcrum && this.renderFulcrumContent()}  */}
-
-      {this.renderFulcrumContent()}
-    </div>
-  )
-
-  renderTBDExpandOnClick = () => (
-    <div className="enclosing-border-landing-page">
-      <h3 className="approach">
-        <a onClick={this.toggleDisplayTBD}>
-          Bankfull Duration (tbd)
-        </a>
-      </h3>
-
-      {this.state.displayedTBD && this.renderTBDContent()}
-    </div>
-  )
-
-  renderAnalogExplanOnClick = () => (
-    <div className="enclosing-border-landing-page">
-      <h3 className="approach">
-        <a
-          onClick={this.toggledisplayAnalog}
-        >
-          River Analogue Search
-        </a>
-      </h3>
-
-      {this.state.displayedAnalog && this.renderAnalogContent()}
-
-    </div>
-  )
-
-  renderFulcrumFlipCard = () => {
-
-    var hoverClass = classNames({
-      "hover": this.state.isHoveredFulcrum,
-    })
-
-    return(
-      <div className="Fulcrum">
-        <div
-          onClick={this.toggleIsFlippedFulcrum}
-          onMouseEnter={this.set("isHoveredFulcrum")}
-          onMouseLeave={this.unset("isHoveredFulcrum")}
-          className={hoverClass}
-        >
-          <FlipCard
-            disabled={true}
-            flipped={this.state.isFlippedFulcrum}
-            style={{
-              "width": "100%",
-            }}
-          >
-            <div className="flipcard-div">
-              <h3 className="approach">
-                Fulcrum Approach
-              </h3>
-            </div>
-
-            {this.renderFulcrumContent()}
-
-          </FlipCard>
-        </div>
-      </div>
-    )
-  }
-
-  renderTBDFLipCard = () => {
-    var hoverClass = classNames({
-      "hover": this.state.isHoveredTBD
-    })
-
-    return(
-      <div className="TBD">
-        <div
-          onClick={this.toggleIsFlippedTBD}
-          onMouseEnter={this.set("isHoveredTBD")}
-          onMouseLeave={this.unset("isHoveredTBD")}
-          className={hoverClass}
-        >
-          <FlipCard
-            disabled={true}
-            flipped={this.state.isFlippedTBD}
-            style={{
-              "width": "100%",
-            }}
-          >
-            <div className="flipcard-div">
-              <h3 className="approach">
-                TBD Approach
-              </h3>
-            </div>
-
-            {this.renderTBDContent()}
-
-          </FlipCard>
-        </div>
-      </div>
-    )
-  }
-
-  renderAnalogFlipCard = () => {
-    var hoverClass = classNames({
-      "hover": this.state.isHoveredAnalog,
-    })
-
-    return(
-      <div className="Analog">
-        <div
-          onClick={this.toggleIsFlippedAnalog}
-          onMouseEnter={this.set("isHoveredAnalog")}
-          onMouseLeave={this.unset("isHoveredAnalog")}
-          className={hoverClass}
-        >
-          <FlipCard
-            disabled={true}
-            flipped={this.state.isFlippedAnalog}
-            style={{
-              "width": "100%",
-            }}
-          >
-            <div className="flipcard-div">
-              <h3 className="approach">
-                Analog Approach
-              </h3>
-            </div>
-
-            {this.renderAnalogContent()}
-
-          </FlipCard>
-        </div>
-      </div>
-    )
-  }
-
   render(){
     return(
       <div className="main-div-top-margin">
@@ -269,7 +125,7 @@ class LandingPage extends Component{
 
           <Col lg={3} md={4} sm={6}>
             <div className="div-helpful rounded-border purple-background">
-              <h3 className="center-text div-helpful-link">
+              <h3 className="center-text div-helpful-link green-text">
                 Helpful Links
               </h3>
               <div className="div-helpful-link">
@@ -323,3 +179,147 @@ class LandingPage extends Component{
 }
 
 export default LandingPage;
+
+// renderFulcrumOnClick = () => (
+//   <div className="enclosing-border-landing-page">
+//     {/* <h3 className="approach">
+//       <a onClick={this.toggleDisplayFulcrum}>
+//         Fulcrum Approach
+//       </a>
+//     </h3>
+//
+//     {this.state.displayedFulcrum && this.renderFulcrumContent()}  */}
+//
+//     {this.renderFulcrumContent()}
+//   </div>
+// )
+//
+// renderTBDExpandOnClick = () => (
+//   <div className="enclosing-border-landing-page">
+//     <h3 className="approach">
+//       <a onClick={this.toggleDisplayTBD}>
+//         Bankfull Duration (tbd)
+//       </a>
+//     </h3>
+//
+//     {this.state.displayedTBD && this.renderTBDContent()}
+//   </div>
+// )
+//
+// renderAnalogExplanOnClick = () => (
+//   <div className="enclosing-border-landing-page">
+//     <h3 className="approach">
+//       <a
+//         onClick={this.toggledisplayAnalog}
+//       >
+//         River Analogue Search
+//       </a>
+//     </h3>
+//
+//     {this.state.displayedAnalog && this.renderAnalogContent()}
+//
+//   </div>
+// )
+//
+// renderFulcrumFlipCard = () => {
+//
+//   var hoverClass = classNames({
+//     "hover": this.state.isHoveredFulcrum,
+//   })
+//
+//   return(
+//     <div className="Fulcrum">
+//       <div
+//         onClick={this.toggleIsFlippedFulcrum}
+//         onMouseEnter={this.set("isHoveredFulcrum")}
+//         onMouseLeave={this.unset("isHoveredFulcrum")}
+//         className={hoverClass}
+//       >
+//         <FlipCard
+//           disabled={true}
+//           flipped={this.state.isFlippedFulcrum}
+//           style={{
+//             "width": "100%",
+//           }}
+//         >
+//           <div className="flipcard-div">
+//             <h3 className="approach green-text">
+//               Fulcrum Approach
+//             </h3>
+//           </div>
+//
+//           {this.renderFulcrumContent()}
+//
+//         </FlipCard>
+//       </div>
+//     </div>
+//   )
+// }
+//
+// renderTBDFLipCard = () => {
+//   var hoverClass = classNames({
+//     "hover": this.state.isHoveredTBD
+//   })
+//
+//   return(
+//     <div className="TBD">
+//       <div
+//         onClick={this.toggleIsFlippedTBD}
+//         onMouseEnter={this.set("isHoveredTBD")}
+//         onMouseLeave={this.unset("isHoveredTBD")}
+//         className={hoverClass}
+//       >
+//         <FlipCard
+//           disabled={true}
+//           flipped={this.state.isFlippedTBD}
+//           style={{
+//             "width": "100%",
+//           }}
+//         >
+//           <div className="flipcard-div">
+//             <h3 className="approach green-text">
+//               TBD Approach
+//             </h3>
+//           </div>
+//
+//           {this.renderTBDContent()}
+//
+//         </FlipCard>
+//       </div>
+//     </div>
+//   )
+// }
+//
+// renderAnalogFlipCard = () => {
+//   var hoverClass = classNames({
+//     "hover": this.state.isHoveredAnalog,
+//   })
+//
+//   return(
+//     <div className="Analog">
+//       <div
+//         onClick={this.toggleIsFlippedAnalog}
+//         onMouseEnter={this.set("isHoveredAnalog")}
+//         onMouseLeave={this.unset("isHoveredAnalog")}
+//         className={hoverClass}
+//       >
+//         <FlipCard
+//           disabled={true}
+//           flipped={this.state.isFlippedAnalog}
+//           style={{
+//             "width": "100%",
+//           }}
+//         >
+//           <div className="flipcard-div">
+//             <h3 className="approach green-text">
+//               Analog Approach
+//             </h3>
+//           </div>
+//
+//           {this.renderAnalogContent()}
+//
+//         </FlipCard>
+//       </div>
+//     </div>
+//   )
+// }
