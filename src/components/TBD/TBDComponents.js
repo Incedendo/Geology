@@ -10,7 +10,8 @@ import classNames from 'classnames';
 
 import '../../assets/scss/include.scss';
 
-const pointColor = "#23CE2B";
+const rootColor = "#23CE2B";
+const pointColor = "#FFFFFF";
 
 export const ClimateOrders = (props) => {
 
@@ -39,6 +40,7 @@ export const ClimateOrders = (props) => {
                >
                  <RadioButton
                    value="FirstOrder"
+                   rootColor = {props.selectedClimate ==="" ? "white" : "grey"}
                    pointColor={pointColor}
                    iconInnerSize="0px"
                    selected={props.selectedClimate==="FirstOrder"}>
@@ -46,6 +48,7 @@ export const ClimateOrders = (props) => {
                  </RadioButton>
                  <RadioButton
                    value="KoppenClassification"
+                   rootColor = {props.selectedClimate ==="" ? "white" : "grey"}
                    pointColor={pointColor}
                    iconInnerSize="0px"
                    selected={props.selectedClimate==="KoppenClassification"}>
@@ -242,6 +245,7 @@ export const RiverSize = (props) => {
            >
              <RadioButton
                value="RiverDepth"
+               rootColor = {props.selectedRiverSize ==="" ? "white" : "grey"}
                pointColor={pointColor}
                iconInnerSize="0px"
              >
@@ -249,6 +253,7 @@ export const RiverSize = (props) => {
              </RadioButton>
              <RadioButton
                value="CrossSectionalArea"
+               rootColor = {props.selectedRiverSize ==="" ? "white" : "grey"}
                pointColor={pointColor}
                iconInnerSize="0px"
              >
@@ -351,6 +356,7 @@ export const TBDPrecision = (props) =>{
           >
             <RadioButton
               value="10%"
+              rootColor = {props.selectedPrecision ==="" ? "white" : "grey"}
               pointColor={pointColor}
               iconInnerSize="0px"
             >
@@ -358,6 +364,7 @@ export const TBDPrecision = (props) =>{
             </RadioButton>
             <RadioButton
               value="20%"
+              rootColor = {props.selectedPrecision ==="" ? "white" : "grey"}
               pointColor={pointColor}
               iconInnerSize="0px"
             >

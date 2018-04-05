@@ -23,15 +23,15 @@ class FulcrumApproach extends Component {
 
   state = {
     post: [],
-    AvgBkflDpt: 0,
-    BkflChanWdt: 0,
-    HydrolicRad: 0,
-    Dee16: 0,
-    Dee50: 0,
-    Dee84: 0,
-    Dee90: 0,
-    SedimentDensity: 0,
-    DMLMult: 0,
+    AvgBkflDpt: '',
+    BkflChanWdt: '',
+    HydrolicRad: '',
+    Dee16: '',
+    Dee50: '',
+    Dee84: '',
+    Dee90: '',
+    SedimentDensity: '',
+    DMLMult: '',
 
     valid_AvgBkflDpt: false,
     valid_BkflChanWdt: false,
@@ -54,6 +54,7 @@ class FulcrumApproach extends Component {
 
     //Customized TBD parameters:
         climateFromDropdown: "",
+        selectedClimate: "",
 
         // 6 inputs for the text fields:
         drainage_low: 0,
@@ -533,24 +534,26 @@ class FulcrumApproach extends Component {
 
   //render the customized TBD Approach within Fulcrum
   renderTBD = () => (
-    <div className="enclosing-border purple-background">
+    <div className={this.state.TBDMode ==="" ? "enclosing-border" : " enclosing-border purple-background"}>
 
       <div className="TBD-div">
           {!this.state.defaultTBD && !this.state.customizedTBD &&
-            <div>
+            <div className="">
               <RadioGroup
                 onChange={ this.setSelectedTBDMode } horizontal
               >
                 <RadioButton
                   value="default"
-                  pointColor="#23CE2B"
+                  rootColor={this.state.TBDMode ==="" ? "#4B1979" : "grey" }
+                  pointColor="white"//"#23CE2B"
                   iconInnerSize="0px"
                 >
                   Default TBD [default value]
                 </RadioButton>
                 <RadioButton
                   value="customized"
-                  pointColor="#23CE2B"
+                  rootColor={this.state.TBDMode ==="" ? "#4B1979" : "grey" }
+                  pointColor="white"//"#23CE2B"
                   iconInnerSize="0px"
                 >
                   Customized TDB
@@ -576,7 +579,7 @@ class FulcrumApproach extends Component {
 
   // render Climate, Drainage Area, River Size and Precision Components
   renderTBDComponents = () => (
-    <div >
+    <div className="purple-background">
       <ClimateOrders
         submitClicked = {this.state.submitClicked}
         selectedClimate = {this.state.selectedClimate}
@@ -784,7 +787,7 @@ class FulcrumApproach extends Component {
           <div >
             {this.renderHeader()}
 
-            <div className="enclosing-border purple-background">
+            <div className="enclosing-border">
               {fieldInputs.map(
                 (fieldObject,index) => (
                   <FulcrumInputComponent

@@ -13,23 +13,24 @@ import RiverChannelsTable  from "./TBD/RiverChannelsTable";
 
 import '../assets/scss/include.scss';
 
-const pointColor = "#23CE2B";
+const rootColor = "#23CE2B";
+const pointColor = "#FFFFFF";
 
 class TBDAnalogFrame extends Component{
   state = {
-    selectedClimate: "FirstOrder", // set when Climate radio buttons are clicked
+    selectedClimate: "", // set when Climate radio buttons are clicked
     climateFromDropdown: { value: 'B', label: 'Arid,Desert,Hot - BWh' },
 
     // 6 inputs for the text fields:
     drainage_low: 1,
     drainage_high: 100,
 
-    selectedRiverSize: "RiverDepth", // set when river size radio buttons are clicked
+    selectedRiverSize: "", // set when river size radio buttons are clicked
     isCrossSection: false,
     riverLow: 1,
     riverHigh: 10000000,
 
-    selectedPrecision: "10%", // set when Precision Radio Buttons are clicked
+    selectedPrecision: "", // set when Precision Radio Buttons are clicked
     isWithin10: true,
     isWithin20: false,
 
@@ -302,13 +303,15 @@ class TBDAnalogFrame extends Component{
                      value="FirstOrder"
                      //iconSize="5px"
                      iconInnerSize="0px"
-                     pointColor={pointColor}
+                     rootColor = {this.state.selectedClimate ==="" ? "white" : "grey"}
+                     pointColor = {pointColor}
                      selected={this.state.selectedClimate==="FirstOrder"}>
                      Major Climate
                    </RadioButton>
                    <RadioButton
                      value="KoppenClassification"
                      iconInnerSize="0px"
+                     rootColor = {this.state.selectedClimate ==="" ? "white" : "grey"}
                      pointColor={pointColor}
                      selected={this.state.selectedClimate==="KoppenClassification"}>
                      KÖppen Climate
@@ -518,6 +521,7 @@ class TBDAnalogFrame extends Component{
              >
                <RadioButton
                  value="RiverDepth"
+                 rootColor = {this.state.selectedRiverSize ==="" ? "white" : "grey"}
                  pointColor={pointColor}
                  iconInnerSize="0px"
                >
@@ -525,7 +529,8 @@ class TBDAnalogFrame extends Component{
                </RadioButton>
                <RadioButton
                  value="CrossSectionalArea"
-                 pointColor={pointColor}
+                 rootColor = {this.state.selectedRiverSize ==="" ? "white" : "grey"}
+                 pointColor = {pointColor}
                  iconInnerSize="0px"
                >
                  Cross Sectional Area (km squared)
@@ -626,12 +631,14 @@ class TBDAnalogFrame extends Component{
               onChange={ this.setPrecisionSelectedOption } horizontal
             >
               <RadioButton value="10%"
+                rootColor = {this.state.selectedPrecision ==="" ? "white" : "grey"}
                 pointColor={pointColor}
                 iconInnerSize="0px"
               >
                 10%
               </RadioButton>
               <RadioButton value="20%"
+                rootColor = {this.state.selectedPrecision ==="" ? "white" : "grey"}
                 pointColor={pointColor}
                 iconInnerSize="0px"
               >

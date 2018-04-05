@@ -1,5 +1,5 @@
 input{
-  border-radius: 5px;
+  border-radius: 7px;
 }
 
 .header{
@@ -7,6 +7,14 @@ input{
   color: white;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.fulcrum-input-title{
+  text-align: right;
+  color: white;
+  background-color: #4B1979; //official TCU purple
+  border-radius: 7px;
+  padding: 3px;
 }
 
 .rightAlignedText{
@@ -48,6 +56,10 @@ input{
     outline: none !important;
     border: 1px solid red;
     box-shadow: 0 0 10px #719ECE;
+}
+
+.imput-error{
+  border: 1px solid red;
 }
 
 .purple-background{
