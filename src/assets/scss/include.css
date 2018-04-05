@@ -51,11 +51,77 @@
     left: 50%;
     background: #7FC6A6; }
 
+img {
+  height: 70px;
+  vertical-align: top; }
+
+a {
+  color: white !important; }
+
+h1 {
+  color: green !important; }
+
+h3 {
+  text-align: center;
+  margin: 0px !important; }
+
+.left-div-img {
+  display: inline-block;
+  left: 0px;
+  width: 20%;
+  background-color: grey; }
+
+.img-left {
+  position: relative;
+  left: 0px; }
+
+.img-right {
+  position: relative;
+  right: 0px; }
+
+.right-div-img {
+  display: inline-block;
+  right: 0px;
+  width: 20%;
+  background-color: grey; }
+
+.contact-div {
+  display: inline-block;
+  background-color: grey;
+  width: 60%; }
+
 .greenText {
   color: green; }
 
 .center {
   text-align: center; }
+
+.home-header {
+  background-color: grey;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 3px;
+  height: 120px; }
+
+.home-footer {
+  position: absolute;
+  background-color: grey;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 80px; }
+
+.div-landingpage {
+  position: absolute;
+  top: 120px;
+  bottom: 80px;
+  left: 0px;
+  right: 0px; }
 
 .centeredPosition {
   margin-right: auto;
@@ -184,6 +250,15 @@
     .detailTaskbarCloseBut .btn-back-task:focus .one, .detailTaskbarCloseBut .btn-back-task:focus .two, .detailTaskbarCloseBut .btn-back-task:focus .three {
       background: #4c8af4; }
 
+input {
+  border-radius: 5px; }
+
+.header {
+  background-color: #4B1979;
+  color: white;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
 .rightAlignedText {
   text-align: right;
   font-weight: bold; }
@@ -194,14 +269,17 @@
 .margin-10 {
   margin: 10px; }
 
+.error-div-fulcrum {
+  margin-bottom: 10px; }
+
 .form {
   position: relative;
   margin-top: -10px; }
 
 .back-button-div-fulcrum {
   position: absolute;
-  margin-top: 0px;
-  margin-left: 40px; }
+  margin-top: 13px;
+  margin-left: 20px; }
 
 .TBD-div {
   margin-left: auto;
@@ -212,6 +290,27 @@
   outline: none !important;
   border: 1px solid red;
   box-shadow: 0 0 10px #719ECE; }
+
+.purple-background {
+  color: white;
+  background-color: #4B1979; }
+
+.black-txt {
+  color: black !important; }
+
+.submit-btn {
+  background: #4B1979;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  height: 50px;
+  padding: 8px; }
+
+button.submit-btn:hover {
+  background: white;
+  border: 2px #4B1979 solid;
+  color: #4B1979;
+  font-weight: bold; }
 
 .rightAlignedText {
   text-align: right; }
@@ -243,8 +342,13 @@
 
 .back-button-div-tbd {
   position: absolute;
-  margin-top: 20px;
-  margin-left: 40px; }
+  margin-top: 13px;
+  margin-left: 20px; }
+
+.back-btn {
+  border: 2px white solid;
+  background: #4B1979;
+  padding: 5px; }
 
 .inline-page-title {
   display: inline-block;
@@ -279,17 +383,49 @@
 .error-color-Koppen {
   border: 1px solid red; }
 
+.black-txt {
+  color: black !important; }
+
+.tbd-value-table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 50%; }
+
 .back-button-link {
   text-decoration: none !important;
-  border: 2px solid;
+  color: white;
+  border: 2px white solid;
+  border-radius: 8px;
   text-transform: uppercase;
   margin: 1rem auto;
   position: relative;
   display: block;
   overflow: hidden;
-  padding: 5px; }
+  padding: 8px; }
+
+a.back-button-link:hover {
+  background-color: white;
+  border: 2px #4B1979 solid;
+  color: #4B1979;
+  font-weight: bold; }
 
 .back-button-div-general {
   position: absolute;
   margin-top: 0px;
   margin-left: 40px; }
+
+.back-btn-result {
+  background: #4B1979;
+  border: 2px white solid;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px; }
+
+button.back-btn-result:hover {
+  background-color: white;
+  border: 2px #4B1979 solid;
+  color: #4B1979;
+  font-weight: bold; }

@@ -8,9 +8,6 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import classNames from 'classnames';
 
-//import other components
-// import RiverChannelsTable  from "./TBD/RiverChannelsTable";
-
 import '../../assets/scss/include.scss';
 
 export const ClimateOrders = (props) => {
@@ -40,15 +37,17 @@ export const ClimateOrders = (props) => {
                >
                  <RadioButton
                    value="FirstOrder"
-                   pointColor="green"
+                   pointColor="white"
+                   iconInnerSize="0px"
                    selected={props.selectedClimate==="FirstOrder"}>
-                   First Order
+                   Major Climate
                  </RadioButton>
                  <RadioButton
                    value="KoppenClassification"
-                   pointColor="green"
+                   pointColor="white"
+                   iconInnerSize="0px"
                    selected={props.selectedClimate==="KoppenClassification"}>
-                   Koppen Classification
+                   KÖppen Climate
                  </RadioButton>
                </RadioGroup>
              </div>
@@ -141,10 +140,12 @@ export const ClimateOrders = (props) => {
 export const DrainageArea = (props) => {
 
   var textfieldMin = classNames({
+    'black-txt': true,
     'text-field-error': props.submitClicked && (props.drainage_low <= 0 || props.drainage_low === "(positive number only)"),
   });
 
   var textfieldMax = classNames({
+    'black-txt': true,
     'text-field-error': props.submitClicked && (props.drainage_high <= 0 || props.drainage_low === "(positive number only)"),
   });
 
@@ -166,7 +167,8 @@ export const DrainageArea = (props) => {
           </Col>
           <Col sm={4} md={10} className="leftAlignedText">
             <div className="inline-with-right-margin">
-              Min: <input type="textbox"
+              Min: <input
+                type="textbox"
                 name="drainage_low"
                 className={textfieldMin}
                 onBlur={props.setRangeValues}
@@ -175,7 +177,8 @@ export const DrainageArea = (props) => {
               />
             </div>
             <div className="inline-no-right-margin">
-              Max: <input type="textbox"
+              Max: <input
+                type="textbox"
                 name="drainage_high"
                 className={textfieldMax}
                 onBlur={props.setRangeValues}
@@ -191,18 +194,22 @@ export const DrainageArea = (props) => {
 
 export const RiverSize = (props) => {
   var textfieldDepthMin = classNames({
+    'black-txt': true,
     'text-field-error': props.submitClicked && props.riverDepth_Min <= 0,
   });
 
   var textfieldDepthMax = classNames({
+    'black-txt': true,
     'text-field-error': props.submitClicked && props.riverDepth_Max <= 0,
   });
 
   var textfieldAreaMin = classNames({
+    'black-txt': true,
     'text-field-error': props.submitClicked && props.crossSectionalArea_Min <= 0,
   });
 
   var textfieldAreaMax = classNames({
+    'black-txt': true,
     'text-field-error': props.submitClicked && props.crossSectionalArea_Max <= 0,
   });
 
@@ -233,13 +240,15 @@ export const RiverSize = (props) => {
            >
              <RadioButton
                value="RiverDepth"
-               pointColor="green"
+               pointColor="white"
+               iconInnerSize="0px"
              >
                River Depth (km)
              </RadioButton>
              <RadioButton
                value="CrossSectionalArea"
-               pointColor="green"
+               pointColor="white"
+               iconInnerSize="0px"
              >
                Cross Sectional Area (km squared)
              </RadioButton>
@@ -256,7 +265,8 @@ export const RiverSize = (props) => {
           {props.selectedRiverSize === "RiverDepth" &&
           <div>
             <div className="inline-with-right-margin">
-              Min: <input type="textbox"
+              Min: <input
+                type="textbox"
                 name="riverLow"
                 className={textfieldDepthMin}
                 onBlur={props.setRangeValues}
@@ -265,7 +275,8 @@ export const RiverSize = (props) => {
               />
             </div>
             <div className="inline-no-right-margin">
-              Max: <input type="textbox"
+              Max: <input
+                type="textbox"
                 name="riverHigh"
                 className={textfieldDepthMax}
                 onBlur={props.setRangeValues}
@@ -279,7 +290,8 @@ export const RiverSize = (props) => {
           {props.selectedRiverSize === "CrossSectionalArea" &&
           <div>
             <div className="inline-with-right-margin">
-              Min: <input type="textbox"
+              Min: <input
+                type="textbox"
                 name="riverLow"
                 className={textfieldAreaMin}
                 onBlur={props.setRangeValues}
@@ -288,7 +300,8 @@ export const RiverSize = (props) => {
               />
             </div>
             <div className="inline-no-right-margin">
-              Max: <input type="textbox"
+              Max: <input
+                type="textbox"
                 name="riverHigh"
                 className={textfieldAreaMax}
                 onBlur={props.setRangeValues}
@@ -334,12 +347,18 @@ export const TBDPrecision = (props) =>{
           <RadioGroup
             onChange={ props.setPrecisionSelectedOption } horizontal
           >
-            <RadioButton value="10%"
-              pointColor="green">
+            <RadioButton
+              value="10%"
+              pointColor="white"
+              iconInnerSize="0px"
+            >
               10%
             </RadioButton>
-            <RadioButton value="20%"
-              pointColor="green">
+            <RadioButton
+              value="20%"
+              pointColor="white"
+              iconInnerSize="0px"
+            >
               20%
             </RadioButton>
           </RadioGroup>

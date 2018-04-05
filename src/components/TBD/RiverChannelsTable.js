@@ -7,6 +7,7 @@ import MyLink from '../Link/MyLink';
 // import {makeData} from './Utils.js';
 import DetailedChannelView from './DetailedChannelView';
 import DetailChannelModal from './DetailChannelModal';
+import MapContainer from '../GoogleAPIScripts/MapContainer';
 
 const fakeData = [
   {
@@ -79,32 +80,34 @@ class RiverChannelsTable extends Component{
     this.setState( (prevState) => ({modalIsOpen: !prevState.modalIsOpen}) );
   }
 
-
   render(){
 
-    console.log(this.props);
+    console.log(this.props.data);
+
+    let ebd;
+
+    if(this.props.tbdWithin10 !== -1){
+      ebd = this.props.tbdWithin10;
+    }else{
+      ebd = this.props.tbdWithin20;
+    }
 
     return(
       <div>
-        <div className="enclosing-border inline" style={{
-          width: "40%",
-          "margin-left": "20px",
-          "margin-right": "20px",
-          "margin-bottom": "30px"
-        }}>
-          <table className="table-margin">
+        <div className="tbd-value-table">
+          <table>
             <tr>
               <th>TBD Value</th>
             </tr>
             <tr>
-              <td>100</td>
+              <td>{ebd}</td>
             </tr>
           </table>
         </div>
 
         <ReactTable
           // data={this.props.data}
-          data={fakeData}
+          data={this.props.data}
           columns={[
             {
               Header: "Site Info",
@@ -120,10 +123,6 @@ class RiverChannelsTable extends Component{
                           pathname: "/TestView/"+
                           cellInfo.row.sitE_ID +"/"+
                           cellInfo.row.sitE_NAME +"/"+ cellInfo.row.latitude +"/"+ cellInfo.row.longitude,
-
-                          // state: {
-                          //   origin: this.props.origin,
-                          //  }
                         }}
                       >
                         {cellInfo.row.sitE_ID}
@@ -137,6 +136,8 @@ class RiverChannelsTable extends Component{
                         isOpen={this.state.modalIsOpen}
                         closeModal={this.toggleModal}
                         enabledModal={this.state.modalIsOpen}
+                        data={this.props.data}
+                        index={cellInfo.index}
                         id={cellInfo.row.sitE_ID}
                         siteName={cellInfo.row.sitE_NAME}
                         lat={cellInfo.row.latitude}
@@ -171,6 +172,7 @@ class RiverChannelsTable extends Component{
                 {
                   Header: "Site Name",
                   accessor: "sitE_NAME",
+                  minWidth: 400,
                 },
               ]
             },
@@ -209,18 +211,101 @@ class RiverChannelsTable extends Component{
               ]
             },
           ]}
-          defaultPageSize={2}
+          defaultPageSize={10}
           className="-striped -highlight"
           SubComponent={row => {
+            const data = this.props.data;
+            const index = row.index;
+            const rowInfo = data[index];
+
+            let ebd_stream;
+
+            if(this.props.tbdWithin10 !== -1){
+              ebd_stream = rowInfo.avG_WITHIN_10;
+            }else{
+              ebd_stream = rowInfo.avG_WITHIN_20;
+            }
+
             return (
               <div style={{ padding: "20px" }}>
-                <em>
-                  You can put any component you want here, even another React
-                  Table! :
-                  {row.sitE_ID}
-                </em>
-                <br />
-                <br />
+
+                id: {rowInfo.sitE_ID}
+
+                <div className="">
+                  <div className="table-margin">
+                    <table>
+                      <tr>
+                        <th>Site ID</th>
+                        <th>Site Name</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                      </tr>
+                      <tr>
+                        <td>{rowInfo.sitE_ID}</td>
+                        <td>{rowInfo.sitE_NAME}</td>
+                        <td>{rowInfo.latitude}</td>
+                        <td>{rowInfo.longitude}</td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div className="table-margin">
+                    <table>
+                      <tr>
+                        <th>Drainage Area</th>
+                        <th>Channel Width</th>
+                        <th>Channel Depth</th>
+                        <th>Source</th>
+                      </tr>
+                      <tr>
+                        <td>{rowInfo.drainagE_AREA_KM}</td>
+                        <td>{rowInfo.channeL_WIDTH_M}</td>
+                        <td>{rowInfo.channeL_DEPTH_M}</td>
+                        <td>{rowInfo.desC_SOURCE}</td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div>
+                    <div className="table-margin">
+                      <table>
+                        <tr>
+                          <th>Climate ID</th>
+                          <th>Climate Description</th>
+                        </tr>
+                        <tr>
+                          <td>{rowInfo.climatE_ID}</td>
+                          <td>{rowInfo.climatE_DESC}</td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div className="table-margin">
+                      <table>
+                        <tr>
+                          <th>Estimated Bankfull Discharge</th>
+                          <th>Reference</th>
+                        </tr>
+                        <tr>
+                          <td>{ebd_stream}</td>
+                          <td>{rowInfo.reF_SOURCE}</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                  {/* <div
+                    style={{
+                      "margin-top": "20px",
+                    }}
+                  >
+                    <MapContainer
+                      lat="41.210171"
+                      long="-73.898506"
+                    />
+                  </div> */}
+
+                </div>
 
 
               </div>

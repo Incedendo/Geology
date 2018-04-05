@@ -1,3 +1,8 @@
+.grid{
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
 .enclosing-border-landing-page{
   border: 1px solid;
   margin: 30px 30px 30px 30px;
@@ -5,13 +10,44 @@
   border-radius: 15px;
 }
 
+.main-div-top-margin{
+  padding-top: 20px;
+}
+
+.rounded-border{
+  border-radius: 8px;
+}
+
 .approach{
   text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.grey-background{
+  background-color: grey;
+}
+
+.purple-background{
+  background-color: 4B1979;
 }
 
 // .enclosing-border-landing-page h3.approach:hover {
 //   font-size: 30px;
 // }
+
+.btn-go-div{
+  position: relative;
+}
+
+.btn-go{
+  position: absolute;
+  right: 0px;
+  top: -30px;
+  background: grey;
+}
 
 .btn-go-fulcrum{
   position: absolute;
@@ -34,19 +70,41 @@
 .background-img{
   border: 1px solid black;
   border-radius: 7px;
-  padding: 7px;
-  width: 650px;
-  background-image: url("https://www.google.com/search?q=mountain&safe=active&source=lnms&tbm=isch&sa=X&ved=0ahUKEwispumkw5DaAhVR7qwKHduVA-MQ_AUICigB&biw=1920&bih=983&dpr=1#imgrc=hrG1Cy6D5QX5PM");
+  padding: 10px;
+  color: white;
+  background-color: #4B1979;
+  font-size: 18px;
 }
 
 .flipcard-div{
+  border: 1px solid black;
+  color: white;
+  background-color: #4B1979;
   size: 100%;
 }
 
+.div-analog-approach{
+  position: relative;
+  height: 80px;
+  height: 170px;
+}
+
 .div-fulcrum-approach{
-  margin-bottom: 180px;
+
 }
 
 .div-TBD-approach{
-  margin-bottom: 140px;
+  height: 180px;
+}
+
+.div-helpful{
+  padding: 10px;
+}
+
+.div-helpful-link{
+  padding: 5px;
+}
+
+.hover{
+  transform: translate(5px,5px);
 }

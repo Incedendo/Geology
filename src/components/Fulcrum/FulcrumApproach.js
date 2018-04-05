@@ -91,7 +91,16 @@ class FulcrumApproach extends Component {
   // send a POST request to the Middelware with all the parameters of the Fulcrum (AND TBD) approach.
   // Update stateDisplay response correspondingly
   postFulcrum = () => {
-    const JimPostUrl = 'https://g2dn2m2b1g.execute-api.us-east-1.amazonaws.com/Prod/api/main/Fulcrum';
+
+    let JimPostUrl = '';
+
+    if(this.state.TBDMode === "Default"){
+      JimPostUrl = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/Fulcrum';
+      console.log("default TBD");
+    }else if(this.state.TBDMode === "Customized"){
+      JimPostUrl = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/Comb';
+      console.log("customzed TBD");
+    }
 
     const postRequestData = {
       method: 'POST',
@@ -188,6 +197,7 @@ class FulcrumApproach extends Component {
       this.setState({
         TBDMode: "Default",
         isTBD: true,
+        submitClicked: false,
       });
     }else{
       this.setState({
@@ -493,29 +503,38 @@ class FulcrumApproach extends Component {
   //
   //----------------------------------------------------------------------
 
-  renderBackBtn = () => (
-    <div className="back-button-div-fulcrum">
-       {!this.state.submitted &&
-         <Link to="/"
-         className="back-button-link">
-             Back
-          </Link>
-       }
+  renderHeader = () => (
+    <div className="header">
+      <div className="back-button-div-fulcrum">
+         {!this.state.submitted &&
+           <Link to="/"
+           className="back-button-link">
+               Back
+            </Link>
+         }
+
+      </div>
+
+      <h1>
+        Fulcrum Approach
+      </h1>
     </div>
+
   )
 
   renderSubmitBtn = () => (
     <div>
       {/* SUBMIT BUTTON */}
-      <button type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
-        Submit
+      <button type="submit" onClick={this.handleSubmit} className="submit-btn">
+        G'\xD6'
+
       </button>
     </div>
   )
 
   //render the customized TBD Approach within Fulcrum
   renderTBD = () => (
-    <div className="enclosing-border">
+    <div className="enclosing-border purple-background">
 
       <div className="TBD-div">
           {!this.state.defaultTBD && !this.state.customizedTBD &&
@@ -525,12 +544,16 @@ class FulcrumApproach extends Component {
               >
                 <RadioButton
                   value="default"
-                  pointColor="green">
+                  pointColor="white"
+                  iconInnerSize="0px"
+                >
                   Default TBD [default value]
                 </RadioButton>
                 <RadioButton
                   value="customized"
-                  pointColor="green">
+                  pointColor="white"
+                  iconInnerSize="0px"
+                >
                   Customized TDB
                 </RadioButton>
               </RadioGroup>
@@ -554,7 +577,7 @@ class FulcrumApproach extends Component {
 
   // render Climate, Drainage Area, River Size and Precision Components
   renderTBDComponents = () => (
-    <div>
+    <div >
       <ClimateOrders
         submitClicked = {this.state.submitClicked}
         selectedClimate = {this.state.selectedClimate}
@@ -754,18 +777,15 @@ class FulcrumApproach extends Component {
     ];
 
     return (
-      <form onSubmit={this.handleSubmit} className="form">
-
-        {this.renderBackBtn()}
-
-        <h1>
-          Fulcrum Approach
-        </h1>
+      <form onSubmit={this.handleSubmit} className="form" style={{
+        'background-color': '#DBDBD9'
+      }}>
 
         {!this.state.submitted &&
           <div >
+            {this.renderHeader()}
 
-            <div className="enclosing-border">
+            <div className="enclosing-border purple-background">
               {fieldInputs.map(
                 (fieldObject,index) => (
                   <FulcrumInputComponent
@@ -785,9 +805,10 @@ class FulcrumApproach extends Component {
             {this.renderTBD()}
 
             {!this.state.inputs_validated &&
-            <div>
-              Please check the inputs and make sure you have entered all correct values!
-            </div>}
+              <div className="error-div-fulcrum">
+                Please check the inputs and make sure you have entered all correct values!
+              </div>
+            }
 
             {this.renderSubmitBtn()}
 
@@ -796,8 +817,19 @@ class FulcrumApproach extends Component {
 
         {this.state.submitted &&
           <div>
-            <div className="">
-               <button onClick={this.toggleSubmitted}>Return</button>
+            <div className="header">
+              <div className='back-button-div-fulcrum'>
+                <button
+                  className="back-btn-result"
+                  onClick={this.toggleSubmitted}>
+                  BACK
+                </button>
+              </div>
+
+
+              <h1 className='inline-page-title'>
+                Result Page
+              </h1>
             </div>
 
             {FetchedResults.map(

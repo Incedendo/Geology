@@ -42,8 +42,14 @@
 
 .back-button-div-tbd {
   position: absolute;;
-  margin-top: 20px;
-  margin-left: 40px;
+  margin-top: 13px;
+  margin-left: 20px;
+}
+
+.back-btn{
+  border: 2px white solid;
+  background: #4B1979;
+  padding: 5px;
 }
 
 // .a-tag {
@@ -156,4 +162,15 @@
 
 .error-color-Koppen{
   border: 1px solid red;
+}
+
+.black-txt{
+  color: black !important;
+}
+.tbd-value-table{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 50%;
 }

@@ -48,6 +48,7 @@
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && surge -p build -d geology-ui.surge.sh"
+    "deploy": "npm run build && surge -p build -d geology-ui.surge.sh",
+    "awsdeploy": "aws s3 cp --recursive ./build s3://rafter-ui-bucket"
   }
 }

@@ -4,7 +4,7 @@ import HomeLinkComponent from './HomeLinkComponent';
 import '../assets/scss/LandingPage.css';
 import FlipCard from 'react-flipcard';
 import { Grid, Row, Col } from 'react-bootstrap';
-
+import classNames from 'classnames';
 
 class LandingPage extends Component{
   state = {
@@ -15,7 +15,15 @@ class LandingPage extends Component{
     isFlippedFulcrum: false,
     isFlippedTBD: false,
     isFlippedAnalog: false,
+
+    isHoveredFulcrum: false,
+    isHoveredTBD: false,
+    isHoveredAnalog: false,
   }
+
+  set = (id) => (e) => this.setState({[id]: true});
+
+  unset = (id) => (e) => this.setState({[id]: false});
 
   toggleDisplayFulcrum = (event) => {
     event.preventDefault();
@@ -46,7 +54,7 @@ class LandingPage extends Component{
 
   renderFulcrumContent = () => (
     <div className="background-img">
-      Fulcrum Approach Explanation
+      Fulcrum Approach:
       <ul>
         <li>
           Leverage the Fulcrum approach to estimate source-to-sink sediment flux calculations using readily available data in the rock record of channel fill thickness and grainsize.
@@ -56,54 +64,58 @@ class LandingPage extends Component{
         </li>
       </ul>
 
-      <div className="">
-        <button>
-          <HomeLinkComponent
-            pathname='/FulcrumApproach'
-            linkTitle= 'Go'
-          />
-        </button>
-      </div>
+      {this.renderGoBtn('/FulcrumApproach')}
     </div>
   )
 
   renderTBDContent = () => (
     <div className="background-img">
-      TBD Approach Explanation
+      TBD Approach:
       <ul>
         <li>
           Query a database of over 500 streams, selecting stream specific attributes of climate, drainage area and/or channel size to calculate an average annual days at bankfull duration (tbd) value.
         </li>
       </ul>
 
-      <div className="">
-        <button >
-          <HomeLinkComponent
-            pathname='/TBDApproach'
-            linkTitle= 'Go'
-          />
-        </button>
-      </div>
+      {this.renderGoBtn('/TBDApproach')}
     </div>
   )
 
   renderAnalogContent = () => (
     <div className="background-img">
-      Analog Approach Explanation
+      Analog Approach:
       <ul>
         <li>
           Select parameters of climate, drainage area and/or channel size to query a database of over 600 streams and return all analogous rivers based on the designated attributes.
         </li>
       </ul>
 
-      <div className="">
-        <button>
-          <HomeLinkComponent
-            pathname='/AnalogChannels'
-            linkTitle= 'Go'
-          />
-        </button>
-      </div>
+      {this.renderGoBtn('/AnalogChannels')}
+    </div>
+  )
+
+  renderGoBtn = (path) => (
+    <div className="btn-go-div">
+      <button className='btn-go'>
+        <HomeLinkComponent
+          pathname={path}
+          linkTitle= 'Go'
+        />
+      </button>
+    </div>
+  )
+
+  renderFulcrumOnClick = () => (
+    <div className="enclosing-border-landing-page">
+      {/* <h3 className="approach">
+        <a onClick={this.toggleDisplayFulcrum}>
+          Fulcrum Approach
+        </a>
+      </h3>
+
+      {this.state.displayedFulcrum && this.renderFulcrumContent()}  */}
+
+      {this.renderFulcrumContent()}
     </div>
   )
 
@@ -115,25 +127,7 @@ class LandingPage extends Component{
         </a>
       </h3>
 
-      {this.state.displayedTBD &&
-        <div>
-          <ul>
-            <li>
-              Query a database of over 500 streams, selecting stream specific attributes of climate, drainage area and/or channel size to calculate an average annual days at bankfull duration (tbd) value.
-            </li>
-          </ul>
-
-          <div className="">
-            <button >
-              <HomeLinkComponent
-                pathname='/TBDApproach'
-                linkTitle= 'Go'
-              />
-            </button>
-          </div>
-
-        </div>
-      }
+      {this.state.displayedTBD && this.renderTBDContent()}
     </div>
   )
 
@@ -147,121 +141,160 @@ class LandingPage extends Component{
         </a>
       </h3>
 
-      {this.state.displayedAnalog &&
-        <div>
-          <ul>
-            <li>
-              Select parameters of climate, drainage area and/or channel size to query a database of over 600 streams and return all analogous rivers based on the designated attributes.
-            </li>
-          </ul>
+      {this.state.displayedAnalog && this.renderAnalogContent()}
 
-          <div className="">
-            <button>
-              <HomeLinkComponent
-                pathname='/AnalogChannels'
-                linkTitle= 'Go'
-              />
-            </button>
-          </div>
+    </div>
+  )
 
+  renderFulcrumFlipCard = () => {
+
+    var hoverClass = classNames({
+      "hover": this.state.isHoveredFulcrum,
+    })
+
+    return(
+      <div className="Fulcrum">
+        <div
+          onClick={this.toggleIsFlippedFulcrum}
+          onMouseEnter={this.set("isHoveredFulcrum")}
+          onMouseLeave={this.unset("isHoveredFulcrum")}
+          className={hoverClass}
+        >
+          <FlipCard
+            disabled={true}
+            flipped={this.state.isFlippedFulcrum}
+            style={{
+              "width": "100%",
+            }}
+          >
+            <div className="flipcard-div">
+              <h3 className="approach">
+                Fulcrum Approach
+              </h3>
+            </div>
+
+            {this.renderFulcrumContent()}
+
+          </FlipCard>
         </div>
-      }
-
-    </div>
-  )
-
-  renderFulcrumFlipCard = () => (
-    <div className="Fulcrum">
-      <div onClick={this.toggleIsFlippedFulcrum}>
-        <FlipCard
-          disabled={true}
-          flipped={this.state.isFlippedFulcrum}
-          style={{
-            "width": "100%",
-          }}
-        >
-          <div className="flipcard-div">
-            <h3 className="approach">
-              Fulcrum Approach
-            </h3>
-          </div>
-
-          {this.renderFulcrumContent()}
-
-        </FlipCard>
       </div>
-    </div>
-  )
+    )
+  }
 
-  renderTBDFLipCard = () => (
-    <div className="TBD">
-      <div onClick={this.toggleIsFlippedTBD}>
-        <FlipCard
-          disabled={true}
-          flipped={this.state.isFlippedTBD}
-          style={{
-            "width": "100%",
-          }}
+  renderTBDFLipCard = () => {
+    var hoverClass = classNames({
+      "hover": this.state.isHoveredTBD
+    })
+
+    return(
+      <div className="TBD">
+        <div
+          onClick={this.toggleIsFlippedTBD}
+          onMouseEnter={this.set("isHoveredTBD")}
+          onMouseLeave={this.unset("isHoveredTBD")}
+          className={hoverClass}
         >
-          <div className="flipcard-div">
-            <h3 className="approach">
-              TBD Approach
-            </h3>
-          </div>
+          <FlipCard
+            disabled={true}
+            flipped={this.state.isFlippedTBD}
+            style={{
+              "width": "100%",
+            }}
+          >
+            <div className="flipcard-div">
+              <h3 className="approach">
+                TBD Approach
+              </h3>
+            </div>
 
-          {this.renderTBDContent()}
+            {this.renderTBDContent()}
 
-        </FlipCard>
+          </FlipCard>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
-  renderAnalogFlipCard = () => (
-    <div className="Analog">
-      <div onClick={this.toggleIsFlippedAnalog}>
-        <FlipCard
-          disabled={true}
-          flipped={this.state.isFlippedAnalog}
-          style={{
-            "width": "100%",
-          }}
+  renderAnalogFlipCard = () => {
+    var hoverClass = classNames({
+      "hover": this.state.isHoveredAnalog,
+    })
+
+    return(
+      <div className="Analog">
+        <div
+          onClick={this.toggleIsFlippedAnalog}
+          onMouseEnter={this.set("isHoveredAnalog")}
+          onMouseLeave={this.unset("isHoveredAnalog")}
+          className={hoverClass}
         >
-          <div className="flipcard-div">
-            <h3 className="approach">
-              Analog Approach
-            </h3>
-          </div>
+          <FlipCard
+            disabled={true}
+            flipped={this.state.isFlippedAnalog}
+            style={{
+              "width": "100%",
+            }}
+          >
+            <div className="flipcard-div">
+              <h3 className="approach">
+                Analog Approach
+              </h3>
+            </div>
 
-          {this.renderAnalogContent()}
+            {this.renderAnalogContent()}
 
-        </FlipCard>
+          </FlipCard>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   render(){
     return(
-      <div className="leftAlignedText" >
-        <Grid>
-          <Row className="div-fulcrum-approach">
-            {this.renderFulcrumFlipCard()}
-          </Row>
+      <div className="main-div-top-margin">
+        <Grid className="">
+          <Col lg={9} md={8} sm={6} xs={12} className="leftAlignedText">
+            <Row className="div-analog-approach">
+              {this.renderAnalogContent()}
+            </Row>
 
-          <Row className="div-TBD-approach">
-            {this.renderTBDFLipCard()}
-          </Row>
+            <Row className="div-TBD-approach">
+              {this.renderTBDContent()}
+            </Row>
 
-          <Row>
-            {this.renderAnalogFlipCard()}
-          </Row>
+            <Row className="div-fulcrum-approach">
+              {this.renderFulcrumContent()}
+            </Row>
+          </Col>
+
+          <Col lg={3} md={4} sm={6}>
+            <div className="div-helpful rounded-border purple-background">
+              <h3 className="div-helpful-link">
+                Helpful Links
+              </h3>
+              <div className="div-helpful-link">
+                <HomeLinkComponent
+                  pathname='/helpfullinks'
+                  linkTitle= 'Research Documents/ White papers'
+                />
+              </div>
+              <div className="div-helpful-link">
+                <HomeLinkComponent
+                  pathname='/helpfullinks'
+                  linkTitle= 'Research Documents/ White papers'
+                />
+              </div>
+              <div className="div-helpful-link">
+                <HomeLinkComponent
+                  pathname='/helpfullinks'
+                  linkTitle= 'Research Documents/ White papers'
+                />
+              </div>
+
+            </div>
+          </Col>
 
         </Grid>
-
-
-
-
-
-
 
       </div>
     )

@@ -10,7 +10,8 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="App grey-app">
+        <meta charset="UTF-8"/>
         <Router>
           {renderRoutes(routes)}
         </Router>

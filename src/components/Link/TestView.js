@@ -49,10 +49,10 @@ class TestView extends Component{
                     <th>Source</th>
                   </tr>
                   <tr>
-                    <td>A</td>
-                    <td>B</td>
-                    <td>C</td>
-                    <td>D</td>
+                    <td>700</td>
+                    <td>15</td>
+                    <td>50</td>
+                    <td>Austin River</td>
                   </tr>
                 </table>
               </div>
@@ -64,8 +64,8 @@ class TestView extends Component{
                     <th>Climate Description</th>
                   </tr>
                   <tr>
-                    <td>Jill</td>
-                    <td>Smith</td>
+                    <td>11078</td>
+                    <td>Temparate</td>
                   </tr>
                 </table>
               </div>
@@ -77,8 +77,8 @@ class TestView extends Component{
                     <th>Reference</th>
                   </tr>
                   <tr>
-                    <td>Jill</td>
-                    <td>Smith</td>
+                    <td>145500</td>
+                    <td>A</td>
                   </tr>
                 </table>
               </div>

@@ -59,52 +59,24 @@ class DetailChannelModal extends Component {
     </div>
   )
 
-  renderChannelView = () => (
-    <div className="">
-      <div className="table-margin">
-        <table>
-          <tr>
-            <th>Site ID</th>
-            <th>Site Name</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-          </tr>
-          <tr>
-            <td>{this.props.id}</td>
-            <td>{this.props.siteName}</td>
-            <td>{this.props.lat}</td>
-            <td>{this.props.long}</td>
-          </tr>
-        </table>
-      </div>
+  renderChannelView = () => {
+    const data = this.props.data
 
-      <div className="table-margin">
-        <table>
-          <tr>
-            <th>Drainage Area</th>
-            <th>Channel Width</th>
-            <th>Channel Depth</th>
-            <th>Source</th>
-          </tr>
-          <tr>
-            <td>A</td>
-            <td>B</td>
-            <td>C</td>
-            <td>D</td>
-          </tr>
-        </table>
-      </div>
-
-      <div>
+    return (
+      <div className="">
         <div className="table-margin">
           <table>
             <tr>
-              <th>Climate ID</th>
-              <th>Climate Description</th>
+              <th>Site ID</th>
+              <th>Site Name</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
             </tr>
             <tr>
-              <td>Jill</td>
-              <td>Smith</td>
+              <td>{this.props.id}</td>
+              <td>{this.props.siteName}</td>
+              <td>{this.props.lat}</td>
+              <td>{this.props.long}</td>
             </tr>
           </table>
         </div>
@@ -112,31 +84,63 @@ class DetailChannelModal extends Component {
         <div className="table-margin">
           <table>
             <tr>
-              <th>Estimated Bankfull Discharge</th>
-              <th>Reference</th>
+              <th>Drainage Area</th>
+              <th>Channel Width</th>
+              <th>Channel Depth</th>
+              <th>Source</th>
             </tr>
             <tr>
-              <td>Jill</td>
-              <td>Smith</td>
+              <td>700</td>
+              <td>15</td>
+              <td>50</td>
+              <td>Austin River</td>
             </tr>
           </table>
         </div>
+
+        <div>
+          <div className="table-margin">
+            <table>
+              <tr>
+                <th>Climate ID</th>
+                <th>Climate Description</th>
+              </tr>
+              <tr>
+                <td>11078</td>
+                <td>Temparate</td>
+              </tr>
+            </table>
+          </div>
+
+          <div className="table-margin">
+            <table>
+              <tr>
+                <th>Estimated Bankfull Discharge</th>
+                <th>Reference</th>
+              </tr>
+              <tr>
+                <td>145500</td>
+                <td>A</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div
+          style={{
+            "margin-top": "20px",
+          }}
+        >
+          <MapContainer
+            lat="41.210171"
+            long="-73.898506"
+          />
+        </div>
+
       </div>
+    )
 
-      <div
-        style={{
-          "margin-top": "20px",
-        }}
-      >
-        <MapContainer
-          lat=""
-          long=""
-        />
-      </div>
-
-    </div>
-  )
-
+  }
   //
   // renderList = (arr, dataType) => (
   //   <div className="list-page-wrapper no-padding full-screen ">

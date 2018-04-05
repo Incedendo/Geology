@@ -4,42 +4,61 @@ import '../assets/scss/LandingPage.css';
 import '../assets/scss/include.scss';
 import LandingPage from './LandingPage';
 import HomeLinkComponent from './HomeLinkComponent';
-
+import logo from '../assets/image/final_rafter_logo.png';
 
 class Home extends Component {
   renderHeader = () => (
-    <div>
-      <h1 className="center greenText">
+    <div className="home-header">
+      <h1 className="">
           R.A.F.T.E.R
       </h1>
 
-      <h3 style={{"text-align": "center"}}>
+      <h3>
         River Analogue Fulcrum Theory Estimate Repository
       </h3>
     </div>
   )
 
+  renderFooter = () => (
+    <div className="home-footer">
+
+      <Grid className="">
+        <Col md={2} className="left-div-img">
+          <img
+            className="img-left"
+            src={logo}
+            alt="etc"
+          />
+        </Col>
+
+        <Col md={8} className="contact-div">
+          <a href="">Contact</a>
+        </Col>
+
+        <Col md={2} className="right-div-img">
+          <img
+            className="img-right"
+            src={logo}
+            alt="etc"
+          />
+        </Col>
+
+      </Grid>
+
+    </div>
+  )
+
   render() {
     return(
-      <div >
+      <div className="">
         {this.renderHeader()}
 
-        <Grid>
-          <Col md={8}>
+        <div className="div-landingpage">
             <LandingPage />
-          </Col>
+        </div>
 
-          <Col md={4}>
-            <div className="enclosing-border-landing-page">
-              <HomeLinkComponent
-                pathname='/helpfullinks'
-                linkTitle= 'Research Documents/ White papers'
-              />
-            </div>
-          </Col>
-        </Grid>
 
-        {/* <HomeForm /> */}
+        {this.renderFooter()}
       </div>
     )
   }

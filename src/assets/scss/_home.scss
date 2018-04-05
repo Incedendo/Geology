@@ -1,9 +1,90 @@
+img {
+  height: 70px;
+  vertical-align: top;
+}
+
+a{
+  color: white !important;
+}
+
+h1{
+  color: green !important;
+}
+
+h3{
+  text-align: center;
+  margin: 0px !important;
+}
+
+.left-div-img{
+  display: inline-block;
+  //position: relative;
+  left: 0px;
+  width: 20%;
+  background-color: grey;
+}
+
+.img-left{
+  position: relative;
+  left: 0px;
+}
+
+.img-right{
+  position: relative;
+  right: 0px;
+}
+
+.right-div-img{
+  display: inline-block;
+  //position: relative;
+  right: 0px;
+  width: 20%;
+  background-color: grey;
+}
+
+.contact-div{
+  display: inline-block;
+  //position: relative;
+  background-color: grey;
+  width: 60%;
+}
+
 .greenText {
   color: green;
 }
 
 .center {
   text-align: center;
+}
+
+.home-header{
+  background-color: grey;
+  position: absolute;;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 3px;
+  height: 120px;
+}
+
+.home-footer{
+  position: absolute;
+  background-color: grey;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 80px;
+}
+
+.div-landingpage{
+  position: absolute;
+  top: 120px;
+  bottom: 80px;
+  left: 0px;
+  right: 0px;
 }
 
 .centeredPosition {

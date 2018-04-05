@@ -21,12 +21,13 @@ th {
   height: 35px;
   font-size: 18px;
   text-align: center !important;
-  padding: 5px; }
+  padding: 5px;
+  background-color: #4B1979;
+  color: white; }
 
 td {
   height: 30px;
   text-align: center; }
 
 table, th, td {
-  border: 2px solid black;
-  border-radius: 5px; }
+  border: 2px solid black; }

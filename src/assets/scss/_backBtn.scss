@@ -1,16 +1,41 @@
 .back-button-link {
   text-decoration: none !important;
-  border: 2px solid;
+  color: white;
+  border: 2px white solid;
+  border-radius: 8px;
   text-transform: uppercase;
   margin: 1rem auto;
   position: relative;
   display: block;
   overflow: hidden;
-  padding: 5px;
+  padding: 8px;
+}
+
+a.back-button-link:hover{
+  background-color: white;
+  border: 2px #4B1979 solid;
+  color: #4B1979;
+  font-weight: bold;
 }
 
 .back-button-div-general {
   position: absolute;
   margin-top: 0px;
   margin-left: 40px;
+}
+
+.back-btn-result{
+  background: #4B1979;
+  border: 2px white solid;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+button.back-btn-result:hover{
+  background-color: white;
+  border: 2px #4B1979 solid;
+  color: #4B1979;
+  font-weight: bold;
 }

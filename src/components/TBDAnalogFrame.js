@@ -16,20 +16,20 @@ import '../assets/scss/include.scss';
 class TBDAnalogFrame extends Component{
   state = {
     selectedClimate: "FirstOrder", // set when Climate radio buttons are clicked
-    climateFromDropdown: "A",
+    climateFromDropdown: { value: 'B', label: 'Arid,Desert,Hot - BWh' },
 
     // 6 inputs for the text fields:
-    drainage_low: 5,
-    drainage_high: 5,
+    drainage_low: 1,
+    drainage_high: 100,
 
     selectedRiverSize: "RiverDepth", // set when river size radio buttons are clicked
-    isCrossSection: true,
-    riverLow: 5,
-    riverHigh: 10,
+    isCrossSection: false,
+    riverLow: 1,
+    riverHigh: 10000000,
 
     selectedPrecision: "10%", // set when Precision Radio Buttons are clicked
-    "isWithin10": true,
-    "isWithin20": true,
+    isWithin10: true,
+    isWithin20: false,
 
     //boolean state:
     enabledFirstOrderDropdown: false,
@@ -43,6 +43,8 @@ class TBDAnalogFrame extends Component{
     error_Border: 'red',
 
     tableData: [],
+    tbdWithin10: 0,
+    tbdWithin20: 0,
   }
 
   componentDidMount(){
@@ -53,11 +55,12 @@ class TBDAnalogFrame extends Component{
 
   // componentDidMount() {
   postTBD = () =>{
-    const JimPostTBDUrl = 'https://g2dn2m2b1g.execute-api.us-east-1.amazonaws.com/Prod/api/main/TBD';
+    const JimPostTBDUrl =
+    'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/TBD';
 
     const postRequestData = {
       method: 'POST',
-      Origin:'http://geology-ui.surge.sh',
+      Origin:'localhost:3000',
       mode: "cors",
       headers: {
         // 'Content-Type': 'text/plain',
@@ -68,14 +71,14 @@ class TBDAnalogFrame extends Component{
       },
       body:
         JSON.stringify({
-          "isFulcrum": true,
+          "isFulcrum": false,
           "isMetric": false,
           "isRiverAnalogue" : false,
           "isTBD": true,
 
           "TBD": {
             //climate:
-              "climate": this.state.climateFromDropdown.value,
+              "climate":  this.state.climateFromDropdown.value,
 
             //drainage:
               "drainageLow": this.state.drainage_low,
@@ -119,6 +122,8 @@ class TBDAnalogFrame extends Component{
       console.log(data);
       this.setState({
         tableData: data.streams,
+        tbdWithin10: data.tbdWithin10,
+        tbdWithin20: data.tbdWithin20,
       })
     });
   }
@@ -173,23 +178,36 @@ class TBDAnalogFrame extends Component{
 
   // validate if the user enter positive numbers for min and max drainage area
   validateDrainageInputs(){
-    if(this.state.drainage_low > 0 &&  this.state.drainage_high > 0){
-            console.log("successfully Validate drainage Inputs: Low: "+ this.state.drainage_low + " , High:  "+ this.state.drainage_high);
-            return true;
+    if(this.state.drainage_low > 0 ||  this.state.drainage_high > 0){
+        if(this.state.drainage_low === ''){
+          this.state.drainage_low = 0;
+        }
+        if(this.state.drainage_high === ''){
+          this.state.drainage_high = Number.MAX_VALUE;
+        }
+
+        console.log("successfully Validate drainage Inputs: Low: "+ this.state.drainage_low + " , High:  "+ this.state.drainage_high);
+        return true;
     }else{
-            console.log("fail to validate drainage inputs");
-            return false;
+        console.log("fail to validate drainage inputs");
+        return false;
     }
   }
 
   validateRiverInputs(){
     if(this.state.selectedRiverSize !== ""){
-      if(this.state.riverLow > 0 && this.state.riverHigh > 0){
-              console.log("validated River Size: Low: "+ this.state.riverLow + " , High:  "+ this.state.riverHigh);
-              return true;
+      if(this.state.riverLow > 0 || this.state.riverHigh > 0){
+          if(this.state.riverLow === ''){
+            this.state.riverLow = 0;
+          }
+          if(this.state.riverHigh === ''){
+            this.state.riverHigh = Number.MAX_VALUE;
+          }
+          console.log("validated River Size: Low: "+ this.state.riverLow + " , High:  "+ this.state.riverHigh);
+          return true;
       }else{
-              console.log("fail to validate River Size: 1 of the Depth text field is empty");
-              return false;
+          console.log("fail to validate River Size: 1 of the Depth text field is empty");
+          return false;
       }
     }else{
       console.log("failed to validate River Inputs: radio box NOT selected");
@@ -250,7 +268,7 @@ class TBDAnalogFrame extends Component{
     })
 
     return(
-      <div className="enclosing-border">
+      <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
           <Row>
             <Col sm={4} md={2} className={title}>
@@ -278,16 +296,20 @@ class TBDAnalogFrame extends Component{
                    onChange={ this.setClimateSelectedOption } horizontal
                  >
                    <RadioButton
+                     className="rounded-border"
                      value="FirstOrder"
-                     pointColor="green"
+                     //iconSize="5px"
+                     iconInnerSize="0px"
+                     pointColor="white"
                      selected={this.state.selectedClimate==="FirstOrder"}>
-                     First Order
+                     Major Climate
                    </RadioButton>
                    <RadioButton
                      value="KoppenClassification"
-                     pointColor="green"
+                     iconInnerSize="0px"
+                     pointColor="white"
                      selected={this.state.selectedClimate==="KoppenClassification"}>
-                     Koppen Classification
+                     KÖppen Climate
                    </RadioButton>
                  </RadioGroup>
                </div>
@@ -380,10 +402,12 @@ class TBDAnalogFrame extends Component{
 
   renderDrainageArea = () => {
     var textfieldMin = classNames({
+      'black-txt': true,
       'text-field-error': this.state.submitClicked && (this.state.drainage_low <= 0 || this.state.drainage_low === "(positive number only)"),
     });
 
     var textfieldMax = classNames({
+      'black-txt': true,
       'text-field-error': this.state.submitClicked && (this.state.drainage_high <= 0 || this.state.drainage_low === "(positive number only)"),
     });
 
@@ -398,14 +422,15 @@ class TBDAnalogFrame extends Component{
     })
 
     return(
-      <div className="enclosing-border">
+      <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
             <Col sm={4} md={2} className={title}>
                 Drainage Area (meter squared):
             </Col>
             <Col sm={4} md={10} className="leftAlignedText">
               <div className="inline-with-right-margin">
-                Min: <input type="textbox"
+                Min: <input  className="black-txt"
+                  type="textbox"
                   name="drainage_low"
                   className={textfieldMin}
                   onBlur={this.setRangeValues}
@@ -414,7 +439,8 @@ class TBDAnalogFrame extends Component{
                 />
               </div>
               <div className="inline-no-right-margin">
-                Max: <input type="textbox"
+                Max: <input  className="black-txt"
+                  type="textbox"
                   name="drainage_high"
                   className={textfieldMax}
                   onBlur={this.setRangeValues}
@@ -439,10 +465,12 @@ class TBDAnalogFrame extends Component{
 
   renderRiverSize = () => {
     var textfieldRiverLow = classNames({
+      'black-txt': true,
       'text-field-error': this.state.submitClicked && this.state.riverLow <= 0,
     });
 
     var textfieldRiverHigh = classNames({
+      'black-txt': true,
       'text-field-error': this.state.submitClicked && this.state.riverHigh <= 0,
     });
 
@@ -461,7 +489,7 @@ class TBDAnalogFrame extends Component{
     })
 
     return(
-      <div className="enclosing-border">
+      <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
           <Col sm={4} md={2} className={title}>
               River Size:
@@ -488,13 +516,15 @@ class TBDAnalogFrame extends Component{
              >
                <RadioButton
                  value="RiverDepth"
-                 pointColor="green"
+                 pointColor="white"
+                 iconInnerSize="0px"
                >
                  River Depth (km)
                </RadioButton>
                <RadioButton
                  value="CrossSectionalArea"
-                 pointColor="green"
+                 pointColor="white"
+                 iconInnerSize="0px"
                >
                  Cross Sectional Area (km squared)
                </RadioButton>
@@ -511,7 +541,8 @@ class TBDAnalogFrame extends Component{
             {this.state.selectedRiverSize === "RiverDepth" &&
             <div>
               <div className="inline-with-right-margin">
-                Min: <input type="textbox"
+                Min: <input
+                  type="textbox"
                   name="riverLow"
                   className={textfieldRiverLow}
                   onBlur={this.setRangeValues}
@@ -520,7 +551,8 @@ class TBDAnalogFrame extends Component{
                 />
               </div>
               <div className="inline-no-right-margin">
-                Max: <input type="textbox"
+                Max: <input
+                  type="textbox"
                   name="riverHigh"
                   className={textfieldRiverHigh}
                   onBlur={this.setRangeValues}
@@ -534,7 +566,8 @@ class TBDAnalogFrame extends Component{
             {this.state.selectedRiverSize === "CrossSectionalArea" &&
             <div>
               <div className="inline-with-right-margin">
-                Min: <input type="textbox"
+                Min: <input
+                  type="textbox"
                   name="riverLow"
                   className={textfieldRiverLow}
                   onBlur={this.setRangeValues}
@@ -543,7 +576,8 @@ class TBDAnalogFrame extends Component{
                 />
               </div>
               <div className="inline-no-right-margin">
-                Max: <input type="textbox"
+                Max: <input
+                  type="textbox"
                   name="riverHigh"
                   className={textfieldRiverHigh}
                   onBlur={this.setRangeValues}
@@ -579,7 +613,7 @@ class TBDAnalogFrame extends Component{
     })
 
     return(
-      <div className="enclosing-border">
+      <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
           <Col sm={4} md={2} className={title}>
               Precision:
@@ -590,11 +624,15 @@ class TBDAnalogFrame extends Component{
               onChange={ this.setPrecisionSelectedOption } horizontal
             >
               <RadioButton value="10%"
-                pointColor="green">
+                pointColor="white"
+                iconInnerSize="0px"
+              >
                 10%
               </RadioButton>
               <RadioButton value="20%"
-                pointColor="green">
+                pointColor="white"
+                iconInnerSize="0px"
+              >
                 20%
               </RadioButton>
             </RadioGroup>
@@ -733,14 +771,16 @@ class TBDAnalogFrame extends Component{
       <div>
         {!this.state.submitted &&
           <form onSubmit={this.handleSubmit} className="form">
+            <div className="header">
+              <div className='back-button-div-tbd'>
+                 <Link to="/" className=" back-button-link back-button-effect">Back</Link>
+              </div>
 
-            <div className='back-button-div-tbd'>
-               <Link to="/" className=" back-button-link back-button-effect">Back</Link>
+              <h1 className='inline-page-title'>
+                {this.props.componentTitle}
+              </h1>
+
             </div>
-
-            <h1 className='inline-page-title'>
-              {this.props.componentTitle}
-            </h1>
 
             {this.renderClimateOrders()}
 
@@ -758,7 +798,7 @@ class TBDAnalogFrame extends Component{
             </div>}
 
             <button
-              type="submit" onClick={this.handleSubmit} className="padding-grid margin-10">
+              type="submit" onClick={this.handleSubmit} className="submit-btn">
               Submit
             </button>
 
@@ -767,18 +807,27 @@ class TBDAnalogFrame extends Component{
 
         {this.state.submitted &&
           <div>
-            <button onClick={this.toggleSubmitted}>
-              Back
-            </button>
+            <div className="header">
+              <div className='back-button-div-tbd'>
+                <button
+                  className="back-btn-result"
+                  onClick={this.toggleSubmitted}>
+                  BACK
+                </button>
+              </div>
+
+
+              <h1 className='inline-page-title'>
+                Result Page
+              </h1>
+            </div>
 
             <RiverChannelsTable
               data={this.state.tableData}
+              tbdWithin10={this.state.tbdWithin10}
+              tbdWithin20={this.state.tbdWithin20}
               origin={this.props.origin}
             />
-
-            <div>
-              {this.state.selectedClimate}
-            </div>
 
           </div>
 
