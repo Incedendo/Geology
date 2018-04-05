@@ -9,7 +9,7 @@ import logo from '../assets/image/final_rafter_logo.png';
 class Home extends Component {
   renderHeader = () => (
     <div className="home-header">
-      <h1 className="">
+      <h1 className="no-margin">
           R.A.F.T.E.R
       </h1>
 

@@ -16,6 +16,10 @@ h3{
   margin: 0px !important;
 }
 
+.no-margin{
+    margin: 0px !important;
+}
+
 .left-div-img{
   display: inline-block;
   //position: relative;
@@ -64,7 +68,7 @@ h3{
   left: 0px;
   right: 0px;
   padding: 3px;
-  height: 120px;
+  height: 80px;
 }
 
 .home-footer{
@@ -81,7 +85,7 @@ h3{
 
 .div-landingpage{
   position: absolute;
-  top: 120px;
+  top: 80px;
   bottom: 80px;
   left: 0px;
   right: 0px;
