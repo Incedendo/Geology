@@ -98,6 +98,7 @@ class LandingPage extends Component{
     <div className="btn-go-div">
       <button className='btn-go'>
         <HomeLinkComponent
+          className="white-text"
           pathname={path}
           linkTitle= 'Go'
         />
@@ -125,23 +126,26 @@ class LandingPage extends Component{
 
           <Col lg={3} md={4} sm={6}>
             <div className="div-helpful rounded-border purple-background">
-              <h3 className="center-text div-helpful-link green-text">
+              <h3 className="center-text green-text">
                 Helpful Links
               </h3>
               <div className="div-helpful-link">
                 <HomeLinkComponent
+                  className="white-text"
                   pathname='/helpfullinks'
                   linkTitle= '1. Holbrook and Wana, 2014 (pdf)'
                 />
               </div>
               <div className="div-helpful-link ">
                 <HomeLinkComponent
+                  className="white-text"
                   pathname='/helpfullinks'
                   linkTitle= '2. Data Dictionary (pdf)'
                 />
               </div>
               <div className="div-helpful-link">
                 <HomeLinkComponent
+                  className="white-text"
                   pathname='/helpfullinks'
                   linkTitle= '3. Original Fulcrum Theory Approach (xlsx)'
                 />
@@ -149,6 +153,7 @@ class LandingPage extends Component{
 
               <div className="div-helpful-link">
                 <HomeLinkComponent
+                  className="white-text"
                   pathname='/helpfullinks'
                   linkTitle= "4. Dr Holbrook's Home Page"
                 />
@@ -156,6 +161,7 @@ class LandingPage extends Component{
 
               <div className="div-helpful-link">
                 <HomeLinkComponent
+                  className="white-text"
                   pathname='/helpfullinks'
                   linkTitle= "5. Fluvial Research Group Main Page"
                 />
@@ -163,6 +169,7 @@ class LandingPage extends Component{
 
               <div className="div-helpful-link">
                 <HomeLinkComponent
+                  className="white-text"
                   pathname='/helpfullinks'
                   linkTitle= '6. References (pdf)'
                 />

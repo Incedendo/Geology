@@ -32,7 +32,7 @@ class Home extends Component {
         </Col>
 
         <Col md={8} className="contact-div">
-          <a href="">Contact</a>
+          <a className="white-text" href="">Contact</a>
         </Col>
 
         <Col md={2} className="right-div-img">

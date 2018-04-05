@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-const HomeLinkComponent = ( {pathname, linkTitle, onClick} ) => (
+const HomeLinkComponent = ( {className, pathname, linkTitle, onClick} ) => (
   <Link to={{
     pathname: pathname
   }}
-    className=""
+    className={className}
     onClick={onClick}
   >
     {linkTitle}

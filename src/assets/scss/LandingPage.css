@@ -1,6 +1,9 @@
 .green-text {
   color: #23CE2B !important; }
 
+.white-link {
+  color: white !important; }
+
 .grid {
   margin-left: 0px !important;
   margin-right: 0px !important; }
@@ -77,7 +80,8 @@
   height: 160px; }
 
 .div-helpful {
-  padding: 10px; }
+  padding: 10px;
+  text-align: center !important; }
 
 .div-helpful-link {
   text-align: left;
@@ -86,5 +90,5 @@
 .center-text {
   text-align: center; }
 
-.hover {
-  transform: translate(5px, 5px); }
+.white-text {
+  color: white !important; }

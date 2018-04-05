@@ -55,9 +55,6 @@ img {
   height: 70px;
   vertical-align: top; }
 
-a {
-  color: white !important; }
-
 h1 {
   color: #23CE2B !important; }
 
@@ -430,5 +427,5 @@ a.back-button-link:hover {
 button.back-btn-result:hover {
   background-color: white;
   border: 2px #4B1979 solid;
-  color: #4B1979;
+  color: #4B1979 !important;
   font-weight: bold; }

@@ -1,6 +1,11 @@
 .green-text{
   color: #23CE2B !important;
 }
+
+.white-link{
+  color: white !important;
+}
+
 .grid{
   margin-left: 0px !important;
   margin-right: 0px !important;
@@ -102,6 +107,7 @@
 
 .div-helpful{
   padding: 10px;
+  text-align: center !important;
 }
 
 .div-helpful-link{
@@ -113,6 +119,6 @@
   text-align: center;
 }
 
-.hover{
-  transform: translate(5px,5px);
+.white-text{
+  color: white !important;
 }
