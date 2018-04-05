@@ -13,6 +13,8 @@ import RiverChannelsTable  from "./TBD/RiverChannelsTable";
 
 import '../assets/scss/include.scss';
 
+const pointColor = "#23CE2B";
+
 class TBDAnalogFrame extends Component{
   state = {
     selectedClimate: "FirstOrder", // set when Climate radio buttons are clicked
@@ -300,14 +302,14 @@ class TBDAnalogFrame extends Component{
                      value="FirstOrder"
                      //iconSize="5px"
                      iconInnerSize="0px"
-                     pointColor="white"
+                     pointColor={pointColor}
                      selected={this.state.selectedClimate==="FirstOrder"}>
                      Major Climate
                    </RadioButton>
                    <RadioButton
                      value="KoppenClassification"
                      iconInnerSize="0px"
-                     pointColor="white"
+                     pointColor={pointColor}
                      selected={this.state.selectedClimate==="KoppenClassification"}>
                      KÖppen Climate
                    </RadioButton>
@@ -516,14 +518,14 @@ class TBDAnalogFrame extends Component{
              >
                <RadioButton
                  value="RiverDepth"
-                 pointColor="white"
+                 pointColor={pointColor}
                  iconInnerSize="0px"
                >
                  River Depth (km)
                </RadioButton>
                <RadioButton
                  value="CrossSectionalArea"
-                 pointColor="white"
+                 pointColor={pointColor}
                  iconInnerSize="0px"
                >
                  Cross Sectional Area (km squared)
@@ -624,13 +626,13 @@ class TBDAnalogFrame extends Component{
               onChange={ this.setPrecisionSelectedOption } horizontal
             >
               <RadioButton value="10%"
-                pointColor="white"
+                pointColor={pointColor}
                 iconInnerSize="0px"
               >
                 10%
               </RadioButton>
               <RadioButton value="20%"
-                pointColor="white"
+                pointColor={pointColor}
                 iconInnerSize="0px"
               >
                 20%

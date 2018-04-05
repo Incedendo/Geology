@@ -269,25 +269,46 @@ class LandingPage extends Component{
 
           <Col lg={3} md={4} sm={6}>
             <div className="div-helpful rounded-border purple-background">
-              <h3 className="div-helpful-link">
+              <h3 className="center-text div-helpful-link">
                 Helpful Links
               </h3>
               <div className="div-helpful-link">
                 <HomeLinkComponent
                   pathname='/helpfullinks'
-                  linkTitle= 'Research Documents/ White papers'
+                  linkTitle= '1. Holbrook and Wana, 2014 (pdf)'
+                />
+              </div>
+              <div className="div-helpful-link ">
+                <HomeLinkComponent
+                  pathname='/helpfullinks'
+                  linkTitle= '2. Data Dictionary (pdf)'
                 />
               </div>
               <div className="div-helpful-link">
                 <HomeLinkComponent
                   pathname='/helpfullinks'
-                  linkTitle= 'Research Documents/ White papers'
+                  linkTitle= '3. Original Fulcrum Theory Approach (xlsx)'
                 />
               </div>
+
               <div className="div-helpful-link">
                 <HomeLinkComponent
                   pathname='/helpfullinks'
-                  linkTitle= 'Research Documents/ White papers'
+                  linkTitle= "4. Dr Holbrook's Home Page"
+                />
+              </div>
+
+              <div className="div-helpful-link">
+                <HomeLinkComponent
+                  pathname='/helpfullinks'
+                  linkTitle= "5. Fluvial Research Group Main Page"
+                />
+              </div>
+
+              <div className="div-helpful-link">
+                <HomeLinkComponent
+                  pathname='/helpfullinks'
+                  linkTitle= '6. References (pdf)'
                 />
               </div>
 

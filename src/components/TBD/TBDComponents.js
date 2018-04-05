@@ -10,6 +10,8 @@ import classNames from 'classnames';
 
 import '../../assets/scss/include.scss';
 
+const pointColor = "#23CE2B";
+
 export const ClimateOrders = (props) => {
 
   var title = classNames({
@@ -37,14 +39,14 @@ export const ClimateOrders = (props) => {
                >
                  <RadioButton
                    value="FirstOrder"
-                   pointColor="white"
+                   pointColor={pointColor}
                    iconInnerSize="0px"
                    selected={props.selectedClimate==="FirstOrder"}>
                    Major Climate
                  </RadioButton>
                  <RadioButton
                    value="KoppenClassification"
-                   pointColor="white"
+                   pointColor={pointColor}
                    iconInnerSize="0px"
                    selected={props.selectedClimate==="KoppenClassification"}>
                    KÖppen Climate
@@ -240,14 +242,14 @@ export const RiverSize = (props) => {
            >
              <RadioButton
                value="RiverDepth"
-               pointColor="white"
+               pointColor={pointColor}
                iconInnerSize="0px"
              >
                River Depth (km)
              </RadioButton>
              <RadioButton
                value="CrossSectionalArea"
-               pointColor="white"
+               pointColor={pointColor}
                iconInnerSize="0px"
              >
                Cross Sectional Area (km squared)
@@ -349,14 +351,14 @@ export const TBDPrecision = (props) =>{
           >
             <RadioButton
               value="10%"
-              pointColor="white"
+              pointColor={pointColor}
               iconInnerSize="0px"
             >
               10%
             </RadioButton>
             <RadioButton
               value="20%"
-              pointColor="white"
+              pointColor={pointColor}
               iconInnerSize="0px"
             >
               20%

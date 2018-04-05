@@ -184,7 +184,6 @@ class FulcrumApproach extends Component {
     this.setState( (prevState) => ({submitted: !prevState.submitted}) );
   }
 
-
   // Switches the isAnalog state whenever the checkbox is clicked/unclicked
   toggleIsAnalog = () => {
     this.setState( (prevState) => ({isAnalog: !prevState.isAnalog}) )
@@ -526,7 +525,7 @@ class FulcrumApproach extends Component {
     <div>
       {/* SUBMIT BUTTON */}
       <button type="submit" onClick={this.handleSubmit} className="submit-btn">
-        G'\xD6'
+        Submit
 
       </button>
     </div>
@@ -544,14 +543,14 @@ class FulcrumApproach extends Component {
               >
                 <RadioButton
                   value="default"
-                  pointColor="white"
+                  pointColor="#23CE2B"
                   iconInnerSize="0px"
                 >
                   Default TBD [default value]
                 </RadioButton>
                 <RadioButton
                   value="customized"
-                  pointColor="white"
+                  pointColor="#23CE2B"
                   iconInnerSize="0px"
                 >
                   Customized TDB

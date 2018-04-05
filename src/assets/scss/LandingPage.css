@@ -77,7 +77,11 @@
   padding: 10px; }
 
 .div-helpful-link {
+  text-align: left;
   padding: 5px; }
+
+.center-text {
+  text-align: center; }
 
 .hover {
   transform: translate(5px, 5px); }
