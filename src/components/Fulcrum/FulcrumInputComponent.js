@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import '../../assets/scss/include.scss';
 import '../../assets/scss/_fulcrumApproach.scss';
-import '../../assets/scss/TextField.css';
 
 const FulcrumInputComponent = ( { title, name, state, isValid, submitted, update, validate } ) => {
 
