@@ -83,8 +83,12 @@ class RiverChannelsTable extends Component{
   render(){
 
     console.log(this.props.data);
+    let ebd; //estimated bankfull discharge
+    let streams = [];
 
-    let ebd;
+    if(this.props.data){
+      streams = this.props.data;
+    }
 
     if(this.props.tbdWithin10 !== -1){
       ebd = this.props.tbdWithin10;
@@ -107,7 +111,7 @@ class RiverChannelsTable extends Component{
 
         <ReactTable
           // data={this.props.data}
-          data={this.props.data}
+          data={streams}
           columns={[
             {
               Header: "Site Info",
