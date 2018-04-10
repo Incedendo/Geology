@@ -54,7 +54,7 @@ class LandingPage extends Component{
 
   renderFulcrumContent = () => (
     <div className="background-img">
-      <span className="green-text">Fulcrum Approach:</span>
+      <span className="yellow-text">Fulcrum Approach:</span>
       <ul>
         <li>
           Leverage the Fulcrum approach to estimate source-to-sink sediment flux calculations using readily available data in the rock record of channel fill thickness and grainsize.
@@ -70,7 +70,7 @@ class LandingPage extends Component{
 
   renderTBDContent = () => (
     <div className="background-img">
-      <span className="green-text">TBD Approach:</span>
+      <span className="yellow-text">TBD Approach:</span>
       <ul>
         <li>
           Query a database of over 500 streams, selecting stream specific attributes of climate, drainage area and/or channel size to calculate an average annual days at bankfull duration (tbd) value.
@@ -83,7 +83,7 @@ class LandingPage extends Component{
 
   renderAnalogContent = () => (
     <div className="background-img">
-      <span className="green-text">Analog Approach:</span>
+      <span className="yellow-text">Analog Approach:</span>
       <ul>
         <li>
           Select parameters of climate, drainage area and/or channel size to query a database of over 600 streams and return all analogous rivers based on the designated attributes.
@@ -126,7 +126,7 @@ class LandingPage extends Component{
 
           <Col lg={3} md={4} sm={6}>
             <div className="div-helpful rounded-border purple-background">
-              <h3 className="center-text green-text">
+              <h3 className="center-text yellow-text">
                 Helpful Links
               </h3>
               <div className="div-helpful-link">

@@ -19,19 +19,19 @@ const pointColor = "#FFFFFF";
 class TBDAnalogFrame extends Component{
   state = {
     selectedClimate: "", // set when Climate radio buttons are clicked
-    climateFromDropdown: { value: 'B', label: 'Arid,Desert,Hot - BWh' },
+    climateFromDropdown: "",
 
     // 6 inputs for the text fields:
-    drainage_low: 1,
-    drainage_high: 100,
+    drainage_low: '',
+    drainage_high: '',
 
     selectedRiverSize: "", // set when river size radio buttons are clicked
     isCrossSection: false,
-    riverLow: 1,
-    riverHigh: 10000000,
+    riverLow: '',
+    riverHigh: '',
 
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
-    isWithin10: true,
+    isWithin10: false,
     isWithin20: false,
 
     //boolean state:
@@ -231,31 +231,53 @@ class TBDAnalogFrame extends Component{
 
   //Encapsulating Validate inputs that check for all fields
   validateInputs(){
-    // check if users choose ALL 3 big Radio Buttons
-    if(this.props.displayedPresicion){
-      if(this.validateClimateInputs() &&
-        this.validateDrainageInputs() &&
-        this.validateRiverInputs() &&
-        this.validatePrecisionInputs()
-      ){
-            console.log("validate ALL inputs");
-            return true;
-      }else{
-            console.log("validateInputs() failed");
-            return false;
+    if(this.validateClimateInputs()){
+      if(this.props.displayedPresicion){
+        if(this.validatePrecisionInputs()){
+          console.log("validate Weather AND Precision inputs");
+          return true;
+        }
+        else{
+          console.log("Please choose one of Precision Boxex");
+          return false;
+        }
       }
-    }else{
-      if(this.validateClimateInputs() &&
-        this.validateDrainageInputs() &&
-        this.validateRiverInputs()
-      ){
-            console.log("validate ALL inputs");
-            return true;
-      }else{
-            console.log("validateInputs() failed");
-            return false;
-      }
+      console.log("validate ONLY weather inputs");
+      return true;
+    }else {
+      console.log("validateInputs() failed");
+      return false;
     }
+
+    // check if users choose ALL 3 big Radio Buttons
+
+    // if(this.props.displayedPresicion){
+    //   if(this.validateClimateInputs() ||
+    //     (
+    //       this.validateDrainageInputs() ||
+    //       this.validateRiverInputs()
+    //     )
+    //     && this.validatePrecisionInputs()
+    //   ){
+    //         console.log("validate ALL inputs");
+    //         return true;
+    //   }else{
+    //         console.log("validateInputs() failed");
+    //         return false;
+    //   }
+    // }else{
+    //   if( this.validateClimateInputs() ){
+    //       if(this.validateDrainageInputs() ||
+    //       this.validateRiverInputs()){
+    //
+    //       }
+    //         console.log("validate ALL inputs");
+    //         return true;
+    //   }else{
+    //         console.log("validateInputs() failed");
+    //         return false;
+    //   }
+    // }
   }
 
   renderClimateOrders = () => {
@@ -405,22 +427,23 @@ class TBDAnalogFrame extends Component{
     )
   }
 
+  //display the Drainage Area section in TBD and Analog Approach
   renderDrainageArea = () => {
     var textfieldMin = classNames({
       'black-txt': true,
-      'text-field-error': this.state.submitClicked && (this.state.drainage_low <= 0 || this.state.drainage_low === "(positive number only)"),
+      'text-field-error': this.state.submitClicked && (this.state.drainage_low < 0 || this.state.drainage_low === "(positive number only)"),
     });
 
     var textfieldMax = classNames({
       'black-txt': true,
-      'text-field-error': this.state.submitClicked && (this.state.drainage_high <= 0 || this.state.drainage_low === "(positive number only)"),
+      'text-field-error': this.state.submitClicked && (this.state.drainage_high < 0 || this.state.drainage_low === "(positive number only)"),
     });
 
     var title = classNames({
       "leftAlignedText-Title": true,
       "title-error": this.state.submitClicked &&
       (
-        this.state.drainage_low <= 0 || this.state.drainage_high <= 0 ||
+        this.state.drainage_low < 0 || this.state.drainage_high < 0 ||
         this.state.drainage_low === "(positive number only)" ||
         this.state.drainage_high === "(positive number only)"
       )
@@ -471,25 +494,22 @@ class TBDAnalogFrame extends Component{
   renderRiverSize = () => {
     var textfieldRiverLow = classNames({
       'black-txt': true,
-      'text-field-error': this.state.submitClicked && this.state.riverLow <= 0,
+      'text-field-error': this.state.submitClicked && this.state.riverLow < 0,
     });
 
     var textfieldRiverHigh = classNames({
       'black-txt': true,
-      'text-field-error': this.state.submitClicked && this.state.riverHigh <= 0,
+      'text-field-error': this.state.submitClicked && this.state.riverHigh < 0,
     });
 
     var title = classNames({
       "leftAlignedText-Title": true,
       "title-error": this.state.submitClicked &&
       (
-        this.state.selectedRiverSize === "" ||
-        this.state.riverDepth_Min <= 0 || this.state.riverDepth_Max <= 0 ||
-        this.state.riverDepth_Min === "(positive number only)" ||
-        this.state.riverDepth_Max === "(positive number only)" ||
-        this.state.crossSectionalArea_Min <= 0 || this.state.crossSectionalArea_Max <= 0 ||
-        this.state.crossSectionalArea_Min === "(positive number only)" ||
-        this.state.crossSectionalArea_Max === "(positive number only)"
+        this.state.riverLow < 0 ||
+        this.state.riverHigh < 0 ||
+        this.state.riverLow === "(positive number only)" ||
+        this.state.riverHigh === "(positive number only)"
       )
     })
 
@@ -599,14 +619,24 @@ class TBDAnalogFrame extends Component{
 
         <div>
           <Grid>
-            <Col sm={4} md={2}></Col>
-            <Col sm={4} md={9}>
-              <input
-                type="checkbox"
-                onChange={this.toggleRiverWidthAttr}
-                className="leftAlignedText"
-              /> Derive Width from River Depth (optional)
-            </Col>
+            <Row>
+              <Col sm={4} md={2}></Col>
+              <Col sm={4} md={9}>
+                <input
+                  type="checkbox"
+                  onChange={this.toggleRiverWidthAttr}
+                  className="leftAlignedText"
+                /> Derive Width from River Depth (optional)
+              </Col>
+            </Row>
+            <Row>
+              {this.state.calculatedDepthUsingWidth &&
+                <div>
+                  <input type="textbox"></input>
+                </div>
+              }
+            </Row>
+
           </Grid>
         </div>
       </div>
@@ -645,22 +675,6 @@ class TBDAnalogFrame extends Component{
                 20%
               </RadioButton>
             </RadioGroup>
-
-            {/* <input
-                type="radio"
-                name="selectedPrecision"
-                value="10%"
-                checked={this.state.selectedPrecision==='10%'}
-                onChange={this.setSelectedOption}
-                className=""
-              /> Within 10%
-             <input
-               type="radio"
-               name="selectedPrecision"
-               value="20%"
-               checked={this.state.selectedPrecision==='20%'} onChange={this.setSelectedOption}
-               className=""
-             /> Within 20% */}
           </Col>
         </Grid>
       </div>
@@ -751,7 +765,7 @@ class TBDAnalogFrame extends Component{
     const {name, value}  = e.target;
     if(value.length !== 0){
       if(!isNaN(value)){
-        if(value <= 0){
+        if(value < 0){
           this.setState(() => ({
             [name]: "(positive number only)",
           }));

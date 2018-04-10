@@ -485,8 +485,8 @@ class FulcrumApproach extends Component {
   validateTBDInputs = () => {
     // check if users choose ALL 3 big Radio Buttons
     if(this.validateClimateInputs() &&
-      this.validateDrainageInputs() &&
-      this.validateRiverInputs() &&
+      // this.validateDrainageInputs() &&
+      // this.validateRiverInputs() &&
       this.validatePrecisionInputs()
     ){
           console.log("validate ALL inputs");
@@ -534,46 +534,47 @@ class FulcrumApproach extends Component {
 
   //render the customized TBD Approach within Fulcrum
   renderTBD = () => (
-    <div className={this.state.TBDMode ==="" ? "enclosing-border" : " enclosing-border purple-background"}>
-
-      <div className="TBD-div">
-          {!this.state.defaultTBD && !this.state.customizedTBD &&
-            <div className="">
-              <RadioGroup
-                onChange={ this.setSelectedTBDMode } horizontal
-              >
-                <RadioButton
-                  value="default"
-                  rootColor={this.state.TBDMode ==="" ? "#4B1979" : "grey" }
-                  pointColor="white"//"#23CE2B"
-                  iconInnerSize="0px"
+    <div className={this.state.TBDMode ==="" ? "enclosing-border" : " enclosing-border light-purple-background"}>
+      <div className="">
+        <div className="TBD-div">
+            {!this.state.defaultTBD && !this.state.customizedTBD &&
+              <div className="">
+                <RadioGroup
+                  onChange={ this.setSelectedTBDMode } horizontal
                 >
-                  Default TBD [default value]
-                </RadioButton>
-                <RadioButton
-                  value="customized"
-                  rootColor={this.state.TBDMode ==="" ? "#4B1979" : "grey" }
-                  pointColor="white"//"#23CE2B"
-                  iconInnerSize="0px"
-                >
-                  Customized TDB
-                </RadioButton>
-              </RadioGroup>
-            </div>
-          }
-      </div>
-
-
-      {this.state.TBDMode === "Default" &&
-        <div>
-          TBD will be calculated using Default value of [...]
+                  <RadioButton
+                    value="default"
+                    rootColor={this.state.TBDMode ==="" ? "#4B1979" : "grey" }
+                    pointColor="white"//"#23CE2B"
+                    iconInnerSize="0px"
+                  >
+                    Default TBD [default value]
+                  </RadioButton>
+                  <RadioButton
+                    value="customized"
+                    rootColor={this.state.TBDMode ==="" ? "#4B1979" : "grey" }
+                    pointColor="white"//"#23CE2B"
+                    iconInnerSize="0px"
+                  >
+                    Customized TDB
+                  </RadioButton>
+                </RadioGroup>
+              </div>
+            }
         </div>
-      }
 
-      {this.state.TBDMode === "Customized" &&
-        this.renderTBDComponents()
-      }
 
+        {this.state.TBDMode === "Default" &&
+          <div className="white-txt">
+            TBD will be calculated using Default value of [...]
+          </div>
+        }
+
+        {this.state.TBDMode === "Customized" &&
+          this.renderTBDComponents()
+        }
+
+      </div>
     </div>
   )
 
@@ -778,12 +779,14 @@ class FulcrumApproach extends Component {
       }
     ];
 
+    const { submitted } = this.state.submitted;
+
     return (
       <form onSubmit={this.handleSubmit} className="form" style={{
         'background-color': '#DBDBD9'
       }}>
 
-        {!this.state.submitted &&
+        {!submitted &&
           <div >
             {this.renderHeader()}
 
@@ -817,7 +820,7 @@ class FulcrumApproach extends Component {
           </div>
         }
 
-        {this.state.submitted &&
+        {submitted &&
           <div>
             <div className="header">
               <div className='back-button-div-fulcrum'>

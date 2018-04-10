@@ -56,7 +56,7 @@ img {
   vertical-align: top; }
 
 h1 {
-  color: #23CE2B !important; }
+  color: #F2CC31 !important; }
 
 h3 {
   text-align: center;
@@ -89,9 +89,6 @@ h3 {
   display: inline-block;
   background-color: grey;
   width: 60%; }
-
-.greenText {
-  color: green; }
 
 .center {
   text-align: center; }
@@ -301,13 +298,6 @@ input {
 .imput-error {
   border: 1px solid red; }
 
-.purple-background {
-  color: white;
-  background-color: #4B1979; }
-
-.black-txt {
-  color: black !important; }
-
 .submit-btn {
   background: #4B1979;
   color: white;
@@ -393,15 +383,22 @@ button.submit-btn:hover {
 .error-color-Koppen {
   border: 1px solid red; }
 
-.black-txt {
-  color: black !important; }
-
 .tbd-value-table {
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
   margin-bottom: 30px;
   width: 50%; }
+
+.div-google-map {
+  position: relative;
+  left: 100px;
+  margin-top: 20px;
+  height: 500px !important; }
+
+hr {
+  height: 2px;
+  border-top: 1px solid #9c27b0 !important; }
 
 .back-button-link {
   text-decoration: none !important;
@@ -439,3 +436,37 @@ button.back-btn-result:hover {
   border: 2px #4B1979 solid;
   color: #4B1979 !important;
   font-weight: bold; }
+
+.greenText {
+  color: green; }
+
+.purple-background {
+  color: white;
+  background-color: #4B1979; }
+
+.grey-background {
+  background-color: grey; }
+
+.light-purple-background {
+  background-color: #552C7E; }
+
+.white-txt {
+  color: white !important; }
+
+.white-text {
+  color: white !important; }
+
+.black-txt {
+  color: black !important; }
+
+.green-text {
+  color: #23CE2B !important; }
+
+.orange-text {
+  color: orange !important; }
+
+.yellow-text {
+  color: #F2CC31 !important; }
+
+.white-link {
+  color: white !important; }

@@ -9,7 +9,9 @@ const FulcrumResultComponent = ( {title, returnedData} ) => (
         {title}:
       </Col>
       <Col sm={4} md={6} className="leftAlignedText">
-        {returnedData}
+        {
+          isNaN(returnedData) ? "No result." : returnedData
+        }
      </Col>
     </Row>
   </Grid>

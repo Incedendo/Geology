@@ -227,7 +227,11 @@ class RiverChannelsTable extends Component{
             }
 
             return (
-              <div style={{ padding: "20px" }}>
+              <div
+                style={{
+                  "background-color": "#DBDBD9",
+                  padding: "20px"
+                }}>
 
                 id: {rowInfo.sitE_ID}
 
@@ -274,7 +278,7 @@ class RiverChannelsTable extends Component{
                           <th>Climate Description</th>
                         </tr>
                         <tr>
-                          <td>{rowInfo.climatE_ID}</td>
+                          <td>{rowInfo.climatE_CODE}</td>
                           <td>{rowInfo.climatE_DESC}</td>
                         </tr>
                       </table>
@@ -294,19 +298,16 @@ class RiverChannelsTable extends Component{
                     </div>
                   </div>
 
-                  {/* <div
-                    style={{
-                      "margin-top": "20px",
-                    }}
-                  >
+                  <div className="div-google-map grey">
                     <MapContainer
-                      lat="41.210171"
-                      long="-73.898506"
+                      lat={rowInfo.latitude}
+                      long={rowInfo.longitude}
                     />
-                  </div> */}
+                  </div>
+
+                  <hr />
 
                 </div>
-
 
               </div>
             );

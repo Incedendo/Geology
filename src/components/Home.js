@@ -14,7 +14,7 @@ class Home extends Component {
       </h1>
 
       <h3>
-        River Analogue Fulcrum Theory Estimate Repository
+        River Analogues and Fulcrum Transport Estimates Repository
       </h3>
     </div>
   )
