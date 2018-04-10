@@ -237,8 +237,6 @@ class RiverChannelsTable extends Component{
                   padding: "20px"
                 }}>
 
-                id: {rowInfo.sitE_ID}
-
                 <div className="">
                   <div className="table-margin">
                     <table>

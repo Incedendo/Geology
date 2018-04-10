@@ -245,7 +245,7 @@ class FulcrumApproach extends Component {
       }else{
         console.log("not a number...");
         this.setState(() => ({
-          [name]: "(positive number only)",
+          [name]: "(Must enter a positive number)",
           [test]: false,
         }))
       }
@@ -354,7 +354,7 @@ class FulcrumApproach extends Component {
     const {name, value}  = e.target;
     if(value.length !== 0){
       if(!isNaN(value)){
-        if(value <= 0){
+        if(value < 0){
           this.setState(() => ({
             [name]: "(positive number only)",
           }));
@@ -373,7 +373,7 @@ class FulcrumApproach extends Component {
     }else{
       console.log(name + "is empty");
       this.setState({
-        [name]: "(positive number only)",
+        [name]: "",
       })
     }
   }

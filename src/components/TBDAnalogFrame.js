@@ -784,7 +784,7 @@ class TBDAnalogFrame extends Component{
     }else{
       console.log(name + "is empty");
       this.setState({
-        [name]: "(positive number only)",
+        [name]: "",
       })
     }
   }
