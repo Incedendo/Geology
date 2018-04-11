@@ -116,37 +116,37 @@ class FulcrumApproach extends Component {
       },
       body:
         JSON.stringify({
-          "isFulcrum": true,
-          "isMetric": false,
-          "isRiverAnalogue" : this.state.isRiverAnalogue,
-          "isTBD": this.state.isTBD,
+          "IsFulcrum": true,
+          "IsMetric": false,
+          "IsRiverAnalogue" : this.state.isRiverAnalogue,
+          "IsTBD": this.state.isTBD,
           "TBD": {
             //climate:
-              "climate": this.state.climateFromDropdown.value,
+              "Climate": this.state.climateFromDropdown.value,
 
             //drainage:
-              "drainageLow": this.state.drainage_low,
-              "drainageHigh": this.state.drainage_high,
+              "DrainageLow": this.state.drainage_low,
+              "DrainageHigh": this.state.drainage_high,
 
             //river size:
-                "isCrossSection": this.state.isCrossSection,
-                "riverSizeLow": this.state.riverLow,
-                "riverSizeHigh": this.state.riverHigh,
+                "IsCrossSection": this.state.isCrossSection,
+                "RiverSizeLow": this.state.riverLow,
+                "RiverSizeHigh": this.state.riverHigh,
 
             //precision:
-              "isWithin10": this.state.isWithin10,
-              "isWithin20": this.state.isWithin20,
+              "IsWithin10": this.state.isWithin10,
+              "IsWithin20": this.state.isWithin20,
           },
           "Fulcrum": {
-            "avgBankfullDepth": this.state.AvgBkflDpt,
-            "bankfullWidth": this.state.BkflChanWdt,
-            "hydraulicRadius": this.state.HydrolicRad,
-            "grainSize_d16": this.state.Dee16,
-            "grainSize_d50": this.state.Dee50,
-            "grainSize_d84": this.state.Dee84,
-            "grainSize_d90": this.state.Dee90,
-            "sedimentDensity": this.state.SedimentDensity,
-            "dimensionlessMultiplier": this.state.DMLMult,
+            "AvgBankfullDepth": this.state.AvgBkflDpt,
+            "BankfullWidth": this.state.BkflChanWdt,
+            "HydraulicRadius": this.state.HydrolicRad,
+            "GrainSizeD16": this.state.Dee16,
+            "GrainSizeD50": this.state.Dee50,
+            "GrainSizeD84": this.state.Dee84,
+            "GrainSizeD90": this.state.Dee90,
+            "SedimentDensity": this.state.SedimentDensity,
+            "DimensionlessMultiplier": this.state.DMLMult,
           },
         })
     }

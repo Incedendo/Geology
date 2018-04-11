@@ -56,11 +56,12 @@ img {
   vertical-align: top; }
 
 h1 {
-  color: #F2CC31 !important; }
+  color: #4AC9EF !important; }
 
 h3 {
   text-align: center;
-  margin: 0px !important; }
+  margin: 0px !important;
+  color: #4AC9EF !important; }
 
 .no-margin {
   margin: 0px !important; }
@@ -466,7 +467,7 @@ button.back-btn-result:hover {
   color: orange !important; }
 
 .yellow-text {
-  color: #F2CC31 !important; }
+  color: #4AC9EF !important; }
 
 .white-link {
   color: white !important; }

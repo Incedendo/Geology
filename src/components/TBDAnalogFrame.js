@@ -22,12 +22,12 @@ class TBDAnalogFrame extends Component{
     climateFromDropdown: "",
 
     // 6 inputs for the text fields:
-    drainage_low: '',
-    drainage_high: '',
+    drainage_low: 0,
+    drainage_high: 83785,
 
     selectedRiverSize: "", // set when river size radio buttons are clicked
     isCrossSection: false,
-    riverLow: '',
+    riverLow: 0,
     riverHigh: '',
 
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
@@ -74,38 +74,38 @@ class TBDAnalogFrame extends Component{
       },
       body:
         JSON.stringify({
-          "isFulcrum": false,
-          "isMetric": false,
-          "isRiverAnalogue" : false,
-          "isTBD": true,
+          "IsFulcrum": false,
+          "IsMetric": false,
+          "IsRiverAnalogue" : false,
+          "IsTBD": true,
 
           "TBD": {
             //climate:
-              "climate":  this.state.climateFromDropdown.value,
+              "Climate":  this.state.climateFromDropdown.value,
 
             //drainage:
-              "drainageLow": this.state.drainage_low,
-              "drainageHigh": this.state.drainage_high,
+              "DrainageLow": this.state.drainage_low,
+              "DrainageHigh": this.state.drainage_high,
 
             //river size:
-                "isCrossSection": this.state.isCrossSection,
-                "riverSizeLow": this.state.riverLow,
-                "riverSizeHigh": this.state.riverHigh,
+                "IsCrossSection": this.state.isCrossSection,
+                "RiverSizeLow": this.state.riverLow,
+                "RiverSizeHigh": this.state.riverHigh,
 
             //precision:
-              "isWithin10": this.state.isWithin10,
-              "isWithin20": this.state.isWithin20,
+              "IsWithin10": this.state.isWithin10,
+              "IsWithin20": this.state.isWithin20,
           },
           "Fulcrum": {
-            "avgBankfullDepth": 9,
-            "bankfullWidth": 8,
-            "hydraulicRadius": 7,
-            "grainSize_d16": 6,
-            "grainSize_d50": 5,
-            "grainSize_d84": 4,
-            "grainSize_d90": 3,
-            "sedimentDensity": 2,
-            "dimensionlessMultiplier": 1,
+            "AvgBankfullDepth": 2.31,
+            "BankfullWidth": 73,
+            "HydraulicRadius": 2.23,
+            "GrainSizeD16": 0.18,
+            "GrainSizeD50": 0.19,
+            "GrainSizeD84": 0.38,
+            "GrainSizeD90": 0.39,
+            "SedimentDensity": 2.65,
+            "DimensionlessMultiplier": 2,
           },
         })
     }
@@ -336,7 +336,7 @@ class TBDAnalogFrame extends Component{
                      rootColor = {this.state.selectedClimate ==="" ? "white" : "grey"}
                      pointColor={pointColor}
                      selected={this.state.selectedClimate==="KoppenClassification"}>
-                     KÖppen Climate
+                     Köppen Climate
                    </RadioButton>
                  </RadioGroup>
                </div>
@@ -559,6 +559,7 @@ class TBDAnalogFrame extends Component{
            </Col>
         </Grid>
 
+        {this.state.selectedRiverSize !== '' &&
         <Grid className="padding-grid">
           <Col sm={4} md={2} className="rightAlignedText">
 
@@ -616,6 +617,8 @@ class TBDAnalogFrame extends Component{
             }
           </Col>
         </Grid>
+        }
+
 
         <div>
           <Grid>
@@ -712,10 +715,12 @@ class TBDAnalogFrame extends Component{
 
     if(value === "RiverDepth"){
       this.setState({
+        riverHigh: 48, //river max depth
         isCrossSection: false,
       })
     }else{
       this.setState({
+        riverHigh: 9780, //river max cross-sectional area
         isCrossSection: true,
       })
     }

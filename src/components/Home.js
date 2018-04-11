@@ -10,7 +10,7 @@ class Home extends Component {
   renderHeader = () => (
     <div className="home-header">
       <h1 className="no-margin">
-          R.A.F.T.E.R
+          R.A.F.T.E.R.
       </h1>
 
       <h3>

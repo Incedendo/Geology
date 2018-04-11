@@ -81,12 +81,11 @@ class RiverChannelsTable extends Component{
   }
 
   render(){
-
     console.log(this.props.data);
     let ebd; //estimated bankfull discharge
     let streams = [];
 
-    if(this.props.data){
+    if(this.props.data !== null){
       streams = this.props.data;
     }
 
@@ -109,212 +108,214 @@ class RiverChannelsTable extends Component{
           </table>
         </div>
 
-        <ReactTable
-          // data={this.props.data}
-          data={streams}
-          columns={[
-            {
-              Header: "Site Info",
-              columns: [
-                {
-                  Header: "Site ID",
-                  accessor: "sitE_ID",
-                  Cell: cellInfo => (
+          <ReactTable
+            data={this.props.data}
+            //data={streams}
+            columns={[
+              {
+                Header: "Site Info",
+                columns: [
+                  {
+                    Header: "Site ID",
+                    accessor: "siteID",
+                    Cell: cellInfo => (
+                      <div>
+                        <Link
+                          target="_blank"
+                          to={{
+                            pathname: "/TestView/"+
+                            cellInfo.row.siteID +"/"+
+                            cellInfo.row.siteNAME +"/"+ cellInfo.row.latitude +"/"+ cellInfo.row.longitude,
+                          }}
+                        >
+                          {cellInfo.row.siteID}
+                        </Link>
+
+                        <button onClick={this.toggleModal}>
+                          Detail
+                        </button>
+
+                        <DetailChannelModal
+                          isOpen={this.state.modalIsOpen}
+                          closeModal={this.toggleModal}
+                          enabledModal={this.state.modalIsOpen}
+                          data={this.props.data}
+                          index={cellInfo.index}
+                          id={cellInfo.row.sitE_ID}
+                          siteName={cellInfo.row.sitE_NAME}
+                          lat={cellInfo.row.latitude}
+                          long={cellInfo.row.longitude}
+                        />
+
+                        {/* <Link
+                          to={{
+                            pathname: "/DetailedChannelView/"+
+                            cellInfo.row.sitE_ID +"/"+ cellInfo.row.latitude + "/"+ cellInfo.row.longitude,
+                            state: {
+                              origin: this.props.origin,
+                              siteID: cellInfo.row.sitE_ID,
+                              latitude: cellInfo.row.latitude,
+                              longitude: cellInfo.row.longitude,
+                              drainageArea: cellInfo.row.drainageArea,
+                              channelWidth: cellInfo.row.channelWidth,
+                              channelDepth: cellInfo.row.channelDepth,
+                              country: cellInfo.row.country,
+                              // climateID:
+                              // climateDescription:
+                              // estimatedBnkfullDischarge:
+                              // reference:
+                            }
+                          }}
+                        >
+                          {cellInfo.row.sitE_ID}
+                        </Link> */}
+                      </div>
+                    )
+                  },
+                  {
+                    Header: "Site Name",
+                    accessor: "siteName",
+                    minWidth: 400,
+                  },
+                ]
+              },
+              {
+                Header: "Coordinates",
+                columns: [
+                  {
+                    Header: "Latitude",
+                    accessor: "latitude"
+                  },
+                  {
+                    Header: "Longitude",
+                    accessor: "longitude"
+                  }
+                ]
+              },
+              {
+                Header: "Channel Info",
+                columns: [
+                  {
+                    Header: "Drainage Area (km)",
+                    accessor: "drainageAreaKm",
+                  },
+                  {
+                    Header: "Channel Width (m)",
+                    accessor: "channelWidthM",
+                  },
+                  {
+                    Header: "Channel Depth (m)",
+                    accessor: "channelDepthM",
+                  },
+                  {
+                    Header: "Country",
+                    accessor: "countryName",
+                  },
+                ]
+              },
+            ]}
+            defaultPageSize={10}
+            className="-striped -highlight"
+            SubComponent={row => {
+              const data = this.props.data;
+              const index = row.index;
+              const rowInfo = data[index];
+
+              let ebd_stream;
+
+              if(this.props.tbdWithin10 !== -1){
+                ebd_stream = rowInfo.avgWithin10;
+              }else{
+                ebd_stream = rowInfo.avgWithin20;
+              }
+
+              return (
+                <div
+                  style={{
+                    "background-color": "#DBDBD9",
+                    padding: "20px"
+                  }}>
+
+                  <div className="">
+                    <div className="table-margin">
+                      <table>
+                        <tr>
+                          <th>Site ID</th>
+                          <th>Site Name</th>
+                          <th>Latitude</th>
+                          <th>Longitude</th>
+                        </tr>
+                        <tr>
+                          <td>{rowInfo.siteID}</td>
+                          <td>{rowInfo.siteName}</td>
+                          <td>{rowInfo.latitude}</td>
+                          <td>{rowInfo.longitude}</td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div className="table-margin">
+                      <table>
+                        <tr>
+                          <th>Drainage Area (km^2)</th>
+                          <th>Channel Width (m)</th>
+                          <th>Channel Depth (m)</th>
+                          <th>Source</th>
+                        </tr>
+                        <tr>
+                          <td>{rowInfo.drainageAreaKm}</td>
+                          <td>{rowInfo.channelWidthM}</td>
+                          <td>{rowInfo.channelDepthM}</td>
+                          <td>{rowInfo.descSource}</td>
+                        </tr>
+                      </table>
+                    </div>
+
                     <div>
-                      <Link
-                        target="_blank"
-                        to={{
-                          pathname: "/TestView/"+
-                          cellInfo.row.sitE_ID +"/"+
-                          cellInfo.row.sitE_NAME +"/"+ cellInfo.row.latitude +"/"+ cellInfo.row.longitude,
-                        }}
-                      >
-                        {cellInfo.row.sitE_ID}
-                      </Link>
+                      <div className="table-margin">
+                        <table>
+                          <tr>
+                            <th>Climate ID</th>
+                            <th>Climate Description</th>
+                          </tr>
+                          <tr>
+                            <td>{rowInfo.climateCode}</td>
+                            <td>{rowInfo.climateDesc}</td>
+                          </tr>
+                        </table>
+                      </div>
 
-                      <button onClick={this.toggleModal}>
-                        Detail
-                      </button>
+                      <div className="table-margin">
+                        <table>
+                          <tr>
+                            <th>Estimated Bankfull Discharge</th>
+                            <th>Reference</th>
+                          </tr>
+                          <tr>
+                            <td>{ebd_stream}</td>
+                            <td>{rowInfo.refSource}</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
 
-                      <DetailChannelModal
-                        isOpen={this.state.modalIsOpen}
-                        closeModal={this.toggleModal}
-                        enabledModal={this.state.modalIsOpen}
-                        data={this.props.data}
-                        index={cellInfo.index}
-                        id={cellInfo.row.sitE_ID}
-                        siteName={cellInfo.row.sitE_NAME}
-                        lat={cellInfo.row.latitude}
-                        long={cellInfo.row.longitude}
+                    <div className="div-google-map grey">
+                      <MapContainer
+                        lat={rowInfo.latitude}
+                        long={rowInfo.longitude}
                       />
-
-                      {/* <Link
-                        to={{
-                          pathname: "/DetailedChannelView/"+
-                          cellInfo.row.sitE_ID +"/"+ cellInfo.row.latitude + "/"+ cellInfo.row.longitude,
-                          state: {
-                            origin: this.props.origin,
-                            siteID: cellInfo.row.sitE_ID,
-                            latitude: cellInfo.row.latitude,
-                            longitude: cellInfo.row.longitude,
-                            drainageArea: cellInfo.row.drainageArea,
-                            channelWidth: cellInfo.row.channelWidth,
-                            channelDepth: cellInfo.row.channelDepth,
-                            country: cellInfo.row.country,
-                            // climateID:
-                            // climateDescription:
-                            // estimatedBnkfullDischarge:
-                            // reference:
-                          }
-                        }}
-                      >
-                        {cellInfo.row.sitE_ID}
-                      </Link> */}
-                    </div>
-                  )
-                },
-                {
-                  Header: "Site Name",
-                  accessor: "sitE_NAME",
-                  minWidth: 400,
-                },
-              ]
-            },
-            {
-              Header: "Coordinates",
-              columns: [
-                {
-                  Header: "Latitude",
-                  accessor: "latitude"
-                },
-                {
-                  Header: "Longitude",
-                  accessor: "longitude"
-                }
-              ]
-            },
-            {
-              Header: "Channel Info",
-              columns: [
-                {
-                  Header: "Drainage Area (km)",
-                  accessor: "drainagE_AREA_KM",
-                },
-                {
-                  Header: "Channel Width (m)",
-                  accessor: "channeL_WIDTH_M",
-                },
-                {
-                  Header: "Channel Depth (m)",
-                  accessor: "channeL_DEPTH_M",
-                },
-                {
-                  Header: "Country",
-                  accessor: "countrY_NAME",
-                },
-              ]
-            },
-          ]}
-          defaultPageSize={10}
-          className="-striped -highlight"
-          SubComponent={row => {
-            const data = this.props.data;
-            const index = row.index;
-            const rowInfo = data[index];
-
-            let ebd_stream;
-
-            if(this.props.tbdWithin10 !== -1){
-              ebd_stream = rowInfo.avG_WITHIN_10;
-            }else{
-              ebd_stream = rowInfo.avG_WITHIN_20;
-            }
-
-            return (
-              <div
-                style={{
-                  "background-color": "#DBDBD9",
-                  padding: "20px"
-                }}>
-
-                <div className="">
-                  <div className="table-margin">
-                    <table>
-                      <tr>
-                        <th>Site ID</th>
-                        <th>Site Name</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
-                      </tr>
-                      <tr>
-                        <td>{rowInfo.sitE_ID}</td>
-                        <td>{rowInfo.sitE_NAME}</td>
-                        <td>{rowInfo.latitude}</td>
-                        <td>{rowInfo.longitude}</td>
-                      </tr>
-                    </table>
-                  </div>
-
-                  <div className="table-margin">
-                    <table>
-                      <tr>
-                        <th>Drainage Area</th>
-                        <th>Channel Width</th>
-                        <th>Channel Depth</th>
-                        <th>Source</th>
-                      </tr>
-                      <tr>
-                        <td>{rowInfo.drainagE_AREA_KM}</td>
-                        <td>{rowInfo.channeL_WIDTH_M}</td>
-                        <td>{rowInfo.channeL_DEPTH_M}</td>
-                        <td>{rowInfo.desC_SOURCE}</td>
-                      </tr>
-                    </table>
-                  </div>
-
-                  <div>
-                    <div className="table-margin">
-                      <table>
-                        <tr>
-                          <th>Climate ID</th>
-                          <th>Climate Description</th>
-                        </tr>
-                        <tr>
-                          <td>{rowInfo.climatE_CODE}</td>
-                          <td>{rowInfo.climatE_DESC}</td>
-                        </tr>
-                      </table>
                     </div>
 
-                    <div className="table-margin">
-                      <table>
-                        <tr>
-                          <th>Estimated Bankfull Discharge</th>
-                          <th>Reference</th>
-                        </tr>
-                        <tr>
-                          <td>{ebd_stream}</td>
-                          <td>{rowInfo.reF_SOURCE}</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
+                    <hr />
 
-                  <div className="div-google-map grey">
-                    <MapContainer
-                      lat={rowInfo.latitude}
-                      long={rowInfo.longitude}
-                    />
                   </div>
-
-                  <hr />
 
                 </div>
+              );
+            }}
+          />
 
-              </div>
-            );
-          }}
-        />
+
       </div>
     )
    }

@@ -8,10 +8,10 @@ const FulcrumInputComponent = ( { title, name, state, isValid, submitted, update
   return(
     <Grid key={title}>
       <Row className="padding-grid">
-        <Col sm={4} md={6} className="fulcrum-input-title">
+        <Col xs={12} sm={12} md={6} className="fulcrum-input-title">
           {title}:
         </Col>
-        <Col sm={4} md={6} className="leftAlignedText">
+        <Col xs={12} sm={12} md={6} className="leftAlignedText">
           <input
             type="text" size="55"
 

@@ -52,7 +52,7 @@ export const ClimateOrders = (props) => {
                    pointColor={pointColor}
                    iconInnerSize="0px"
                    selected={props.selectedClimate==="KoppenClassification"}>
-                   KÖppen Climate
+                   Köppen Climate
                  </RadioButton>
                </RadioGroup>
              </div>
@@ -167,11 +167,33 @@ export const DrainageArea = (props) => {
   return(
     <div className="">
       <Grid className="padding-grid">
-          <Col sm={4} md={2} className={title}>
+          <Col sm={12} md={2} className={title}>
               Drainage Area (meter squared):
           </Col>
-          <Col sm={4} md={10} className="leftAlignedText">
-            <div className="inline-with-right-margin">
+          <Col sm={12} md={10} className="leftAlignedText">
+            <Grid>
+              <Col sm={12} md={6}>
+                Min: <input
+                  type="textbox"
+                  name="drainage_low"
+                  className={textfieldMin}
+                  onBlur={props.setRangeValues}
+                  value={props.drainage_low}
+                  onChange={props.updateFieldValue}
+                />
+              </Col>
+              <Col sm={12} md={6}>
+                Max: <input
+                  type="textbox"
+                  name="drainage_high"
+                  className={textfieldMax}
+                  onBlur={props.setRangeValues}
+                  value={props.drainage_high}
+                  onChange={props.updateFieldValue}
+                />
+              </Col>
+            </Grid>
+            {/* <div className="inline-with-right-margin">
               Min: <input
                 type="textbox"
                 name="drainage_low"
@@ -190,7 +212,7 @@ export const DrainageArea = (props) => {
                 value={props.drainage_high}
                 onChange={props.updateFieldValue}
               />
-            </div>
+            </div> */}
          </Col>
       </Grid>
     </div>
@@ -235,10 +257,10 @@ export const RiverSize = (props) => {
   return(
     <div className="">
       <Grid className="padding-grid">
-        <Col sm={4} md={2} className={title}>
+        <Col sm={12} md={2} className={title}>
             River Size:
         </Col>
-        <Col sm={4} md={9} className="leftAlignedText">
+        <Col sm={12} md={9} className="leftAlignedText">
 
            <RadioGroup
              onChange={ props.setRiverSizeSelectedOption } horizontal
@@ -264,13 +286,35 @@ export const RiverSize = (props) => {
       </Grid>
 
       <Grid className="padding-grid">
-        <Col sm={4} md={2} className="rightAlignedText">
+        <Col sm={12} md={2} className="rightAlignedText">
 
         </Col>
 
-        <Col sm={4} md={9} className="leftAlignedText">
+        <Col sm={12} md={9} className="leftAlignedText">
           {props.selectedRiverSize === "RiverDepth" &&
-          <div>
+          <Grid>
+            <Col sm={12} md={6}>
+              Min: <input
+                type="textbox"
+                name="riverLow"
+                className={textfieldDepthMin}
+                onBlur={props.setRangeValues}
+                onChange={props.updateFieldValue}
+                value={props.riverDepth_Min}
+              />
+            </Col>
+            <Col sm={12} md={6}>
+              Max: <input
+                type="textbox"
+                name="riverHigh"
+                className={textfieldDepthMax}
+                onBlur={props.setRangeValues}
+                onChange={props.updateFieldValue}
+                value={props.riverDepth_Max}
+              />
+            </Col>
+          </Grid>
+          /* <div>
             <div className="inline-with-right-margin">
               Min: <input
                 type="textbox"
@@ -291,7 +335,7 @@ export const RiverSize = (props) => {
                 value={props.riverDepth_Max}
               />
             </div>
-          </div>
+          </div> */
           }
 
           {props.selectedRiverSize === "CrossSectionalArea" &&
@@ -323,8 +367,8 @@ export const RiverSize = (props) => {
 
       <div>
         <Grid>
-          <Col sm={4} md={2}></Col>
-          <Col sm={4} md={9}>
+          <Col sm={12} md={2}></Col>
+          <Col sm={12} md={9}>
             <input
               type="checkbox"
               onChange={props.toggleRiverWidthAttr}
@@ -346,10 +390,10 @@ export const TBDPrecision = (props) =>{
   return(
     <div className="">
       <Grid className="padding-grid">
-        <Col sm={4} md={2} className={title}>
+        <Col sm={12} md={2} className={title}>
             Precision:
         </Col>
-        <Col sm={4} md={9} className="leftAlignedText">
+        <Col sm={12} md={9} className="leftAlignedText">
 
           <RadioGroup
             onChange={ props.setPrecisionSelectedOption } horizontal
