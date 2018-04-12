@@ -662,7 +662,6 @@ class TBDAnalogFrame extends Component{
                 </div>
               }
             </Row>
-
           </Grid>
         </div>
       </div>

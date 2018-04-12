@@ -193,26 +193,6 @@ export const DrainageArea = (props) => {
                 />
               </Col>
             </Grid>
-            {/* <div className="inline-with-right-margin">
-              Min: <input
-                type="textbox"
-                name="drainage_low"
-                className={textfieldMin}
-                onBlur={props.setRangeValues}
-                value={props.drainage_low}
-                onChange={props.updateFieldValue}
-              />
-            </div>
-            <div className="inline-no-right-margin">
-              Max: <input
-                type="textbox"
-                name="drainage_high"
-                className={textfieldMax}
-                onBlur={props.setRangeValues}
-                value={props.drainage_high}
-                onChange={props.updateFieldValue}
-              />
-            </div> */}
          </Col>
       </Grid>
     </div>
@@ -285,6 +265,7 @@ export const RiverSize = (props) => {
          </Col>
       </Grid>
 
+      {this.selectedRiverSize !== '' &&
       <Grid className="padding-grid">
         <Col sm={12} md={2} className="rightAlignedText">
 
@@ -314,33 +295,11 @@ export const RiverSize = (props) => {
               />
             </Col>
           </Grid>
-          /* <div>
-            <div className="inline-with-right-margin">
-              Min: <input
-                type="textbox"
-                name="riverLow"
-                className={textfieldDepthMin}
-                onBlur={props.setRangeValues}
-                onChange={props.updateFieldValue}
-                value={props.riverDepth_Min}
-              />
-            </div>
-            <div className="inline-no-right-margin">
-              Max: <input
-                type="textbox"
-                name="riverHigh"
-                className={textfieldDepthMax}
-                onBlur={props.setRangeValues}
-                onChange={props.updateFieldValue}
-                value={props.riverDepth_Max}
-              />
-            </div>
-          </div> */
           }
 
           {props.selectedRiverSize === "CrossSectionalArea" &&
-          <div>
-            <div className="inline-with-right-margin">
+          <Grid>
+            <Col sm={12} md={6}>
               Min: <input
                 type="textbox"
                 name="riverLow"
@@ -349,8 +308,8 @@ export const RiverSize = (props) => {
                 onChange={props.updateFieldValue}
                 value={props.crossSectionalArea_Min}
               />
-            </div>
-            <div className="inline-no-right-margin">
+            </Col>
+            <Col sm={12} md={6}>
               Max: <input
                 type="textbox"
                 name="riverHigh"
@@ -359,22 +318,41 @@ export const RiverSize = (props) => {
                 onChange={props.updateFieldValue}
                 value={props.crossSectionalArea_Max}
               />
-            </div>
-          </div>
+            </Col>
+          </Grid>
           }
         </Col>
       </Grid>
+      }
+
+
 
       <div>
         <Grid>
-          <Col sm={12} md={2}></Col>
-          <Col sm={12} md={9}>
-            <input
-              type="checkbox"
-              onChange={props.toggleRiverWidthAttr}
-              className="leftAlignedText"
-            /> Derive Width from River Depth (optional)
-          </Col>
+          <Row>
+            <Col sm={12} md={2}></Col>
+            <Col sm={12} md={9}>
+              <input
+                type="checkbox"
+                onChange={props.toggleRiverWidthAttr}
+                className="leftAlignedText"
+              /> Derive Width from River Depth (optional)
+            </Col>
+          </Row>
+          <Row>
+            {props.calculatedDepthUsingWidth &&
+              <div>
+                <input
+                  type="textbox"
+                  name="riverWidth"
+                  className="black-txt"
+                  value={props.riverWidth}
+                  onBlur={props.setRiverWidth}
+                  onChange={props.updateFieldValue}
+                />
+              </div>
+            }
+          </Row>
         </Grid>
       </div>
     </div>

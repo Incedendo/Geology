@@ -10,6 +10,8 @@ import RiverChannelsTable  from "../TBD/RiverChannelsTable";
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
+import BaseSupSub from 'react-basesupsub';
+
 //import RadioButton package
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
 
@@ -58,12 +60,13 @@ class FulcrumApproach extends Component {
 
         // 6 inputs for the text fields:
         drainage_low: 0,
-        drainage_high: 0,
+        drainage_high: 83785,
 
         selectedRiverSize: "", // set when river size radio buttons are clicked
         isCrossSection: null,
         riverLow: 0,
-        riverHigh: 0,
+        riverHigh: '',
+        riverWidth: '',
         toggleRiverWidthAttr: false,
         calculatedDepthUsingWidth: false,
 
@@ -393,14 +396,40 @@ class FulcrumApproach extends Component {
 
     if(value === "RiverDepth"){
       this.setState({
+        riverHigh: 48, //river max depth
         isCrossSection: false,
       })
     }else{
       this.setState({
+        riverHigh: 9780, //river max cross-sectional area
         isCrossSection: true,
       })
     }
     console.log(this.state.selectedRiverSize);
+  }
+
+  getBaseLog = (x, y) => {
+    return Math.log(y) / Math.log(x);
+  }
+
+  //calculate River Depth based on the provided River Width using Scientific Formula
+  deriveRiverDepthFromWidth = () => {
+    let depth = 0;
+    let width = this.state.riverWidth;
+    width = width / 8.8;
+    depth = this.getBaseLog(1.82, width);
+    console.log("printing depth: ", depth);
+    this.setState({
+      riverHigh: depth
+    });
+
+    //return depth;
+  }
+
+  setRiverWidth = (e) => {
+    //const {name, value}  = e.target;
+    this.setRangeValues(e);
+    this.deriveRiverDepthFromWidth();
   }
 
   toggleRiverWidthAttr = () => {
@@ -548,7 +577,25 @@ class FulcrumApproach extends Component {
                     pointColor="white"//"#23CE2B"
                     iconInnerSize="0px"
                   >
-                    Default TBD [default value]
+                    <div>
+                      <div
+                        style={{
+                          'margin-right': '5px',
+                          display: 'inline-block'
+                        }}
+                      >
+                        Default
+                      </div>
+                      <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+                      <div
+                        style={{
+                          'margin-left': '5px',
+                          display: 'inline-block'
+                        }}
+                      >
+                          [default value]
+                      </div>
+                    </div>
                   </RadioButton>
                   <RadioButton
                     value="customized"
@@ -556,7 +603,18 @@ class FulcrumApproach extends Component {
                     pointColor="white"//"#23CE2B"
                     iconInnerSize="0px"
                   >
-                    Customized TDB
+                    <div>
+                      <div
+                        style={{
+                          'margin-right': '5px',
+                          display: 'inline-block'
+                        }}
+                      >
+                        Customized
+                      </div>
+                      <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+                    </div>
+
                   </RadioButton>
                 </RadioGroup>
               </div>
@@ -612,6 +670,9 @@ class FulcrumApproach extends Component {
         setRangeValues = {this.setRangeValues}
         updateFieldValue = {this.updateFieldValue}
         toggleRiverWidthAttr = {this.state.toggleRiverWidthAttr}
+        calculatedDepthUsingWidth = {this.state.calculatedDepthUsingWidth}
+        riverWidth = {this.state.riverWidth}
+        setRiverWidth = {this.setRiverWidth}
       />
 
       <TBDPrecision

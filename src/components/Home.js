@@ -32,7 +32,13 @@ class Home extends Component {
           />
         </Col>
 
-        <Col md={8} className="contact-div">
+        <Col md={8}
+          className="contact-div"
+          style={{
+            'margin-top': 'auto',
+            'margin-bottom': 'auto'
+          }}
+        >
           <a className="white-text" href="">Contact</a>
         </Col>
 
