@@ -70,8 +70,8 @@ class FulcrumApproach extends Component {
         calculatedDepthUsingWidth: false,
 
         selectedPrecision: "", // set when Precision Radio Buttons are clicked
-        isWithin10: null,
-        isWithin20: null,
+        isWithin10: false,
+        isWithin20: false,
 
     response: {
       slope: 0,

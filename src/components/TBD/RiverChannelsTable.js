@@ -426,6 +426,13 @@ class RiverChannelsTable extends Component{
                         onClick={() => this.downloadCSV(rowInfo.siteID)}>
                         Download CSV File
                       </button>
+                      <div
+                        style={{
+                          'text-align': 'center'
+                        }}
+                      >
+                        (It might take up to 15 seconds to prepare the file for download...)
+                      </div>
                     </div>
 
                     <hr />

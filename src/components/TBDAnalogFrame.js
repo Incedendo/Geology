@@ -61,7 +61,7 @@ class TBDAnalogFrame extends Component{
 
   // componentDidMount() {
   postTBD = () =>{
-    console.log("Printing default river High: '",this.state.riverHigh + "'");
+    console.log("Printing state: ",this.state);
 
     const JimPostTBDUrl =
     'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/TBD';
@@ -236,11 +236,11 @@ class TBDAnalogFrame extends Component{
   // validate if the user enter positive numbers for min and max Cross Sectional Area
   validatePrecisionInputs(){
     if(this.state.selectedPrecision !== ""){
-            console.log("validated Precision: " + this.state.selectedPrecision);
-            return true;
+        console.log("validated Precision: " + this.state.selectedPrecision);
+        return true;
     }else{
-            console.log("fail to validate Precision: radio box NOT selected");
-            return false;
+        console.log("fail to validate Precision: radio box NOT selected");
+        return false;
     }
   }
 
