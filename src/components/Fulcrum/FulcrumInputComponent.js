@@ -7,7 +7,12 @@ const FulcrumInputComponent = ( { title, name, state, isValid, submitted, update
 
   return(
     <Grid key={title}>
-      <Row className="padding-grid">
+      <Row
+        className="padding-grid"
+        style={{
+          'margin-left': '60px !important',
+        }}
+      >
         <Col xs={12} sm={12} md={6} className="fulcrum-input-title">
           {title}:
         </Col>

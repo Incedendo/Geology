@@ -112,7 +112,7 @@ class LandingPage extends Component{
     <div className="btn-go-div">
       <button className='btn-go'>
         <HomeLinkComponent
-          className="white-text"
+          className="blue-text"
           pathname={path}
           linkTitle= 'Go'
         />
@@ -166,11 +166,7 @@ class LandingPage extends Component{
               </div>
 
               <div className="div-helpful-link">
-                <HomeLinkComponent
-                  className="white-text"
-                  pathname='/helpfullinks'
-                  linkTitle= "4. Dr Holbrook's Home Page"
-                />
+                <a className="white-text"href="https://sgee.tcu.edu/staff/john-holbrook-ph-d/">4. Dr Holbrook's Home Page</a>
               </div>
 
               <div className="div-helpful-link">

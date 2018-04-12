@@ -31,7 +31,8 @@ body {
   position: absolute;
   right: 0px;
   top: -30px;
-  background: grey; }
+  background: grey;
+  border-radius: 5px; }
 
 .btn-go-fulcrum {
   position: absolute;

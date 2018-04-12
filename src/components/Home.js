@@ -39,7 +39,7 @@ class Home extends Component {
             'margin-bottom': 'auto'
           }}
         >
-          <a className="white-text" href="">Contact</a>
+          <a className="white-text" href="https://sgee.tcu.edu/staff/john-holbrook-ph-d/">Contact</a>
         </Col>
 
         <Col md={2} className="right-div-img">
