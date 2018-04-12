@@ -268,7 +268,27 @@ class RiverChannelsTable extends Component{
                     <div className="table-margin">
                       <table>
                         <tr>
-                          <th>Drainage Area (km^2)</th>
+                          <th>
+                            <div>
+                              <div
+                                style={{
+                                  'margin-right': '2px',
+                                  display: 'inline-block'
+                                }}
+                              >
+                                Drainage Area (
+                              </div>
+                              <BaseSupSub style={{ display: 'inline-block' }} base="km" sup="2" />
+                              <div
+                                style={{
+                                  'margin-left': '2px',
+                                  display: 'inline-block'
+                                }}
+                              >
+                                 )
+                              </div>
+                            </div>
+                          </th>
                           <th>Channel Width (m)</th>
                           <th>Channel Depth (m)</th>
                           <th>Source</th>

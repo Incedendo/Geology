@@ -7,6 +7,7 @@ import { RadioGroup, RadioButton } from 'react-radio-buttons';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import classNames from 'classnames';
+import BaseSupSub from 'react-basesupsub';
 
 import '../../assets/scss/include.scss';
 
@@ -259,7 +260,25 @@ export const RiverSize = (props) => {
                pointColor={pointColor}
                iconInnerSize="0px"
              >
-               Cross Sectional Area (km squared)
+               <div>
+                 <div
+                   style={{
+                     'margin-right': '2px',
+                     display: 'inline-block'
+                   }}
+                 >
+                   Cross Sectional Area (
+                 </div>
+                 <BaseSupSub style={{ display: 'inline-block' }} base="km" sup="2" />
+                 <div
+                   style={{
+                     'margin-left': '2px',
+                     display: 'inline-block'
+                   }}
+                 >
+                    )
+                 </div>
+               </div>
              </RadioButton>
            </RadioGroup>
          </Col>
