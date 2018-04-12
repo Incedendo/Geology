@@ -8,6 +8,9 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import classNames from 'classnames';
 
+//  for FileDownload
+import fileDownload from 'js-file-download';
+
 //import other components
 import RiverChannelsTable  from "./TBD/RiverChannelsTable";
 
@@ -29,6 +32,7 @@ class TBDAnalogFrame extends Component{
     isCrossSection: false,
     riverLow: 0,
     riverHigh: '',
+    riverWidth: '',
 
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
     isWithin10: false,
@@ -58,6 +62,7 @@ class TBDAnalogFrame extends Component{
 
   // componentDidMount() {
   postTBD = () =>{
+
     const JimPostTBDUrl =
     'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/TBD';
 
@@ -108,6 +113,14 @@ class TBDAnalogFrame extends Component{
             "DimensionlessMultiplier": 2,
           },
         })
+    }
+
+    if(this.state.riverWidth !== ''){
+      const riverDepthGeneratedFromWidth = this.deriveRiverDepthFromWidth();
+      this.setState({
+        riverHigh: riverDepthGeneratedFromWidth
+      });
+      console.log("Derive new Depth from Width:", riverDepthGeneratedFromWidth);
     }
 
     fetch(JimPostTBDUrl, postRequestData)
@@ -629,13 +642,21 @@ class TBDAnalogFrame extends Component{
                   type="checkbox"
                   onChange={this.toggleRiverWidthAttr}
                   className="leftAlignedText"
-                /> Derive Width from River Depth (optional)
+                /> Derive Width from River Depth (m) (optional)
               </Col>
             </Row>
             <Row>
               {this.state.calculatedDepthUsingWidth &&
                 <div>
-                  <input type="textbox"></input>
+                  <input
+                    type="textbox"
+                    name="riverWidth"
+                    className="black-txt"
+                    value={this.state.riverWidth}
+                    //onBlur={this.setRangeValues}
+                    onBlur={this.setRiverWidth}
+                    onChange={this.updateFieldValue}
+                  />
                 </div>
               }
             </Row>
@@ -717,18 +738,37 @@ class TBDAnalogFrame extends Component{
       this.setState({
         riverHigh: 48, //river max depth
         isCrossSection: false,
-      })
+      });
     }else{
       this.setState({
         riverHigh: 9780, //river max cross-sectional area
         isCrossSection: true,
-      })
+      });
     }
   }
 
+  getBaseLog = (x, y) => {
+    return Math.log(y) / Math.log(x);
+  }
+
   //calculate River Depth based on the provided River Width using Scientific Formula
-  deriveRiverDepthFromWidth(){
-    return 0;
+  deriveRiverDepthFromWidth = () => {
+    let depth = 0;
+    let width = this.state.riverWidth;
+    width = width / 8.8;
+    depth = this.getBaseLog(1.82, width);
+    console.log("printing depth: ", depth);
+    this.setState({
+      riverHigh: depth
+    });
+
+    //return depth;
+  }
+
+  setRiverWidth = (e) => {
+    //const {name, value}  = e.target;
+    this.setRangeValues(e);
+    this.deriveRiverDepthFromWidth();
   }
 
   toggleRiverWidthAttr = () => {
@@ -794,6 +834,42 @@ class TBDAnalogFrame extends Component{
     }
   }
 
+  downloadCSV = () => {
+    const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID=01093800';
+
+    const getRequestData = {
+      method: 'GET',
+      Origin:'localhost:3000',
+      mode: "cors",
+      headers: {
+        // 'Content-Type': 'text/plain',
+        // Accept: 'text/plain',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        // 'X-Content-Type-Options': 'nosniff',
+      }
+    }
+
+    fetch(getCsvURL, getRequestData)
+    // .then( results => results.json() )
+    .then( response =>
+      {
+        if (response.status === 200 || response.status === 201) {
+          console.log(response);
+          return response.blob();
+        } else {
+          console.log('Get CSV Failure!', response.status);
+        }
+      }
+    ).then( blob => {
+      console.log("expecting returned data");
+      console.log(blob);
+      fileDownload(blob, 'tbd_data.csv');
+    });
+
+
+  }
+
   render(){
     return(
       <div>
@@ -826,7 +902,7 @@ class TBDAnalogFrame extends Component{
             </div>}
 
             <button
-              type="submit" onClick={this.handleSubmit} className="submit-btn">
+              type="submit" onClick={this.handleSubmit} className="back-btn-result">
               Submit
             </button>
 
@@ -857,8 +933,15 @@ class TBDAnalogFrame extends Component{
               origin={this.props.origin}
             />
 
-          </div>
+            <div className="csv-btn">
+              <button
+                className="back-btn-result"
+                onClick={this.downloadCSV}>
+                Download CSV File
+              </button>
+            </div>
 
+          </div>
         }
       </div>
     )

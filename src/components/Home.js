@@ -5,6 +5,7 @@ import '../assets/scss/include.scss';
 import LandingPage from './LandingPage';
 import HomeLinkComponent from './HomeLinkComponent';
 import logo from '../assets/image/final_rafter_logo.png';
+import GeoDeptlogo from '../assets/image/SGEEwordmark.png';
 
 class Home extends Component {
   renderHeader = () => (
@@ -38,7 +39,7 @@ class Home extends Component {
         <Col md={2} className="right-div-img">
           <img
             className="img-right"
-            src={logo}
+            src={GeoDeptlogo}
             alt="etc"
           />
         </Col>

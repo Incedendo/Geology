@@ -525,7 +525,7 @@ class FulcrumApproach extends Component {
   renderSubmitBtn = () => (
     <div>
       {/* SUBMIT BUTTON */}
-      <button type="submit" onClick={this.handleSubmit} className="submit-btn">
+      <button type="submit" onClick={this.handleSubmit} className="back-btn-result">
         Submit
 
       </button>
