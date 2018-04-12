@@ -9,6 +9,8 @@ import DetailedChannelView from './DetailedChannelView';
 import DetailChannelModal from './DetailChannelModal';
 import MapContainer from '../GoogleAPIScripts/MapContainer';
 import BaseSupSub from 'react-basesupsub';
+//  for FileDownload
+import fileDownload from 'js-file-download';
 
 const fakeData = [
   {
@@ -81,6 +83,42 @@ class RiverChannelsTable extends Component{
     this.setState( (prevState) => ({modalIsOpen: !prevState.modalIsOpen}) );
   }
 
+  downloadCSV = (id) => {
+    console.log("stream id: ",id);
+
+    const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID='+id;
+
+    const getRequestData = {
+      method: 'GET',
+      Origin:'http://rafter-ui-bucket.s3-website-us-east-1.amazonaws.com/FulcrumApproach',
+      mode: "cors",
+      headers: {
+        // 'Content-Type': 'text/plain',
+        // Accept: 'text/plain',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        // 'X-Content-Type-Options': 'nosniff',
+      }
+    }
+
+    fetch(getCsvURL, getRequestData)
+    // .then( results => results.json() )
+    .then( response =>
+      {
+        if (response.status === 200 || response.status === 201) {
+          console.log(response);
+          return response.blob();
+        } else {
+          console.log('Get CSV Failure!', response.status);
+        }
+      }
+    ).then( blob => {
+      console.log("expecting returned data");
+      console.log(blob);
+      fileDownload(blob, 'tbd_data.csv');
+    });
+  }
+
   render(){
     console.log(this.props.data);
     let ebd; //estimated bankfull discharge
@@ -142,9 +180,10 @@ class RiverChannelsTable extends Component{
                           {cellInfo.row.siteID}
                         </Link>
 
-                        <button onClick={this.toggleModal}>
+                        {/* <button onClick={this.toggleModal}>
                           Detail
-                        </button>
+                        </button> */}
+
 
                         <DetailChannelModal
                           isOpen={this.state.modalIsOpen}
@@ -306,10 +345,32 @@ class RiverChannelsTable extends Component{
                       <div className="table-margin">
                         <table>
                           <tr>
+                            <th>
+                              <div>
+                                <div
+                                  style={{
+                                    'margin-right': '5px',
+                                    display: 'inline-block'
+                                  }}
+                                >
+                                  Average
+                                </div>
+                                <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
+                                <div
+                                  style={{
+                                    'margin-left': '5px',
+                                    display: 'inline-block'
+                                  }}
+                                >
+                                  (days)
+                                </div>
+                              </div>
+                            </th>
                             <th>Climate ID</th>
                             <th>Climate Description</th>
                           </tr>
                           <tr>
+                            <td>{ebd_stream}</td>
                             <td>{rowInfo.climateCode}</td>
                             <td>{rowInfo.climateDesc}</td>
                           </tr>
@@ -319,11 +380,33 @@ class RiverChannelsTable extends Component{
                       <div className="table-margin">
                         <table>
                           <tr>
-                            <th>Estimated Bankfull Discharge</th>
+                            <th>
+
+                              <div>
+                                <div
+                                  style={{
+                                    'margin-right': '2px',
+                                    display: 'inline-block'
+                                  }}
+                                >
+                                  Estimated Bankfull Discharge (
+                                </div>
+                                <BaseSupSub style={{ display: 'inline-block' }} base="m" sup="3" />
+                                <div
+                                  style={{
+                                    'margin-left': '2px',
+                                    display: 'inline-block'
+                                  }}
+                                >
+                                  /s)
+                                </div>
+                              </div>
+
+                            </th>
                             <th>Reference</th>
                           </tr>
                           <tr>
-                            <td>{ebd_stream}</td>
+                            <td>{rowInfo.estDischargeCubicMPerSec}</td>
                             <td>{rowInfo.refSource}</td>
                           </tr>
                         </table>
@@ -335,6 +418,14 @@ class RiverChannelsTable extends Component{
                         lat={rowInfo.latitude}
                         long={rowInfo.longitude}
                       />
+                    </div>
+
+                    <div className="csv-btn">
+                      <button
+                        className="back-btn-result"
+                        onClick={() => this.downloadCSV(rowInfo.siteID)}>
+                        Download CSV File
+                      </button>
                     </div>
 
                     <hr />

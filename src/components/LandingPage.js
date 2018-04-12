@@ -74,7 +74,7 @@ class LandingPage extends Component{
   renderTBDContent = () => (
     <div className="background-img">
       <div className="yellow-text">
-        <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+        <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
         <div
           style={{
             'margin-left': '5px',

@@ -25,33 +25,32 @@ class FulcrumApproach extends Component {
 
   state = {
     post: [],
-    AvgBkflDpt: '',
-    BkflChanWdt: '',
-    HydrolicRad: '',
-    Dee16: '',
-    Dee50: '',
-    Dee84: '',
-    Dee90: '',
-    SedimentDensity: '',
-    DMLMult: '',
 
-    valid_AvgBkflDpt: false,
-    valid_BkflChanWdt: false,
-    valid_HydrolicRad: false,
-    valid_Dee16: false,
-    valid_Dee50: false,
-    valid_Dee84: false,
-    valid_Dee90: false,
-    valid_SedimentDensity: false,
-    valid_DMLMult: false,
+    AvgBkflDpt: 2.31,
+    BkflChanWdt: 73,
+    HydrolicRad: 2.23,
+    Dee16: 0.18,
+    Dee50: 0.19,
+    Dee84: 0.38,
+    Dee90: 0.39,
+    SedimentDensity: 2.65,
+    DMLMult: 2,
+
+    valid_AvgBkflDpt: true,
+    valid_BkflChanWdt: true,
+    valid_HydrolicRad: true,
+    valid_Dee16: true,
+    valid_Dee50: true,
+    valid_Dee84: true,
+    valid_Dee90: true,
+    valid_SedimentDensity: true,
+    valid_DMLMult: true,
 
     submitted: false,
     submitClicked: false,
     inputs_validated: true,
     displayedResult: false,
 
-    isRiverAnalogue: false,
-    isTBD: false,
     TBDMode: "", // "Default" or "Customized"
 
     //Customized TBD parameters:
@@ -63,9 +62,9 @@ class FulcrumApproach extends Component {
         drainage_high: 83785,
 
         selectedRiverSize: "", // set when river size radio buttons are clicked
-        isCrossSection: null,
+        isCrossSection: false,
         riverLow: 0,
-        riverHigh: '',
+        riverHigh: 1000000,
         riverWidth: '',
         toggleRiverWidthAttr: false,
         calculatedDepthUsingWidth: false,
@@ -90,19 +89,84 @@ class FulcrumApproach extends Component {
       totalSuspendedSedimentVolumeDischargedPerYear_WrightParker: 0,
       data: [],
     },
+
+    //TBD response:
+    tableData: [],
+    tbdWithin10: 0,
+    tbdWithin20: 0,
   };
 
   // send a POST request to the Middelware with all the parameters of the Fulcrum (AND TBD) approach.
   // Update stateDisplay response correspondingly
   postFulcrum = () => {
+    console.log("Printing default river High: '",this.state.riverHigh + "'");
 
     let JimPostUrl = '';
+    let postReqBody = {};
+    const FulcrumDataObject = {
+      "AvgBankfullDepth": this.state.AvgBkflDpt,
+      "BankfullWidth": this.state.BkflChanWdt,
+      "HydraulicRadius": this.state.HydrolicRad,
+      "GrainSizeD16": this.state.Dee16,
+      "GrainSizeD50": this.state.Dee50,
+      "GrainSizeD84": this.state.Dee84,
+      "GrainSizeD90": this.state.Dee90,
+      "SedimentDensity": this.state.SedimentDensity,
+      "DimensionlessMultiplier": this.state.DMLMult,
+    };
 
     if(this.state.TBDMode === "Default"){
       JimPostUrl = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/Fulcrum';
-      console.log("default TBD");
+      postReqBody = JSON.stringify({
+        "IsFulcrum": true,
+        "IsMetric": false,
+        "IsRiverAnalogue" : false,
+        "IsTBD": true,
+        "TBD": {
+          //climate:
+            "Climate": 'A',
+
+          //drainage:
+            "DrainageLow": 0,
+            "DrainageHigh": 0,
+
+          //river size:
+              "IsCrossSection": false,
+              "RiverSizeLow": 0,
+              "RiverSizeHigh": 0,
+
+          //precision:
+            "IsWithin10": true,
+            "IsWithin20": false,
+        },
+        "Fulcrum": FulcrumDataObject
+      });
     }else if(this.state.TBDMode === "Customized"){
       JimPostUrl = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/Comb';
+      postReqBody = JSON.stringify({
+        "IsFulcrum": true,
+        "IsMetric": false,
+        "IsRiverAnalogue" : false,
+        "IsTBD": true,
+        "TBD": {
+          //climate:
+            "Climate": this.state.climateFromDropdown.value,
+
+          //drainage:
+            "DrainageLow": this.state.drainage_low,
+            "DrainageHigh": this.state.drainage_high,
+
+          //river size:
+              "IsCrossSection": this.state.isCrossSection,
+              "RiverSizeLow": this.state.riverLow,
+              "RiverSizeHigh": this.state.riverHigh,
+
+          //precision:
+            "IsWithin10": this.state.isWithin10,
+            "IsWithin20": this.state.isWithin20,
+        },
+        "Fulcrum": FulcrumDataObject
+      });
       console.log("customzed TBD");
     }
 
@@ -117,41 +181,7 @@ class FulcrumApproach extends Component {
         Accept: 'application/json',
         // 'X-Content-Type-Options': 'nosniff',
       },
-      body:
-        JSON.stringify({
-          "IsFulcrum": true,
-          "IsMetric": false,
-          "IsRiverAnalogue" : this.state.isRiverAnalogue,
-          "IsTBD": this.state.isTBD,
-          "TBD": {
-            //climate:
-              "Climate": this.state.climateFromDropdown.value,
-
-            //drainage:
-              "DrainageLow": this.state.drainage_low,
-              "DrainageHigh": this.state.drainage_high,
-
-            //river size:
-                "IsCrossSection": this.state.isCrossSection,
-                "RiverSizeLow": this.state.riverLow,
-                "RiverSizeHigh": this.state.riverHigh,
-
-            //precision:
-              "IsWithin10": this.state.isWithin10,
-              "IsWithin20": this.state.isWithin20,
-          },
-          "Fulcrum": {
-            "AvgBankfullDepth": this.state.AvgBkflDpt,
-            "BankfullWidth": this.state.BkflChanWdt,
-            "HydraulicRadius": this.state.HydrolicRad,
-            "GrainSizeD16": this.state.Dee16,
-            "GrainSizeD50": this.state.Dee50,
-            "GrainSizeD84": this.state.Dee84,
-            "GrainSizeD90": this.state.Dee90,
-            "SedimentDensity": this.state.SedimentDensity,
-            "DimensionlessMultiplier": this.state.DMLMult,
-          },
-        })
+      body: postReqBody
     }
 
     fetch(JimPostUrl, postRequestData)
@@ -164,13 +194,22 @@ class FulcrumApproach extends Component {
       }
     ).then( data => {
       console.log(data);
-      console.log(data.slope);
-      console.log(data.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn);
-      this.setState({
-        response: data,
-      });
+      if(this.state.TBDMode === "Default"){
+        this.setState({
+          response: data
+        });
+      }else{
+        this.setState({
+          response: data,
+          tableData: data.streams,
+          tbdWithin10: data.tbdWithin10,
+          tbdWithin20: data.tbdWithin20
+        });
+      }
 
       console.log("post successful!!!");
+    }).catch(err => {
+      throw new Error(err)
     });
   }
 
@@ -199,13 +238,11 @@ class FulcrumApproach extends Component {
     if(value === "default"){
       this.setState({
         TBDMode: "Default",
-        isTBD: true,
         submitClicked: false,
       });
     }else{
       this.setState({
         TBDMode: "Customized",
-        isTBD: true,
         submitClicked: false,
       });
     }
@@ -260,9 +297,15 @@ class FulcrumApproach extends Component {
     }
   }
 
+  printState = () => {
+    console.log(this.state);
+  }
+
   //set the isSubmitted state to true
   handleSubmit = (e) => {
       e.preventDefault();
+
+      // this.printState();
 
       const {
         state_AvgBkflDpt,
@@ -278,18 +321,19 @@ class FulcrumApproach extends Component {
 
       //make sure the form's inputs are validated before proceed to send the post request to the server.
       if(this.validateAllInputsFulcrum()){
-        console.log("in validate Fulcrum: " + this.state.TBDMode);
+        console.log("Fulcrum validated, TBD mode: " + this.state.TBDMode);
         if(this.state.TBDMode === "Default"){
-            console.log("about to POST Fulcrum....");
+            console.log("--- default TBD ---");
             this.setState({
               submitted: true,
               submitClicked: true,
               inputs_validated: true,
             });
             this.postFulcrum();
-            console.log("Done: "+this.state.submitted);
+            this.state.submitted && console.log("Done Default: "+this.state.submitted);
         }else if(this.state.TBDMode === "Customized"){
             if(this.validateTBDInputs()){
+              console.log("--- customized tbd ---");
               //do TBD Component Validation
               this.setState({
                 submitted: true,
@@ -297,7 +341,7 @@ class FulcrumApproach extends Component {
                 inputs_validated: true,
               });
               this.postFulcrum();
-              console.log(this.state.submitted);
+              this.state.submitted && console.log("Done Customized: "+ this.state.submitted);
             }
         }
       }else{
@@ -514,8 +558,6 @@ class FulcrumApproach extends Component {
   validateTBDInputs = () => {
     // check if users choose ALL 3 big Radio Buttons
     if(this.validateClimateInputs() &&
-      // this.validateDrainageInputs() &&
-      // this.validateRiverInputs() &&
       this.validatePrecisionInputs()
     ){
           console.log("validate ALL inputs");
@@ -545,7 +587,7 @@ class FulcrumApproach extends Component {
       </div>
 
       <h1>
-        Fulcrum Approach
+        Fulcrum Theory Approach Sediment Flux Estimates
       </h1>
     </div>
 
@@ -624,7 +666,7 @@ class FulcrumApproach extends Component {
 
         {this.state.TBDMode === "Default" &&
           <div className="white-txt">
-            TBD will be calculated using Default value of [...]
+            TBD will be calculated using Default value of 6.5
           </div>
         }
 
@@ -690,6 +732,8 @@ class FulcrumApproach extends Component {
         <div>
           <RiverChannelsTable
             data={this.state.tableData}
+            tbdWithin10={this.state.tbdWithin10}
+            tbdWithin20={this.state.tbdWithin20}
             origin="/FulcrumApproach"
           />
         </div>
@@ -840,14 +884,14 @@ class FulcrumApproach extends Component {
       }
     ];
 
-    const { submitted } = this.state.submitted;
+    //const { submitted } = this.state.submitted;
 
     return (
       <form onSubmit={this.handleSubmit} className="form" style={{
         'background-color': '#DBDBD9'
       }}>
 
-        {!submitted &&
+        {!this.state.submitted &&
           <div >
             {this.renderHeader()}
 
@@ -881,7 +925,7 @@ class FulcrumApproach extends Component {
           </div>
         }
 
-        {submitted &&
+        {this.state.submitted &&
           <div>
             <div className="header">
               <div className='back-button-div-fulcrum'>

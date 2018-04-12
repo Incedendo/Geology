@@ -8,7 +8,7 @@ class AnalogComponent extends Component{
     return(
       <div>
         <TBDAnalogFrame
-          componentTitle="Analog"
+          componentTitle="River Analogues"
           displayedPresicion={false}
           origin="/AnalogChannels"
         />

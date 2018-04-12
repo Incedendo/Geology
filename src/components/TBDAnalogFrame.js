@@ -8,9 +8,6 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import classNames from 'classnames';
 
-//  for FileDownload
-import fileDownload from 'js-file-download';
-
 import BaseSupSub from 'react-basesupsub';
 
 //import other components
@@ -34,7 +31,7 @@ class TBDAnalogFrame extends Component{
     isCrossSection: false,
     riverLow: 0,
     riverHigh: '',
-    riverWidth: '',
+    riverWidth: '', //must be empty
 
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
     isWithin10: false,
@@ -64,6 +61,7 @@ class TBDAnalogFrame extends Component{
 
   // componentDidMount() {
   postTBD = () =>{
+    console.log("Printing default river High: '",this.state.riverHigh + "'");
 
     const JimPostTBDUrl =
     'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/TBD';
@@ -116,6 +114,8 @@ class TBDAnalogFrame extends Component{
           },
         })
     }
+
+
 
     if(this.state.riverWidth !== ''){
       const riverDepthGeneratedFromWidth = this.deriveRiverDepthFromWidth();
@@ -568,7 +568,7 @@ class TBDAnalogFrame extends Component{
                  pointColor = {pointColor}
                  iconInnerSize="0px"
                >
-                 
+
                  <div>
                    <div
                      style={{
@@ -854,54 +854,27 @@ class TBDAnalogFrame extends Component{
     }
   }
 
-  downloadCSV = () => {
-    const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID=01093800';
-
-    const getRequestData = {
-      method: 'GET',
-      Origin:'localhost:3000',
-      mode: "cors",
-      headers: {
-        // 'Content-Type': 'text/plain',
-        // Accept: 'text/plain',
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        // 'X-Content-Type-Options': 'nosniff',
-      }
-    }
-
-    fetch(getCsvURL, getRequestData)
-    // .then( results => results.json() )
-    .then( response =>
-      {
-        if (response.status === 200 || response.status === 201) {
-          console.log(response);
-          return response.blob();
-        } else {
-          console.log('Get CSV Failure!', response.status);
-        }
-      }
-    ).then( blob => {
-      console.log("expecting returned data");
-      console.log(blob);
-      fileDownload(blob, 'tbd_data.csv');
-    });
-
-
-  }
 
   renderTitle = () => {
     if(this.props.componentTitle === 'TBD Approach'){
       return(
         <div>
-          <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+          <div
+            style={{
+              'margin-right': '15px',
+              display: 'inline-block'
+            }}
+          >
+              Stream Specific Bankfull Duration (
+          </div>
+          <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
           <div
             style={{
               'margin-left': '15px',
               display: 'inline-block'
             }}
           >
-              Approach:
+              )
           </div>
         </div>
       )
@@ -974,14 +947,6 @@ class TBDAnalogFrame extends Component{
               tbdWithin20={this.state.tbdWithin20}
               origin={this.props.origin}
             />
-
-            <div className="csv-btn">
-              <button
-                className="back-btn-result"
-                onClick={this.downloadCSV}>
-                Download CSV File
-              </button>
-            </div>
 
           </div>
         }
