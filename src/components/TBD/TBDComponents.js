@@ -18,7 +18,10 @@ export const ClimateOrders = (props) => {
 
   var title = classNames({
     "leftAlignedText-Title": true,
-    "title-error": props.submitClicked && props.selectedClimate === ""
+    "title-error": props.submitClicked &&
+    (props.selectedClimate === "" ||
+      (props.selectedFirstOrder === "" && props.selectedKoppen === "")
+    )
   })
 
   var selectColorError = classNames({
@@ -147,19 +150,19 @@ export const DrainageArea = (props) => {
 
   var textfieldMin = classNames({
     'black-txt': true,
-    'text-field-error': props.submitClicked && (props.drainage_low <= 0 || props.drainage_low === "(positive number only)"),
+    'text-field-error': props.submitClicked && (props.drainage_low < 0 || props.drainage_low === "(positive number only)"),
   });
 
   var textfieldMax = classNames({
     'black-txt': true,
-    'text-field-error': props.submitClicked && (props.drainage_high <= 0 || props.drainage_low === "(positive number only)"),
+    'text-field-error': props.submitClicked && (props.drainage_high < 0 || props.drainage_low === "(positive number only)"),
   });
 
   var title = classNames({
     "leftAlignedText-Title": true,
     "title-error":props.submitClicked &&
     (
-      props.drainage_low <= 0 || props.drainage_high <= 0 ||
+      props.drainage_low < 0 || props.drainage_high < 0 ||
       props.drainage_low === "(positive number only)" ||
       props.drainage_high === "(positive number only)"
     )
@@ -201,37 +204,23 @@ export const DrainageArea = (props) => {
 }
 
 export const RiverSize = (props) => {
-  var textfieldDepthMin = classNames({
+  var textfieldMin = classNames({
     'black-txt': true,
-    'text-field-error': props.submitClicked && props.riverDepth_Min <= 0,
+    'text-field-error': props.submitClicked && props.riverMin < 0,
   });
 
-  var textfieldDepthMax = classNames({
+  var textfieldMax = classNames({
     'black-txt': true,
-    'text-field-error': props.submitClicked && props.riverDepth_Max <= 0,
-  });
-
-  var textfieldAreaMin = classNames({
-    'black-txt': true,
-    'text-field-error': props.submitClicked && props.crossSectionalArea_Min <= 0,
-  });
-
-  var textfieldAreaMax = classNames({
-    'black-txt': true,
-    'text-field-error': props.submitClicked && props.crossSectionalArea_Max <= 0,
+    'text-field-error': props.submitClicked && props.riverMax < 0,
   });
 
   var title = classNames({
     "leftAlignedText-Title": true,
     "title-error": props.submitClicked &&
     (
-      props.selectedRiverSize === "" ||
-      props.riverDepth_Min <= 0 || props.riverDepth_Max <= 0 ||
-      props.riverDepth_Min === "(positive number only)" ||
-      props.riverDepth_Max === "(positive number only)" ||
-      props.crossSectionalArea_Min <= 0 || props.crossSectionalArea_Max <= 0 ||
-      props.crossSectionalArea_Min === "(positive number only)" ||
-      props.crossSectionalArea_Max === "(positive number only)"
+      props.riverMin < 0 || props.riverMax < 0 ||
+      props.riverMin === "(positive number only)" ||
+      props.riverMax === "(positive number only)"
     )
   })
 
@@ -297,20 +286,20 @@ export const RiverSize = (props) => {
               Min: <input
                 type="textbox"
                 name="riverLow"
-                className={textfieldDepthMin}
+                className={textfieldMin}
                 onBlur={props.setRangeValues}
                 onChange={props.updateFieldValue}
-                value={props.riverDepth_Min}
+                value={props.riverMin}
               />
             </Col>
             <Col sm={12} md={6}>
               Max: <input
                 type="textbox"
                 name="riverHigh"
-                className={textfieldDepthMax}
+                className={textfieldMax}
                 onBlur={props.setRangeValues}
                 onChange={props.updateFieldValue}
-                value={props.riverDepth_Max}
+                value={props.riverMax}
               />
             </Col>
           </Grid>
@@ -322,20 +311,20 @@ export const RiverSize = (props) => {
               Min: <input
                 type="textbox"
                 name="riverLow"
-                className={textfieldAreaMin}
+                className={textfieldMin}
                 onBlur={props.setRangeValues}
                 onChange={props.updateFieldValue}
-                value={props.crossSectionalArea_Min}
+                value={props.riverMin}
               />
             </Col>
             <Col sm={12} md={6}>
               Max: <input
                 type="textbox"
                 name="riverHigh"
-                className={textfieldAreaMax}
+                className={textfieldMax}
                 onBlur={props.setRangeValues}
                 onChange={props.updateFieldValue}
-                value={props.crossSectionalArea_Max}
+                value={props.riverMax}
               />
             </Col>
           </Grid>

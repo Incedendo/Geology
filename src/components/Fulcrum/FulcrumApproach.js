@@ -703,10 +703,8 @@ class FulcrumApproach extends Component {
 
       <RiverSize
         submitClicked = {this.state.submitClicked}
-        riverDepth_Min = {this.state.riverLow}
-        riverDepth_Max = {this.state.riverHigh}
-        crossSectionalArea_Min = {this.state.riverLow}
-        crossSectionalArea_Max = {this.state.riverHigh}
+        riverMin = {this.state.riverLow}
+        riverMax = {this.state.riverHigh}
         selectedRiverSize = {this.state.selectedRiverSize}
         setRiverSizeSelectedOption= {this.setRiverSizeSelectedOption}
         setRangeValues = {this.setRangeValues}
