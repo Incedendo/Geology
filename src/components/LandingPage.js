@@ -4,6 +4,9 @@ import HomeLinkComponent from './HomeLinkComponent';
 import '../assets/scss/LandingPage.css';
 import FlipCard from 'react-flipcard';
 import { Grid, Row, Col } from 'react-bootstrap';
+
+import BaseSupSub from 'react-basesupsub';
+
 import classNames from 'classnames';
 
 class LandingPage extends Component{
@@ -70,7 +73,18 @@ class LandingPage extends Component{
 
   renderTBDContent = () => (
     <div className="background-img">
-      <span className="yellow-text">TBD Approach:</span>
+      <div className="yellow-text">
+        <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+        <div
+          style={{
+            'margin-left': '5px',
+            display: 'inline-block'
+          }}
+        >
+            Approach:
+        </div>
+      </div>
+
       <ul>
         <li>
           Query a database of over 500 streams, selecting stream specific attributes of climate, drainage area and/or channel size to calculate an average annual days at bankfull duration (tbd) value.

@@ -8,6 +8,7 @@ import MyLink from '../Link/MyLink';
 import DetailedChannelView from './DetailedChannelView';
 import DetailChannelModal from './DetailChannelModal';
 import MapContainer from '../GoogleAPIScripts/MapContainer';
+import BaseSupSub from 'react-basesupsub';
 
 const fakeData = [
   {
@@ -100,7 +101,17 @@ class RiverChannelsTable extends Component{
         <div className="tbd-value-table">
           <table>
             <tr>
-              <th>TBD Value</th>
+              <th>
+                <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
+                <div
+                  style={{
+                    'margin-left': '5px',
+                    display: 'inline-block'
+                  }}
+                >
+                    value
+                </div>
+              </th>
             </tr>
             <tr>
               <td>{ebd}</td>

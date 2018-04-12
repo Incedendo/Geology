@@ -770,6 +770,7 @@
 import React, { Component } from 'react';
 //import other components
 import TBDAnalogFrame from '../TBDAnalogFrame';
+import BaseSupSub from 'react-basesupsub';
 import '../../assets/scss/include.scss';
 
 class TBDApproach extends Component{

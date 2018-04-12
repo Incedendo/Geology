@@ -11,6 +11,8 @@ import classNames from 'classnames';
 //  for FileDownload
 import fileDownload from 'js-file-download';
 
+import BaseSupSub from 'react-basesupsub';
+
 //import other components
 import RiverChannelsTable  from "./TBD/RiverChannelsTable";
 
@@ -336,8 +338,8 @@ class TBDAnalogFrame extends Component{
                    <RadioButton
                      className="rounded-border"
                      value="FirstOrder"
-                     //iconSize="5px"
-                     iconInnerSize="0px"
+                     iconSize="6px"
+                     iconInnerSize="3px"
                      rootColor = {this.state.selectedClimate ==="" ? "white" : "grey"}
                      pointColor = {pointColor}
                      selected={this.state.selectedClimate==="FirstOrder"}>
@@ -870,6 +872,28 @@ class TBDAnalogFrame extends Component{
 
   }
 
+  renderTitle = () => {
+    if(this.props.componentTitle === 'TBD Approach'){
+      return(
+        <div>
+          <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+          <div
+            style={{
+              'margin-left': '15px',
+              display: 'inline-block'
+            }}
+          >
+              Approach:
+          </div>
+        </div>
+      )
+    }else{
+      return(
+        <div>{this.props.componentTitle}</div>
+      )
+    }
+  }
+
   render(){
     return(
       <div>
@@ -881,7 +905,7 @@ class TBDAnalogFrame extends Component{
               </div>
 
               <h1 className='inline-page-title'>
-                {this.props.componentTitle}
+                {this.renderTitle()}
               </h1>
 
             </div>
