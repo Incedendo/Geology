@@ -135,7 +135,7 @@ class RiverChannelsTable extends Component{
     }
 
     return(
-      <div>
+      <div className="grey-app">
         <div className="tbd-value-table">
           <table>
             <tr>

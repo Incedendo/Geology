@@ -736,6 +736,37 @@ class FulcrumApproach extends Component {
           />
         </div>
       }
+
+      {this.state.TBDMode === "Default" &&
+      <div className="tbd-value-table">
+        <table>
+          <tr>
+            <th>
+              <div
+                style={{
+                  'margin-right': '5px',
+                  display: 'inline-block'
+                }}
+              >
+                  Default
+              </div>
+              <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
+              <div
+                style={{
+                  'margin-left': '5px',
+                  display: 'inline-block'
+                }}
+              >
+                  value
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <td>6.5</td>
+          </tr>
+        </table>
+      </div>
+      }
     </div>
   )
 
@@ -834,6 +865,7 @@ class FulcrumApproach extends Component {
       },
       {
         title: "Mean Flow Velocity (m/s)",
+
         returnedData: this.state.response.meanSlopeVelocity,
       },
       {

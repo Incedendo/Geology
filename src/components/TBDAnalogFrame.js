@@ -912,9 +912,10 @@ class TBDAnalogFrame extends Component{
             }
 
             {!this.state.inputs_validated &&
-            <div>
-              Please enter correct values for inputs...
-            </div>}
+              <div>
+                Please enter correct values for inputs...
+              </div>
+            }
 
             <button
               type="submit" onClick={this.handleSubmit} className="back-btn-result">
