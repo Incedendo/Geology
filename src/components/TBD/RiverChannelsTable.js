@@ -175,60 +175,6 @@ class RiverChannelsTable extends Component{
                   {
                     Header: "Site ID",
                     accessor: "siteID",
-                    Cell: cellInfo => (
-                      <div>
-                        <Link
-                          target="_blank"
-                          to={{
-                            pathname: "/TestView/"+
-                            cellInfo.row.siteID +"/"+
-                            cellInfo.row.siteNAME +"/"+ cellInfo.row.latitude +"/"+ cellInfo.row.longitude,
-                          }}
-                        >
-                          {cellInfo.row.siteID}
-                        </Link>
-
-                        {/* <button onClick={this.toggleModal}>
-                          Detail
-                        </button> */}
-
-
-                        <DetailChannelModal
-                          isOpen={this.state.modalIsOpen}
-                          closeModal={this.toggleModal}
-                          enabledModal={this.state.modalIsOpen}
-                          data={this.props.data}
-                          index={cellInfo.index}
-                          id={cellInfo.row.sitE_ID}
-                          siteName={cellInfo.row.sitE_NAME}
-                          lat={cellInfo.row.latitude}
-                          long={cellInfo.row.longitude}
-                        />
-
-                        {/* <Link
-                          to={{
-                            pathname: "/DetailedChannelView/"+
-                            cellInfo.row.sitE_ID +"/"+ cellInfo.row.latitude + "/"+ cellInfo.row.longitude,
-                            state: {
-                              origin: this.props.origin,
-                              siteID: cellInfo.row.sitE_ID,
-                              latitude: cellInfo.row.latitude,
-                              longitude: cellInfo.row.longitude,
-                              drainageArea: cellInfo.row.drainageArea,
-                              channelWidth: cellInfo.row.channelWidth,
-                              channelDepth: cellInfo.row.channelDepth,
-                              country: cellInfo.row.country,
-                              // climateID:
-                              // climateDescription:
-                              // estimatedBnkfullDischarge:
-                              // reference:
-                            }
-                          }}
-                        >
-                          {cellInfo.row.sitE_ID}
-                        </Link> */}
-                      </div>
-                    )
                   },
                   {
                     Header: "Site Name",
@@ -414,7 +360,7 @@ class RiverChannelsTable extends Component{
                             <th>Reference</th>
                           </tr>
                           <tr>
-                            <td>{rowInfo.estDischargeCubicMPerSec}</td>
+                            <td>{rowInfo.estDischargeCubMPerSec}</td>
                             <td>{rowInfo.refSource}</td>
                           </tr>
                         </table>
