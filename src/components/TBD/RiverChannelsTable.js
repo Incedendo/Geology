@@ -140,6 +140,14 @@ class RiverChannelsTable extends Component{
           <table>
             <tr>
               <th>
+                <div
+                  style={{
+                    'margin-right': '5px',
+                    display: 'inline-block'
+                  }}
+                >
+                    Year Averaged Bankfull Flow Duration,
+                </div>
                 <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
                 <div
                   style={{
@@ -147,7 +155,7 @@ class RiverChannelsTable extends Component{
                     display: 'inline-block'
                   }}
                 >
-                    value
+                    (days)
                 </div>
               </th>
             </tr>

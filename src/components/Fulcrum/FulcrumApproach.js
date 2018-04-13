@@ -748,7 +748,7 @@ class FulcrumApproach extends Component {
                   display: 'inline-block'
                 }}
               >
-                  Default
+                  Year Averaged Bankfull Flow Duration,
               </div>
               <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
               <div
@@ -757,7 +757,7 @@ class FulcrumApproach extends Component {
                   display: 'inline-block'
                 }}
               >
-                  value
+                  (days)
               </div>
             </th>
           </tr>
@@ -860,7 +860,7 @@ class FulcrumApproach extends Component {
 
     const FetchedResults = [
       {
-        title: "Slope",
+        title: "Slope, S",
         returnedData: this.state.response.slope,
       },
       {
@@ -869,15 +869,15 @@ class FulcrumApproach extends Component {
         returnedData: this.state.response.meanSlopeVelocity,
       },
       {
-        title: "Channel Bankful Discharge (m^3/s)",
+        title: "Channel Bankful Discharge, Qbf ((m^3)/s)",
         returnedData: this.state.response.channelBankfullDischarge,
       },
       {
-        title: "Total BedLoad Discharge (m^3/s)",
+        title: "Total BedLoad Discharge, Qtbf ((m^3)/s)",
         returnedData: this.state.response.totalBedloadDischarge,
       },
       {
-        title: "Total Bedload Volume Sediment Discharge (m^3/s)",
+        title: "Total Bedload Sediment Volume Discharge, Q ((m^3)/yr)",
         returnedData: this.state.response.totalBedloadVolumeSedimentDischarge,
       },
       {
@@ -889,27 +889,27 @@ class FulcrumApproach extends Component {
         returnedData: this.state.response.tbdWithin20,
       },
       {
-        title: "Total Bankful Suspended Sediment Discharge (Van Rijn) (m^3/s)",
+        title: "Total Bankful Suspended Sediment Discharge (Van Rijn), Qss (m^3/s)",
         returnedData: this.state.response.totalBankfullSuspendedSedimentDischarge_VanRijn,
       },
       {
-        title: "Total Bankful Suspended Sediment Discharge (Wright Parker) (m^3/s)",
+        title: "Total Bankful Suspended Sediment Discharge (Wright Parker), Qss (m^3/s)",
         returnedData: this.state.response.totalBankfullSuspendedSedimentDischarge_WrightParker,
       },
       {
-        title: "Total Combined Sediment Volume Discharge Per Year (Van Rijn) (m^3/yr)",
+        title: "Total Combined Sediment Volume Discharge Per Year (Van Rijn), Q (m^3/yr)",
         returnedData: this.state.response.totalCombinedSedimentVolumeDischargePerYear_VanRijn,
       },
       {
-        title: "Total Combined Sediment Volume Discharge Per Year (Wright Parker) (m^3/yr)",
+        title: "Total Combined Sediment Volume Discharge Per Year (Wright Parker), Q (m^3/yr)",
         returnedData: this.state.response.totalCombinedSedimentVolumeDischargePerYear_WrightParker,
       },
       {
-        title: "Total Suspended Sediment Volume Discharge Per Year (Van Rijn) (m^3/yr)",
+        title: "Total Suspended Sediment Volume Discharge Per Year (Van Rijn), Qmas (m^3/yr)",
         returnedData: this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn,
       },
       {
-        title: "Total Suspended Sediment Volume Discharge Per Year (Wright Parker) (m^3/yr)",
+        title: "Total Suspended Sediment Volume Discharge Per Year (Wright Parker), Qmas (m^3/yr)",
         returnedData: this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_WrightParker,
       }
     ];
