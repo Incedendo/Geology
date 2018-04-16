@@ -172,7 +172,25 @@ export const DrainageArea = (props) => {
     <div className="">
       <Grid className="padding-grid">
           <Col sm={12} md={2} className={title}>
-              Drainage Area (meter squared):
+            <div className="">
+              <div
+                style={{
+                  'margin-left': '5px',
+                  display: 'inline-block'
+                }}
+              >
+                Drainage Area (
+              </div>
+              <BaseSupSub style={{ display: 'inline-block' }} base="km" sup="2" />
+              <div
+                style={{
+                  'margin-left': '5px',
+                  display: 'inline-block'
+                }}
+              >
+              ):
+              </div>
+            </div>
           </Col>
           <Col sm={12} md={10} className="leftAlignedText">
             <Grid>
@@ -241,7 +259,7 @@ export const RiverSize = (props) => {
                pointColor={pointColor}
                iconInnerSize="0px"
              >
-               River Depth (km)
+               River Depth (m)
              </RadioButton>
              <RadioButton
                value="CrossSectionalArea"
@@ -258,7 +276,7 @@ export const RiverSize = (props) => {
                  >
                    Cross Sectional Area (
                  </div>
-                 <BaseSupSub style={{ display: 'inline-block' }} base="km" sup="2" />
+                 <BaseSupSub style={{ display: 'inline-block' }} base="m" sup="2" />
                  <div
                    style={{
                      'margin-left': '2px',

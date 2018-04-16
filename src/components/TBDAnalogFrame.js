@@ -24,14 +24,14 @@ class TBDAnalogFrame extends Component{
     climateFromDropdown: "",
 
     // 6 inputs for the text fields:
-    drainage_low: 0,
-    drainage_high: 83785,
+    drainage_low: null,
+    drainage_high: null,
 
     selectedRiverSize: "", // set when river size radio buttons are clicked
     isCrossSection: false,
-    riverLow: 0,
-    riverHigh: '',
-    riverWidth: '', //must be empty
+    riverLow: null,
+    riverHigh: null,
+    riverWidth: null, //must be empty
 
     selectedPrecision: "", // set when Precision Radio Buttons are clicked
     isWithin10: false,
@@ -310,7 +310,9 @@ class TBDAnalogFrame extends Component{
     return(
       <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
-          <Row>
+          <Row style={{
+            'margin-left': '5px !important',
+          }}>
             <Col sm={4} md={2} className={title}>
                 Climate:
             </Col>
@@ -468,7 +470,25 @@ class TBDAnalogFrame extends Component{
       <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
             <Col sm={4} md={2} className={title}>
-                Drainage Area (meter squared):
+              <div className="">
+                <div
+                  style={{
+                    'margin-left': '5px',
+                    display: 'inline-block'
+                  }}
+                >
+                  Drainage Area (
+                </div>
+                <BaseSupSub style={{ display: 'inline-block' }} base="km" sup="2" />
+                <div
+                  style={{
+                    'margin-left': '5px',
+                    display: 'inline-block'
+                  }}
+                >
+                ):
+                </div>
+              </div>
             </Col>
             <Col sm={4} md={10} className="leftAlignedText">
               <div className="inline-with-right-margin">
@@ -560,7 +580,7 @@ class TBDAnalogFrame extends Component{
                  pointColor={pointColor}
                  iconInnerSize="0px"
                >
-                 River Depth (km)
+                 River Depth (m)
                </RadioButton>
                <RadioButton
                  value="CrossSectionalArea"
@@ -578,7 +598,7 @@ class TBDAnalogFrame extends Component{
                    >
                      Cross Sectional Area (
                    </div>
-                   <BaseSupSub style={{ display: 'inline-block' }} base="km" sup="2" />
+                   <BaseSupSub style={{ display: 'inline-block' }} base="m" sup="2" />
                    <div
                      style={{
                        'margin-left': '2px',

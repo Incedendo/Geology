@@ -57,7 +57,7 @@ class LandingPage extends Component{
 
   renderFulcrumContent = () => (
     <div className="background-img">
-      <span className="yellow-text">Fulcrum Approach:</span>
+      <span className="yellow-text">Fulcrum Theory Approach Sediment Flux Estimates:</span>
       <ul>
         <li>
           Leverage the Fulcrum approach to estimate source-to-sink sediment flux calculations using readily available data in the rock record of channel fill thickness and grainsize.
@@ -74,6 +74,14 @@ class LandingPage extends Component{
   renderTBDContent = () => (
     <div className="background-img">
       <div className="yellow-text">
+        <div
+          style={{
+            'margin-left': '5px',
+            display: 'inline-block'
+          }}
+        >
+          Stream Specific Bankfull Duration (
+        </div>
         <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
         <div
           style={{
@@ -81,7 +89,7 @@ class LandingPage extends Component{
             display: 'inline-block'
           }}
         >
-            Approach:
+          ):
         </div>
       </div>
 
@@ -97,7 +105,7 @@ class LandingPage extends Component{
 
   renderAnalogContent = () => (
     <div className="background-img">
-      <span className="yellow-text">Analog Approach:</span>
+      <span className="yellow-text">River Analogues:</span>
       <ul>
         <li>
           Select parameters of climate, drainage area and/or channel size to query a database of over 600 streams and return all analogous rivers based on the designated attributes.

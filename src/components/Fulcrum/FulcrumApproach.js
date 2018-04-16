@@ -52,20 +52,19 @@ class FulcrumApproach extends Component {
     displayedResult: false,
 
     TBDMode: "", // "Default" or "Customized"
-
     //Customized TBD parameters:
         climateFromDropdown: "",
         selectedClimate: "",
 
         // 6 inputs for the text fields:
-        drainage_low: 0,
-        drainage_high: 83785,
+        drainage_low: null,
+        drainage_high: null,
 
         selectedRiverSize: "", // set when river size radio buttons are clicked
         isCrossSection: false,
-        riverLow: 0,
-        riverHigh: 1000000,
-        riverWidth: '',
+        riverLow: null,
+        riverHigh: null,
+        riverWidth: null,
         toggleRiverWidthAttr: false,
         calculatedDepthUsingWidth: false,
 
