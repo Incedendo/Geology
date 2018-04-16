@@ -9,7 +9,7 @@ import GeoDeptlogo from '../assets/image/SGEEwordmark.png';
 
 class Home extends Component {
   renderHeader = () => (
-    <div className="home-header">
+    <div className="home-header purple-background">
       <h1 className="no-margin">
           R.A.F.T.E.R.
       </h1>
@@ -21,7 +21,7 @@ class Home extends Component {
   )
 
   renderFooter = () => (
-    <div className="home-footer">
+    <div className="home-footer purple-background">
 
       <Grid className="">
         <Col md={2} className="left-div-img">

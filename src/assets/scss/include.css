@@ -56,12 +56,12 @@ img {
   vertical-align: top; }
 
 h1 {
-  color: #4AC9EF !important; }
+  color: white !important; }
 
 h3 {
   text-align: center;
   margin: 0px !important;
-  color: #4AC9EF !important; }
+  color: white !important; }
 
 .no-margin {
   margin: 0px !important; }
@@ -70,7 +70,8 @@ h3 {
   display: inline-block;
   left: 0px;
   width: 20%;
-  background-color: grey; }
+  background-color: white;
+  border-radius: 5px; }
 
 .img-left {
   position: relative;
@@ -84,18 +85,17 @@ h3 {
   display: inline-block;
   right: 0px;
   width: 20%;
-  background-color: grey; }
+  background-color: white;
+  border-radius: 5px; }
 
 .contact-div {
   display: inline-block;
-  background-color: grey;
   width: 60%; }
 
 .center {
   text-align: center; }
 
 .home-header {
-  background-color: grey;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -105,14 +105,13 @@ h3 {
 
 .home-footer {
   position: absolute;
-  background-color: grey;
   margin-top: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
   left: 0px;
   right: 0px;
   bottom: 0px;
-  height: 80px; }
+  height: 90px; }
 
 .div-landingpage {
   position: absolute;
@@ -470,7 +469,7 @@ button.back-btn-result:hover {
   color: orange !important; }
 
 .yellow-text {
-  color: #4AC9EF !important; }
+  color: white !important; }
 
 .blue-text {
   color: #4AC9EF !important; }

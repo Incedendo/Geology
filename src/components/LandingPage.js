@@ -57,7 +57,12 @@ class LandingPage extends Component{
 
   renderFulcrumContent = () => (
     <div className="background-img">
-      <span className="yellow-text">Fulcrum Theory Approach Sediment Flux Estimates:</span>
+      <div className="yellow-text"
+        style={{
+          'font-size': '25px',
+          'text-align': 'center'
+        }}
+        >Fulcrum Theory Approach Sediment Flux Estimates:</div>
       <ul>
         <li>
           Leverage the Fulcrum approach to estimate source-to-sink sediment flux calculations using readily available data in the rock record of channel fill thickness and grainsize.
@@ -73,7 +78,13 @@ class LandingPage extends Component{
 
   renderTBDContent = () => (
     <div className="background-img">
-      <div className="yellow-text">
+      <div className="yellow-text"
+        style={{
+          'font-size': '25px',
+          // 'font-weight': 'bold',
+          'text-align': 'center'
+        }}
+        >
         <div
           style={{
             'margin-left': '5px',
@@ -105,7 +116,13 @@ class LandingPage extends Component{
 
   renderAnalogContent = () => (
     <div className="background-img">
-      <span className="yellow-text">River Analogues:</span>
+      <div className="yellow-text"
+        style={{
+          'font-size': '25px',
+          // 'font-weight': 'bold',
+          'text-align': 'center'
+        }}
+      >River Analogues:</div>
       <ul>
         <li>
           Select parameters of climate, drainage area and/or channel size to query a database of over 600 streams and return all analogous rivers based on the designated attributes.
@@ -132,7 +149,8 @@ class LandingPage extends Component{
     return(
       <div className="main-div-top-margin">
         <Grid className="">
-          <Col lg={9} md={8} sm={6} xs={12} className="leftAlignedText">
+          <Col lg={9}
+             className="leftAlignedText">
             <Row className="div-analog-approach">
               {this.renderAnalogContent()}
             </Row>
@@ -146,7 +164,7 @@ class LandingPage extends Component{
             </Row>
           </Col>
 
-          <Col lg={3} md={4} sm={6}>
+          <Col lg={3} >
             <div className="div-helpful rounded-border purple-background">
               <h3 className="center-text yellow-text">
                 Helpful Links
