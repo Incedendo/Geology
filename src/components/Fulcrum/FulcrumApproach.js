@@ -50,6 +50,7 @@ class FulcrumApproach extends Component {
     submitClicked: false,
     inputs_validated: true,
     displayedResult: false,
+    errorMessage: '',
 
     TBDMode: "", // "Default" or "Customized"
     //Customized TBD parameters:
@@ -271,6 +272,7 @@ class FulcrumApproach extends Component {
   validateInputFulcrum = (e) => {
     const {name, value} = e.target;
     const test =  "valid_"+name;
+    const errorMessage = "errorMessage";
     console.log(test);
 
     //if the inputs is a valid number
@@ -286,6 +288,7 @@ class FulcrumApproach extends Component {
         this.setState(() => ({
           [name]: "(Must enter a positive number)",
           [test]: false,
+          [errorMessage]: "All Fulcrum inputs must be positive numbers.",
         }))
       }
     }else{
@@ -342,6 +345,13 @@ class FulcrumApproach extends Component {
               this.postFulcrum();
               this.state.submitted && console.log("Done Customized: "+ this.state.submitted);
             }
+        }else{
+          this.setState({
+            submitClicked: true,
+            inputs_validated: false,
+            errorMessage: "Please choose a TBD option",
+          });
+          console.log("unable to post bc user did not choose a TBD option...");
         }
       }else{
         this.setState({
@@ -946,6 +956,9 @@ class FulcrumApproach extends Component {
             {!this.state.inputs_validated &&
               <div className="error-div-fulcrum">
                 Please check the inputs and make sure you have entered all correct values!
+                <div>
+                  {this.state.errorMessage}
+                </div>
               </div>
             }
 

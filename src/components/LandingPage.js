@@ -4,10 +4,11 @@ import HomeLinkComponent from './HomeLinkComponent';
 import '../assets/scss/LandingPage.css';
 import FlipCard from 'react-flipcard';
 import { Grid, Row, Col } from 'react-bootstrap';
-
 import BaseSupSub from 'react-basesupsub';
-
 import classNames from 'classnames';
+
+import logo from '../assets/image/final_rafter_logo.png';
+import GeoDeptlogo from '../assets/image/SGEEwordmark.png';
 
 class LandingPage extends Component{
   state = {
@@ -22,37 +23,6 @@ class LandingPage extends Component{
     isHoveredFulcrum: false,
     isHoveredTBD: false,
     isHoveredAnalog: false,
-  }
-
-  set = (id) => (e) => this.setState({[id]: true});
-
-  unset = (id) => (e) => this.setState({[id]: false});
-
-  toggleDisplayFulcrum = (event) => {
-    event.preventDefault();
-    this.setState( (prevState) => ({displayedFulcrum: !prevState.displayedFulcrum}) );
-  }
-
-  toggleIsFlippedFulcrum = () => {
-    this.setState( (prevState) => ({isFlippedFulcrum: !prevState.isFlippedFulcrum}) );
-  }
-
-  toggleDisplayTBD = (event) => {
-    event.preventDefault();
-    this.setState( (prevState) => ({displayedTBD: !prevState.displayedTBD}) );
-  }
-
-  toggleIsFlippedTBD = () => {
-    this.setState( (prevState) => ({isFlippedTBD: !prevState.isFlippedTBD}) );
-  }
-
-  toggledisplayAnalog = (event) => {
-    event.preventDefault();
-    this.setState( (prevState) => ({displayedAnalog: !prevState.displayedAnalog}) );
-  }
-
-  toggleIsFlippedAnalog = () => {
-    this.setState( (prevState) => ({isFlippedAnalog: !prevState.isFlippedAnalog}) );
   }
 
   renderFulcrumContent = () => (
@@ -145,9 +115,44 @@ class LandingPage extends Component{
     </div>
   )
 
+  renderFooter = () => (
+    <div className="home-footer purple-background">
+
+      <Grid className="">
+        <Col md={2} className="left-div-img">
+          <img
+            className="img-left"
+            src={logo}
+            alt="etc"
+          />
+        </Col>
+
+        <Col md={8}
+          className="contact-div"
+          style={{
+            'margin-top': 'auto',
+            'margin-bottom': 'auto'
+          }}
+        >
+          <a className="white-text" href="https://sgee.tcu.edu/staff/john-holbrook-ph-d/">Contact</a>
+        </Col>
+
+        <Col md={2} className="right-div-img">
+          <img
+            className="img-right"
+            src={GeoDeptlogo}
+            alt="etc"
+          />
+        </Col>
+
+      </Grid>
+
+    </div>
+  )
+
   render(){
     return(
-      <div className="main-div-top-margin">
+      <div className="main-div-top-margin grey">
         <Grid className="">
           <Col lg={9}
              className="leftAlignedText">
@@ -169,26 +174,20 @@ class LandingPage extends Component{
               <h3 className="center-text yellow-text">
                 Helpful Links
               </h3>
+
               <div className="div-helpful-link">
-                <HomeLinkComponent
-                  className="white-text"
-                  pathname='/helpfullinks'
-                  linkTitle= '1. Holbrook and Wana, 2014 (pdf)'
-                />
+                <a className="white-text"
+                  href="https://s3.amazonaws.com/rafter-ui-bucket/Holbrook+and+Wanas%2C+2014.pdf">1. Holbrook and Wana, 2014 (pdf)</a>
               </div>
+
               <div className="div-helpful-link ">
-                <HomeLinkComponent
-                  className="white-text"
-                  pathname='/helpfullinks'
-                  linkTitle= '2. Data Dictionary (pdf)'
-                />
+                <a className="white-text"
+                  href="https://s3.amazonaws.com/rafter-ui-bucket/Data+Dictionary.docx">2. Data Dictionary (pdf)</a>
               </div>
+
               <div className="div-helpful-link">
-                <HomeLinkComponent
-                  className="white-text"
-                  pathname='/helpfullinks'
-                  linkTitle= '3. Original Fulcrum Theory Approach (xlsx)'
-                />
+                <a className="white-text"
+                  href="https://s3.amazonaws.com/rafter-ui-bucket/Fulcrum+Test+Claculations+Spread+Sheet.xlsx">3. Original Fulcrum Theory Approach (xlsx)</a>
               </div>
 
               <div className="div-helpful-link">
@@ -196,25 +195,21 @@ class LandingPage extends Component{
               </div>
 
               <div className="div-helpful-link">
-                <HomeLinkComponent
-                  className="white-text"
-                  pathname='/helpfullinks'
-                  linkTitle= "5. Fluvial Research Group Main Page"
-                />
+                <a className="white-text"
+                  href="https://frg.leeds.ac.uk">5. Fluvial Research Group Main Page</a>
               </div>
 
               <div className="div-helpful-link">
-                <HomeLinkComponent
-                  className="white-text"
-                  pathname='/helpfullinks'
-                  linkTitle= '6. References (pdf)'
-                />
+                <a className="white-text"
+                  href="">56. References (pdf)</a>
               </div>
 
             </div>
           </Col>
 
         </Grid>
+
+        {/* {this.renderFooter()} */}
 
       </div>
     )
@@ -365,4 +360,35 @@ export default LandingPage;
 //       </div>
 //     </div>
 //   )
+// }
+
+// set = (id) => (e) => this.setState({[id]: true});
+//
+// unset = (id) => (e) => this.setState({[id]: false});
+//
+// toggleDisplayFulcrum = (event) => {
+//   event.preventDefault();
+//   this.setState( (prevState) => ({displayedFulcrum: !prevState.displayedFulcrum}) );
+// }
+//
+// toggleIsFlippedFulcrum = () => {
+//   this.setState( (prevState) => ({isFlippedFulcrum: !prevState.isFlippedFulcrum}) );
+// }
+//
+// toggleDisplayTBD = (event) => {
+//   event.preventDefault();
+//   this.setState( (prevState) => ({displayedTBD: !prevState.displayedTBD}) );
+// }
+//
+// toggleIsFlippedTBD = () => {
+//   this.setState( (prevState) => ({isFlippedTBD: !prevState.isFlippedTBD}) );
+// }
+//
+// toggledisplayAnalog = (event) => {
+//   event.preventDefault();
+//   this.setState( (prevState) => ({displayedAnalog: !prevState.displayedAnalog}) );
+// }
+//
+// toggleIsFlippedAnalog = () => {
+//   this.setState( (prevState) => ({isFlippedAnalog: !prevState.isFlippedAnalog}) );
 // }
