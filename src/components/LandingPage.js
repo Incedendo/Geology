@@ -201,7 +201,7 @@ class LandingPage extends Component{
 
               <div className="div-helpful-link">
                 <a className="white-text"
-                  href="">56. References (pdf)</a>
+                  href="">6. References (pdf)</a>
               </div>
 
             </div>

@@ -963,6 +963,7 @@ class TBDAnalogFrame extends Component{
             </div>
 
             <RiverChannelsTable
+              title={this.props.componentTitle}
               data={this.state.tableData}
               tbdWithin10={this.state.tbdWithin10}
               tbdWithin20={this.state.tbdWithin20}

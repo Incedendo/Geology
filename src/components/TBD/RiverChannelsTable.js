@@ -136,6 +136,7 @@ class RiverChannelsTable extends Component{
 
     return(
       <div className="grey-app">
+        {this.props.title !== "River Analogues" &&
         <div className="tbd-value-table">
           <table>
             <tr>
@@ -164,6 +165,7 @@ class RiverChannelsTable extends Component{
             </tr>
           </table>
         </div>
+        }
 
           <ReactTable
             data={this.props.data}
