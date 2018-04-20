@@ -288,7 +288,7 @@ class FulcrumApproach extends Component {
         this.setState(() => ({
           [name]: "(Must enter a positive number)",
           [test]: false,
-          [errorMessage]: "All Fulcrum inputs must be positive numbers.",
+          [errorMessage]: "All Fulcrum inputs must be positive numbers.\n",
         }))
       }
     }else{
@@ -349,7 +349,7 @@ class FulcrumApproach extends Component {
           this.setState({
             submitClicked: true,
             inputs_validated: false,
-            errorMessage: "Please choose a TBD option",
+            errorMessage: "Please choose a TBD option\n",
           });
           console.log("unable to post bc user did not choose a TBD option...");
         }
@@ -518,11 +518,17 @@ class FulcrumApproach extends Component {
             return true;
         }else{
             console.log("did not choose an item in the dropdown: ");
+            this.setState({
+              errorMessage: "Please Select a Climate Type\n"
+            })
             return false;
         }
     }else{
-            console.log("fail to validate selectedClimate: radio box NOT selected");
-            return false;
+      this.setState({
+        errorMessage: "Please Select a Climate Order \n"
+      })
+      console.log("fail to validate selectedClimate: radio box NOT selected");
+      return false;
     }
   }
 
@@ -558,6 +564,9 @@ class FulcrumApproach extends Component {
             console.log("validated Precision: " + this.state.selectedPrecision);
             return true;
     }else{
+            this.setState({
+              errorMessage: "Please select Precision Radio Box\n"
+            })
             console.log("fail to validate Precision: radio box NOT selected");
             return false;
     }

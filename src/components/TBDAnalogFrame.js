@@ -555,21 +555,6 @@ class TBDAnalogFrame extends Component{
               River Size:
           </Col>
           <Col sm={4} md={9} className="leftAlignedText">
-            {/* <input
-                type="radio"
-                name="selectedRiverSize"
-                value="RiverDepth"
-                checked={this.state.selectedRiverSize==='RiverDepth'}
-                onChange={this.setSelectedOption}
-                className=""
-              /> River Depth
-             <input
-               type="radio"
-               name="selectedRiverSize"
-               value="CrossSectionalArea"
-               checked={this.state.selectedRiverSize==='CrossSectionalArea'} onChange={this.setSelectedOption}
-               className=""
-             /> Cross Sectional Area */}
 
              <RadioGroup
                onChange={ this.setRiverSizeSelectedOption } horizontal
@@ -613,14 +598,13 @@ class TBDAnalogFrame extends Component{
            </Col>
         </Grid>
 
-        {this.state.selectedRiverSize !== '' &&
+        {(this.state.selectedRiverSize !== '' || this.state.calculatedDepthUsingWidth)
+        &&
         <Grid className="padding-grid">
           <Col sm={4} md={2} className="rightAlignedText">
-
           </Col>
 
           <Col sm={4} md={9} className="leftAlignedText">
-            {this.state.selectedRiverSize === "RiverDepth" &&
             <div>
               <div className="inline-with-right-margin">
                 Min: <input
@@ -643,44 +627,20 @@ class TBDAnalogFrame extends Component{
                 />
               </div>
             </div>
-            }
-
-            {this.state.selectedRiverSize === "CrossSectionalArea" &&
-            <div>
-              <div className="inline-with-right-margin">
-                Min: <input
-                  type="textbox"
-                  name="riverLow"
-                  className={textfieldRiverLow}
-                  onBlur={this.setRangeValues}
-                  onChange={this.updateFieldValue}
-                  value={this.state.riverLow}
-                />
-              </div>
-              <div className="inline-no-right-margin">
-                Max: <input
-                  type="textbox"
-                  name="riverHigh"
-                  className={textfieldRiverHigh}
-                  onBlur={this.setRangeValues}
-                  onChange={this.updateFieldValue}
-                  value={this.state.riverHigh}
-                />
-              </div>
-            </div>
-            }
           </Col>
         </Grid>
         }
 
-
-        <div>
+        <div style={{
+          'margin-bottom': '10px',
+        }}>
           <Grid>
             <Row>
               <Col sm={4} md={2}></Col>
               <Col sm={4} md={9}>
                 <input
                   type="checkbox"
+                  checked={this.state.calculatedDepthUsingWidth}
                   onChange={this.toggleRiverWidthAttr}
                   className="leftAlignedText"
                 /> Derive Width from River Depth (m) (optional)
@@ -688,7 +648,9 @@ class TBDAnalogFrame extends Component{
             </Row>
             <Row>
               {this.state.calculatedDepthUsingWidth &&
-                <div>
+                <div style={{
+                  'margin-top': '10px',
+                }}>
                   <input
                     type="textbox"
                     name="riverWidth"
@@ -807,8 +769,8 @@ class TBDAnalogFrame extends Component{
 
   setRiverWidth = (e) => {
     //const {name, value}  = e.target;
-    this.setRangeValues(e);
-    this.deriveRiverDepthFromWidth();
+    this.setRangeValues(e); //for river Width
+    this.deriveRiverDepthFromWidth(); //update river High (depth)
   }
 
   toggleRiverWidthAttr = () => {
