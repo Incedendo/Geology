@@ -36,6 +36,7 @@ class FulcrumApproach extends Component {
     SedimentDensity: 2.65,
     DMLMult: 2,
 
+    //booleans to for error checking of inputs
     valid_AvgBkflDpt: true,
     valid_BkflChanWdt: true,
     valid_HydrolicRad: true,
@@ -46,16 +47,17 @@ class FulcrumApproach extends Component {
     valid_SedimentDensity: true,
     valid_DMLMult: true,
 
-    submitted: false,
+    submitted: false, //true if all inputs are validated to perform a successful API call
     submitClicked: false,
     inputs_validated: true,
-    displayedResult: false,
     errorMessage: '',
 
     TBDMode: "", // "Default" or "Customized"
     //Customized TBD parameters:
         climateFromDropdown: "",
         selectedClimate: "",
+        enabledFirstOrderDropdown: false,
+        enabledKoppenDropdown: false,
 
         // 6 inputs for the text fields:
         drainage_low: null,
@@ -73,6 +75,7 @@ class FulcrumApproach extends Component {
         isWithin10: false,
         isWithin20: false,
 
+    //an object to store the calculated esults after submit returns a JSON object.
     response: {
       slope: 0,
       meanSlopeVelocity: 0,
@@ -90,7 +93,7 @@ class FulcrumApproach extends Component {
       data: [],
     },
 
-    //TBD response:
+    //Extra fields for TBD response:
     tableData: [],
     tbdWithin10: 0,
     tbdWithin20: 0,
@@ -371,7 +374,7 @@ class FulcrumApproach extends Component {
 
   //----------------------------------------------------------------------
   //
-  //                   *** TBD COMPONENTS Subroutines ***
+  //           *** TBD COMPONENTS Subroutines for Customzed TBD ***
   //
   //----------------------------------------------------------------------
 
@@ -385,19 +388,18 @@ class FulcrumApproach extends Component {
       //when user chooses First Order option
       this.setState({
         enabledFirstOrderDropdown: true, //disable the radio for first order
-        selectedKoppen: '', //set the state to nil for error checking
         enabledKoppenDropdown: false,
       })
     }else{
       //when user chooses Koppen options
       this.setState({
         enabledKoppenDropdown: true,
-        selectedFirstOrder: '', //set the state to nil to for error checking
         enabledFirstOrderDropdown: false,
       })
     }
   }
 
+  //Update the chosen Value of the Menu Dropdown
   handleClimateSelectionChangeDropDown = (value) => {
     this.setState({
       climateFromDropdown: value,
@@ -408,8 +410,11 @@ class FulcrumApproach extends Component {
   //A function that set the max/min values for either the drainage_low/ drainage_high, crossSectionalArea_Min/ crossSectionalArea_Max, riverDepth_Min/ riverDepth_Max
   setRangeValues = (e) => {
     const {name, value}  = e.target;
+    //Make sure the textfield is not empty
     if(value.length !== 0){
+      //check if the value is a number
       if(!isNaN(value)){
+        //check for positive number:
         if(value < 0){
           this.setState(() => ({
             [name]: "(positive number only)",
@@ -434,6 +439,7 @@ class FulcrumApproach extends Component {
     }
   }
 
+  //Save Text Field's input to state on OnChange
   updateFieldValue = (e) => {
     const {name, value} = e.target;
     this.setState(() => ({
@@ -475,8 +481,6 @@ class FulcrumApproach extends Component {
     this.setState({
       riverHigh: depth
     });
-
-    //return depth;
   }
 
   setRiverWidth = (e) => {
@@ -601,7 +605,6 @@ class FulcrumApproach extends Component {
                Back
             </Link>
          }
-
       </div>
 
       <h1>
@@ -622,74 +625,71 @@ class FulcrumApproach extends Component {
   )
 
   //render the customized TBD Approach within Fulcrum
-  renderTBD = () => (
-    <div className={this.state.TBDMode ==="" ? "enclosing-border" : " enclosing-border light-purple-background"}>
+  renderTBD = (TBDMode, ...rest) => (
+    <div className={TBDMode ==="" ? "enclosing-border" : " enclosing-border light-purple-background"}>
       <div className="">
         <div className="TBD-div">
-            {!this.state.defaultTBD && !this.state.customizedTBD &&
-              <div className="">
-                <RadioGroup
-                  onChange={ this.setSelectedTBDMode } horizontal
-                >
-                  <RadioButton
-                    value="default"
-                    rootColor={this.state.TBDMode ==="" ? "#4B1979" : "grey" }
-                    pointColor="white"//"#23CE2B"
-                    iconInnerSize="0px"
+          <div className="">
+            <RadioGroup
+              onChange={ this.setSelectedTBDMode } horizontal
+            >
+              <RadioButton
+                value="default"
+                rootColor={TBDMode ==="" ? "#4B1979" : "grey" }
+                pointColor="white"//"#23CE2B"
+                iconInnerSize="0px"
+              >
+                <div>
+                  <div
+                    style={{
+                      'margin-right': '5px',
+                      display: 'inline-block'
+                    }}
                   >
-                    <div>
-                      <div
-                        style={{
-                          'margin-right': '5px',
-                          display: 'inline-block'
-                        }}
-                      >
-                        Default
-                      </div>
-                      <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
-                      <div
-                        style={{
-                          'margin-left': '5px',
-                          display: 'inline-block'
-                        }}
-                      >
-                          [default value]
-                      </div>
-                    </div>
-                  </RadioButton>
-                  <RadioButton
-                    value="customized"
-                    rootColor={this.state.TBDMode ==="" ? "#4B1979" : "grey" }
-                    pointColor="white"//"#23CE2B"
-                    iconInnerSize="0px"
+                    Default
+                  </div>
+                  <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+                  <div
+                    style={{
+                      'margin-left': '5px',
+                      display: 'inline-block'
+                    }}
                   >
-                    <div>
-                      <div
-                        style={{
-                          'margin-right': '5px',
-                          display: 'inline-block'
-                        }}
-                      >
-                        Customized
-                      </div>
-                      <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
-                    </div>
+                      [default value]
+                  </div>
+                </div>
+              </RadioButton>
+              <RadioButton
+                value="customized"
+                rootColor={TBDMode ==="" ? "#4B1979" : "grey" }
+                pointColor="white"//"#23CE2B"
+                iconInnerSize="0px"
+              >
+                <div>
+                  <div
+                    style={{
+                      'margin-right': '5px',
+                      display: 'inline-block'
+                    }}
+                  >
+                    Customized
+                  </div>
+                  <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+                </div>
 
-                  </RadioButton>
-                </RadioGroup>
-              </div>
-            }
+              </RadioButton>
+            </RadioGroup>
+          </div>
         </div>
 
-
-        {this.state.TBDMode === "Default" &&
+        {TBDMode === "Default" &&
           <div className="white-txt">
             TBD will be calculated using Default value of 6.5
           </div>
         }
 
-        {this.state.TBDMode === "Customized" &&
-          this.renderTBDComponents()
+        {TBDMode === "Customized" &&
+          this.renderTBDComponents(...rest)
         }
 
       </div>
@@ -697,65 +697,72 @@ class FulcrumApproach extends Component {
   )
 
   // render Climate, Drainage Area, River Size and Precision Components
-  renderTBDComponents = () => (
-    <div className="purple-background">
-      <ClimateOrders
-        submitClicked = {this.state.submitClicked}
-        selectedClimate = {this.state.selectedClimate}
-        selectedFirstOrder = {this.state.selectedFirstOrder}
-        selectedKoppen = {this.state.selectedKoppen}
-        enabledFirstOrderDropdown = {this.state.enabledFirstOrderDropdown}
-        enabledKoppenDropdown = {this.state.enabledKoppenDropdown}
-        climateFromDropdown = {this.state.climateFromDropdown}
-        setClimateSelectedOption = {this.setClimateSelectedOption}
-        handleClimateSelectionChangeDropDown = {this.handleClimateSelectionChangeDropDown}
-      />
+  renderTBDComponents = (...rest) => {
+    const {
+      submitClicked,
+      selectedClimate, enabledFirstOrderDropdown, enabledKoppenDropdown, climateFromDropdown,
+      drainage_low, drainage_high,
+      riverLow, riverHigh, selectedRiverSize, toggleRiverWidthAttr, calculatedDepthUsingWidth, riverWidth,
+      selectedPrecision
+    } = rest;
 
-      <DrainageArea
-        submitClicked = {this.state.submitClicked}
-        drainage_low = {this.state.drainage_low}
-        drainage_high = {this.state.drainage_high}
-        setRangeValues={this.setRangeValues}
-        updateFieldValue={this.updateFieldValue}
-      />
+    return(
+      <div className="purple-background">
+        <ClimateOrders
+          submitClicked = {this.state.submitClicked}
+          selectedClimate = {this.state.selectedClimate}
+          enabledFirstOrderDropdown = {this.state.enabledFirstOrderDropdown}
+          enabledKoppenDropdown = {this.state.enabledKoppenDropdown}
+          climateFromDropdown = {this.state.climateFromDropdown}
+          setClimateSelectedOption = {this.setClimateSelectedOption}
+          handleClimateSelectionChangeDropDown = {this.handleClimateSelectionChangeDropDown}
+        />
 
-      <RiverSize
-        submitClicked = {this.state.submitClicked}
-        riverMin = {this.state.riverLow}
-        riverMax = {this.state.riverHigh}
-        selectedRiverSize = {this.state.selectedRiverSize}
-        setRiverSizeSelectedOption= {this.setRiverSizeSelectedOption}
-        setRangeValues = {this.setRangeValues}
-        updateFieldValue = {this.updateFieldValue}
-        toggleRiverWidthAttr = {this.state.toggleRiverWidthAttr}
-        calculatedDepthUsingWidth = {this.state.calculatedDepthUsingWidth}
-        riverWidth = {this.state.riverWidth}
-        setRiverWidth = {this.setRiverWidth}
-      />
+        <DrainageArea
+          submitClicked = {this.state.submitClicked}
+          drainage_low = {this.state.drainage_low}
+          drainage_high = {this.state.drainage_high}
+          setRangeValues={this.setRangeValues}
+          updateFieldValue={this.updateFieldValue}
+        />
 
-      <TBDPrecision
-        submitClicked = {this.state.submitClicked}
-        selectedPrecision = {this.state.selectedPrecision}
-        setPrecisionSelectedOption= {this.setPrecisionSelectedOption}
-      />
+        <RiverSize
+          submitClicked = {this.state.submitClicked}
+          riverMin = {this.state.riverLow}
+          riverMax = {this.state.riverHigh}
+          selectedRiverSize = {this.state.selectedRiverSize}
+          setRiverSizeSelectedOption= {this.setRiverSizeSelectedOption}
+          setRangeValues = {this.setRangeValues}
+          updateFieldValue = {this.updateFieldValue}
+          toggleRiverWidthAttr = {this.state.toggleRiverWidthAttr}
+          calculatedDepthUsingWidth = {this.state.calculatedDepthUsingWidth}
+          riverWidth = {this.state.riverWidth}
+          setRiverWidth = {this.setRiverWidth}
+        />
 
-    </div>
-  )
+        <TBDPrecision
+          submitClicked = {this.state.submitClicked}
+          selectedPrecision = {this.state.selectedPrecision}
+          setPrecisionSelectedOption= {this.setPrecisionSelectedOption}
+        />
+      </div>
+    )
+  }
 
-  renderRiverChannelTable = () => (
+  renderRiverChannelTable = (TBDMode, tableData, tbdWithin10, tbdWithin20) => (
     <div>
-      {this.state.TBDMode==="Customized" &&
+      {TBDMode==="Customized" &&
         <div>
           <RiverChannelsTable
-            data={this.state.tableData}
-            tbdWithin10={this.state.tbdWithin10}
-            tbdWithin20={this.state.tbdWithin20}
+            data={tableData}
+            tbdWithin10={tbdWithin10}
+            tbdWithin20={tbdWithin20}
             origin="/FulcrumApproach"
           />
         </div>
       }
 
-      {this.state.TBDMode === "Default" &&
+      {TBDMode === "Default" &&
       <div className="tbd-value-table">
         <table>
           <tr>
@@ -817,7 +824,31 @@ class FulcrumApproach extends Component {
       valid_SedimentDensity,
       valid_DMLMult,
 
+      submitted,
+      submitClicked,
+      inputs_validated,
+      errorMessage,
+
+      TBDMode,
+
+      climateFromDropdown, selectedClimate, enabledFirstOrderDropdown, enabledKoppenDropdown,
+
+      drainage_low, drainage_high,
+
+      selectedRiverSize,riverLow, riverHigh, riverWidth, toggleRiverWidthAttr, calculatedDepthUsingWidth,
+
+      selectedPrecision,
+
+      response,
+
+      tableData,
+      tbdWithin10,
+      tbdWithin20,
+
     } = this.state;
+
+
+    // An array of all Fulcrum inputs to be iterated over in the main render() when loading FulcrumInputComponent for Showing the Form initially
 
     const fieldInputs = [
       {
@@ -876,59 +907,61 @@ class FulcrumApproach extends Component {
       },
     ]
 
+    // An array that stores the results of Fulcrum Approach. Only to be call in the main render() to parse results after Submit() succesfully updates all state values.
+
     const FetchedResults = [
       {
         title: "Slope, S",
-        returnedData: this.state.response.slope,
+        returnedData: response.slope,
       },
       {
         title: "Mean Flow Velocity (m/s)",
 
-        returnedData: this.state.response.meanSlopeVelocity,
+        returnedData: response.meanSlopeVelocity,
       },
       {
         title: "Channel Bankful Discharge, Qbf ((m^3)/s)",
-        returnedData: this.state.response.channelBankfullDischarge,
+        returnedData: response.channelBankfullDischarge,
       },
       {
         title: "Total BedLoad Discharge, Qtbf ((m^3)/s)",
-        returnedData: this.state.response.totalBedloadDischarge,
+        returnedData: response.totalBedloadDischarge,
       },
       {
         title: "Total Bedload Sediment Volume Discharge, Q ((m^3)/yr)",
-        returnedData: this.state.response.totalBedloadVolumeSedimentDischarge,
+        returnedData: response.totalBedloadVolumeSedimentDischarge,
       },
       {
         title: "TBD Within 10%",
-        returnedData: this.state.response.tbdWithin10,
+        returnedData: response.tbdWithin10,
       },
       {
         title: "TBD Within 20%",
-        returnedData: this.state.response.tbdWithin20,
+        returnedData: response.tbdWithin20,
       },
       {
         title: "Total Bankful Suspended Sediment Discharge (Van Rijn), Qss (m^3/s)",
-        returnedData: this.state.response.totalBankfullSuspendedSedimentDischarge_VanRijn,
+        returnedData: response.totalBankfullSuspendedSedimentDischarge_VanRijn,
       },
       {
         title: "Total Bankful Suspended Sediment Discharge (Wright Parker), Qss (m^3/s)",
-        returnedData: this.state.response.totalBankfullSuspendedSedimentDischarge_WrightParker,
+        returnedData: response.totalBankfullSuspendedSedimentDischarge_WrightParker,
       },
       {
         title: "Total Combined Sediment Volume Discharge Per Year (Van Rijn), Q (m^3/yr)",
-        returnedData: this.state.response.totalCombinedSedimentVolumeDischargePerYear_VanRijn,
+        returnedData: response.totalCombinedSedimentVolumeDischargePerYear_VanRijn,
       },
       {
         title: "Total Combined Sediment Volume Discharge Per Year (Wright Parker), Q (m^3/yr)",
-        returnedData: this.state.response.totalCombinedSedimentVolumeDischargePerYear_WrightParker,
+        returnedData: response.totalCombinedSedimentVolumeDischargePerYear_WrightParker,
       },
       {
         title: "Total Suspended Sediment Volume Discharge Per Year (Van Rijn), Qmas (m^3/yr)",
-        returnedData: this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn,
+        returnedData: response.totalSuspendedSedimentVolumeDischargedPerYear_VanRijn,
       },
       {
         title: "Total Suspended Sediment Volume Discharge Per Year (Wright Parker), Qmas (m^3/yr)",
-        returnedData: this.state.response.totalSuspendedSedimentVolumeDischargedPerYear_WrightParker,
+        returnedData: response.totalSuspendedSedimentVolumeDischargedPerYear_WrightParker,
       }
     ];
 
@@ -939,7 +972,13 @@ class FulcrumApproach extends Component {
         'background-color': '#DBDBD9'
       }}>
 
-        {!this.state.submitted &&
+        {/*
+          this.state.submitted controls the logic of this class, which shows 2 different div depending on the state of submitted or not.
+
+          Initially show the form with empty fields for User to enter inputs.
+        */}
+
+        {!submitted &&
           <div >
             {this.renderHeader()}
 
@@ -960,13 +999,22 @@ class FulcrumApproach extends Component {
               )}
             </div>
 
-            {this.renderTBD()}
+            {this.renderTBD(TBDMode, submitClicked,
+              selectedClimate, enabledFirstOrderDropdown, enabledKoppenDropdown, climateFromDropdown,
+              drainage_low, drainage_high,
+              riverLow, riverHigh, selectedRiverSize, toggleRiverWidthAttr, calculatedDepthUsingWidth, riverWidth,
+              selectedPrecision
+            )}
 
-            {!this.state.inputs_validated &&
+            {/*
+              Display a message to notify user if form inputs are incorrect
+             */}
+
+            {!inputs_validated &&
               <div className="error-div-fulcrum">
                 Please check the inputs and make sure you have entered all correct values!
                 <div>
-                  {this.state.errorMessage}
+                  {errorMessage}
                 </div>
               </div>
             }
@@ -976,7 +1024,11 @@ class FulcrumApproach extends Component {
           </div>
         }
 
-        {this.state.submitted &&
+        {/*
+          Once the form is submitted, display the results
+         */}
+
+        {submitted &&
           <div>
             <div className="header">
               <div className='back-button-div-fulcrum'>
@@ -1002,7 +1054,7 @@ class FulcrumApproach extends Component {
               />
             )}
 
-            {this.renderRiverChannelTable()}
+            {this.renderRiverChannelTable(TBDMode, tableData, tbdWithin10, tbdWithin20)}
 
           </div>
         }

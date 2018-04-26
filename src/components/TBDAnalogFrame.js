@@ -68,14 +68,11 @@ class TBDAnalogFrame extends Component{
 
     const postRequestData = {
       method: 'POST',
-      Origin:'localhost:3000',
-      mode: "cors",
+      // Origin: 'localhost:3000',
+      // mode: "cors",
       headers: {
-        // 'Content-Type': 'text/plain',
-        // Accept: 'text/plain',
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-        // 'X-Content-Type-Options': 'nosniff',
+        Accept: 'application/json'
       },
       body:
         JSON.stringify({
@@ -318,21 +315,6 @@ class TBDAnalogFrame extends Component{
             </Col>
 
             <Col sm={4} md={9} className="leftAlignedText">
-              {/* <input
-                  type="radio"
-                  name="selectedClimate"
-                  value="FirstOrder"
-                  checked={this.state.selectedClimate === 'FirstOrder'}
-                  onChange={this.setSelectedOption}
-                  className=""
-                /> First Order
-               <input
-                 type="radio"
-                 name="selectedClimate"
-                 value="KoppenClassification"
-                 checked={this.state.selectedClimate === 'KoppenClassification'}  onChange={this.setSelectedOption}
-                 className=""
-               /> Koppen Classification */}
                <div >
                  <RadioGroup
                    onChange={ this.setClimateSelectedOption } horizontal
@@ -342,7 +324,8 @@ class TBDAnalogFrame extends Component{
                      value="FirstOrder"
                      iconSize="6px"
                      iconInnerSize="3px"
-                     rootColor = {this.state.selectedClimate ==="" ? "white" : "grey"}
+                     //rootColor = {this.state.selectedClimate ==="" ? "white" : "grey"}
+                     rootColor = "grey"
                      pointColor = {pointColor}
                      selected={this.state.selectedClimate==="FirstOrder"}>
                      Major Climate
@@ -350,7 +333,8 @@ class TBDAnalogFrame extends Component{
                    <RadioButton
                      value="KoppenClassification"
                      iconInnerSize="0px"
-                     rootColor = {this.state.selectedClimate ==="" ? "white" : "grey"}
+                     //rootColor = {this.state.selectedClimate ==="" ? "white" : "grey"}
+                     rootColor = "grey"
                      pointColor={pointColor}
                      selected={this.state.selectedClimate==="KoppenClassification"}>
                      Köppen Climate
@@ -469,7 +453,7 @@ class TBDAnalogFrame extends Component{
     return(
       <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
-            <Col sm={4} md={2} className={title}>
+            <Col md={3} className={title}>
               <div className="">
                 <div
                   style={{
@@ -490,7 +474,7 @@ class TBDAnalogFrame extends Component{
                 </div>
               </div>
             </Col>
-            <Col sm={4} md={10} className="leftAlignedText">
+            <Col  md={9} className="leftAlignedText">
               <div className="inline-with-right-margin">
                 Min: <input  className="black-txt"
                   type="textbox"
@@ -551,10 +535,10 @@ class TBDAnalogFrame extends Component{
     return(
       <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
-          <Col sm={4} md={2} className={title}>
+          <Col md={2} className={title}>
               River Size:
           </Col>
-          <Col sm={4} md={9} className="leftAlignedText">
+          <Col md={9} className="leftAlignedText">
 
              <RadioGroup
                onChange={ this.setRiverSizeSelectedOption } horizontal
@@ -601,10 +585,10 @@ class TBDAnalogFrame extends Component{
         {(this.state.selectedRiverSize !== '' || this.state.calculatedDepthUsingWidth)
         &&
         <Grid className="padding-grid">
-          <Col sm={4} md={2} className="rightAlignedText">
+          <Col md={3} className="rightAlignedText">
           </Col>
 
-          <Col sm={4} md={9} className="leftAlignedText">
+          <Col md={9} className="leftAlignedText">
             <div>
               <div className="inline-with-right-margin">
                 Min: <input
@@ -687,14 +671,14 @@ class TBDAnalogFrame extends Component{
               onChange={ this.setPrecisionSelectedOption } horizontal
             >
               <RadioButton value="10%"
-                rootColor = {this.state.selectedPrecision ==="" ? "white" : "grey"}
+                rootColor = "grey"
                 pointColor={pointColor}
                 iconInnerSize="0px"
               >
                 10%
               </RadioButton>
               <RadioButton value="20%"
-                rootColor = {this.state.selectedPrecision ==="" ? "white" : "grey"}
+                rootColor = "grey"
                 pointColor={pointColor}
                 iconInnerSize="0px"
               >
@@ -717,14 +701,12 @@ class TBDAnalogFrame extends Component{
       //when user chooses First Order option
       this.setState({
         enabledFirstOrderDropdown: true, //disable the radio for first order
-        selectedKoppen: '', //set the state to nil for error checking
         enabledKoppenDropdown: false,
       })
     }else{
       //when user chooses Koppen options
       this.setState({
         enabledKoppenDropdown: true,
-        selectedFirstOrder: '', //set the state to nil to for error checking
         enabledFirstOrderDropdown: false,
       })
     }
@@ -843,7 +825,7 @@ class TBDAnalogFrame extends Component{
         <div>
           <div
             style={{
-              'margin-right': '15px',
+              'margin-right': '5px',
               display: 'inline-block'
             }}
           >
@@ -852,7 +834,7 @@ class TBDAnalogFrame extends Component{
           <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
           <div
             style={{
-              'margin-left': '15px',
+              'margin-left': '5px',
               display: 'inline-block'
             }}
           >
@@ -865,6 +847,40 @@ class TBDAnalogFrame extends Component{
         <div>{this.props.componentTitle}</div>
       )
     }
+  }
+
+  clearAll = (e) => {
+    e.preventDefault();
+    this.setState({
+      selectedClimate: "", // set when Climate radio buttons are clicked
+      climateFromDropdown: "",
+
+      // 6 inputs for the text fields:
+      drainage_low: null,
+      drainage_high: null,
+
+      selectedRiverSize: "", // set when river size radio buttons are clicked
+      isCrossSection: false,
+      riverLow: null,
+      riverHigh: null,
+      riverWidth: null, //must be empty
+
+      selectedPrecision: "", // set when Precision Radio Buttons are clicked
+      isWithin10: false,
+      isWithin20: false,
+
+      //boolean state:
+      enabledFirstOrderDropdown: false,
+      enabledKoppenDropdown: false,
+      calculatedDepthUsingWidth: false,
+      inputs_validated: true,
+      submitClicked: false,
+      submitted: false,
+
+      tableData: [],
+      tbdWithin10: 0,
+      tbdWithin20: 0,
+    })
   }
 
   render(){
@@ -899,10 +915,19 @@ class TBDAnalogFrame extends Component{
               </div>
             }
 
-            <button
-              type="submit" onClick={this.handleSubmit} className="back-btn-result">
-              Submit
-            </button>
+            <div>
+              <button
+                onClick={this.clearAll}
+                className="back-btn-result">
+                Clear
+              </button>
+
+              <button
+                type="submit" onClick={this.handleSubmit} className="back-btn-result">
+                Submit
+              </button>
+            </div>
+
 
           </form>
         }
@@ -918,19 +943,24 @@ class TBDAnalogFrame extends Component{
                 </button>
               </div>
 
-
               <h1 className='inline-page-title'>
                 Result Page
               </h1>
             </div>
 
-            <RiverChannelsTable
-              title={this.props.componentTitle}
-              data={this.state.tableData}
-              tbdWithin10={this.state.tbdWithin10}
-              tbdWithin20={this.state.tbdWithin20}
-              origin={this.props.origin}
-            />
+            {this.state.tableData === null ?
+              <div>
+                ...Loading Result
+              </div>
+              :
+              <RiverChannelsTable
+                title={this.props.componentTitle}
+                data={this.state.tableData}
+                tbdWithin10={this.state.tbdWithin10}
+                tbdWithin20={this.state.tbdWithin20}
+                origin={this.props.origin}
+              />
+            }
 
           </div>
         }

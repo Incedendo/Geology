@@ -14,7 +14,13 @@ import '../../assets/scss/include.scss';
 const rootColor = "#23CE2B";
 const pointColor = "#FFFFFF";
 
+/*
+  The climate div component in TBD/Analogues Appraoch
+*/
+
 export const ClimateOrders = (props) => {
+
+  console.log(props);
 
   var title = classNames({
     "leftAlignedText-Title": true,
@@ -22,11 +28,6 @@ export const ClimateOrders = (props) => {
     (props.selectedClimate === "" ||
       (props.selectedFirstOrder === "" && props.selectedKoppen === "")
     )
-  })
-
-  var selectColorError = classNames({
-    "error-color-First-order": props.submitClicked && props.selectedFirstOrder === "",
-    "error-color-Koppen": props.submitClicked &&  props.selectedKoppen === "",
   })
 
   return(
@@ -44,7 +45,7 @@ export const ClimateOrders = (props) => {
                >
                  <RadioButton
                    value="FirstOrder"
-                   rootColor = {props.selectedClimate ==="" ? "white" : "grey"}
+                   rootColor = "grey"
                    pointColor={pointColor}
                    iconInnerSize="0px"
                    selected={props.selectedClimate==="FirstOrder"}>
@@ -52,7 +53,7 @@ export const ClimateOrders = (props) => {
                  </RadioButton>
                  <RadioButton
                    value="KoppenClassification"
-                   rootColor = {props.selectedClimate ==="" ? "white" : "grey"}
+                   rootColor = "grey"
                    pointColor={pointColor}
                    iconInnerSize="0px"
                    selected={props.selectedClimate==="KoppenClassification"}>
@@ -73,7 +74,6 @@ export const ClimateOrders = (props) => {
                 <Select
                   name="first-order"
                   value={props.climateFromDropdown && props.climateFromDropdown.value}
-                  // className={selectColorError}
                   onChange={props.handleClimateSelectionChangeDropDown}
                   autoFocus
                   autoBlur
@@ -146,7 +146,12 @@ export const ClimateOrders = (props) => {
   )
 }
 
+/*
+  The Drainage Area div component in TBD/Analogues Appraoch
+*/
 export const DrainageArea = (props) => {
+
+  //customized className for component's title for quick input validation
 
   var textfieldMin = classNames({
     'black-txt': true,
@@ -171,7 +176,7 @@ export const DrainageArea = (props) => {
   return(
     <div className="">
       <Grid className="padding-grid">
-          <Col sm={12} md={2} className={title}>
+          <Col md={3} className={title}>
             <div className="">
               <div
                 style={{
@@ -192,9 +197,9 @@ export const DrainageArea = (props) => {
               </div>
             </div>
           </Col>
-          <Col sm={12} md={10} className="leftAlignedText">
+          <Col md={9} className="leftAlignedText">
             <Grid>
-              <Col sm={12} md={6}>
+              <Col sm={12} md={4}>
                 Min: <input
                   type="textbox"
                   name="drainage_low"
@@ -204,7 +209,7 @@ export const DrainageArea = (props) => {
                   onChange={props.updateFieldValue}
                 />
               </Col>
-              <Col sm={12} md={6}>
+              <Col sm={12} md={4}>
                 Max: <input
                   type="textbox"
                   name="drainage_high"
@@ -221,7 +226,12 @@ export const DrainageArea = (props) => {
   )
 }
 
+/*
+  The River div component in TBD/Analogues Appraoch
+*/
 export const RiverSize = (props) => {
+
+  //customized className for component's title for quick input validation
   var textfieldMin = classNames({
     'black-txt': true,
     'text-field-error': props.submitClicked && props.riverMin < 0,
@@ -245,17 +255,17 @@ export const RiverSize = (props) => {
   return(
     <div className="">
       <Grid className="padding-grid">
-        <Col sm={12} md={2} className={title}>
+        <Col md={2} className={title}>
             River Size:
         </Col>
-        <Col sm={12} md={9} className="leftAlignedText">
+        <Col md={9} className="leftAlignedText">
 
            <RadioGroup
              onChange={ props.setRiverSizeSelectedOption } horizontal
            >
              <RadioButton
                value="RiverDepth"
-               rootColor = {props.selectedRiverSize ==="" ? "white" : "grey"}
+               rootColor = "grey"
                pointColor={pointColor}
                iconInnerSize="0px"
              >
@@ -263,7 +273,7 @@ export const RiverSize = (props) => {
              </RadioButton>
              <RadioButton
                value="CrossSectionalArea"
-               rootColor = {props.selectedRiverSize ==="" ? "white" : "grey"}
+               rootColor = "grey"
                pointColor={pointColor}
                iconInnerSize="0px"
              >
@@ -293,14 +303,13 @@ export const RiverSize = (props) => {
 
       {this.selectedRiverSize !== '' &&
       <Grid className="padding-grid">
-        <Col sm={12} md={2} className="rightAlignedText">
+        <Col sm={12} md={3} className="rightAlignedText">
 
         </Col>
 
         <Col sm={12} md={9} className="leftAlignedText">
-          {props.selectedRiverSize === "RiverDepth" &&
           <Grid>
-            <Col sm={12} md={6}>
+            <Col sm={12} md={4}>
               Min: <input
                 type="textbox"
                 name="riverLow"
@@ -310,7 +319,7 @@ export const RiverSize = (props) => {
                 value={props.riverMin}
               />
             </Col>
-            <Col sm={12} md={6}>
+            <Col sm={12} md={4}>
               Max: <input
                 type="textbox"
                 name="riverHigh"
@@ -321,36 +330,9 @@ export const RiverSize = (props) => {
               />
             </Col>
           </Grid>
-          }
-
-          {props.selectedRiverSize === "CrossSectionalArea" &&
-          <Grid>
-            <Col sm={12} md={6}>
-              Min: <input
-                type="textbox"
-                name="riverLow"
-                className={textfieldMin}
-                onBlur={props.setRangeValues}
-                onChange={props.updateFieldValue}
-                value={props.riverMin}
-              />
-            </Col>
-            <Col sm={12} md={6}>
-              Max: <input
-                type="textbox"
-                name="riverHigh"
-                className={textfieldMax}
-                onBlur={props.setRangeValues}
-                onChange={props.updateFieldValue}
-                value={props.riverMax}
-              />
-            </Col>
-          </Grid>
-          }
         </Col>
       </Grid>
       }
-
 
 
       <div>
@@ -385,7 +367,14 @@ export const RiverSize = (props) => {
   )
 }
 
+/*
+  The Precision div component in TBD/Analogues Appraoch
+*/
+
 export const TBDPrecision = (props) =>{
+
+  //customized className for component's title for quick input validation
+
   var title = classNames({
     "leftAlignedText-Title": true,
     "title-error": props.submitClicked && props.selectedPrecision === ""
@@ -404,7 +393,7 @@ export const TBDPrecision = (props) =>{
           >
             <RadioButton
               value="10%"
-              rootColor = {props.selectedPrecision ==="" ? "white" : "grey"}
+              rootColor = "grey"
               pointColor={pointColor}
               iconInnerSize="0px"
             >
@@ -412,7 +401,7 @@ export const TBDPrecision = (props) =>{
             </RadioButton>
             <RadioButton
               value="20%"
-              rootColor = {props.selectedPrecision ==="" ? "white" : "grey"}
+              rootColor = "grey"
               pointColor={pointColor}
               iconInnerSize="0px"
             >

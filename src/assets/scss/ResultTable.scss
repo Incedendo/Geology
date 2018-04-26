@@ -13,8 +13,20 @@
   margin-bottom: 20px;
 }
 
+td, th {
+    border-left:solid black 1px;
+    border-top:solid black 1px;
+}
+
+td:first-child, th:first-child {
+     border-left: none;
+}
+
 table {
     border-collapse: collapse;
+    border:solid black 1px;
+    border-radius:6px;
+    -moz-border-radius:6px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -22,6 +34,7 @@ table {
 }
 
 th {
+    border-top: none;
     height: 35px;
     font-size: 18px;
     text-align: center !important;

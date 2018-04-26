@@ -11,6 +11,9 @@ import MapContainer from '../GoogleAPIScripts/MapContainer';
 import BaseSupSub from 'react-basesupsub';
 //  for FileDownload
 import fileDownload from 'js-file-download';
+import '../../assets/scss/include.scss';
+import '../../assets/scss/ResultTable.scss';
+import classNames from 'classnames';
 
 const fakeData = [
   {
@@ -77,6 +80,7 @@ class RiverChannelsTable extends Component{
 
   state = {
     modalIsOpen: false,
+    downloaded: false,
   }
 
   toggleModal = () => {
@@ -84,6 +88,7 @@ class RiverChannelsTable extends Component{
   }
 
   downloadCSV = (id) => {
+
     console.log("stream id: ",id);
 
     const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID='+id;
@@ -115,11 +120,22 @@ class RiverChannelsTable extends Component{
     ).then( blob => {
       console.log("expecting returned data");
       console.log(blob);
-      fileDownload(blob, 'tbd_data.csv');
+      const fileName = 'tbd_data_' + id + '.csv';
+      fileDownload(blob, fileName);
     });
+
+    this.setState({
+      downloaded: true
+    })
   }
 
   render(){
+
+    const downloadButtonState = classNames({
+      "back-btn-result": !this.state.downloaded,
+      "": this.state.downloaded
+    })
+
     console.log(this.props.data);
     let ebd; //estimated bankfull discharge
     let streams = [];
@@ -136,199 +152,130 @@ class RiverChannelsTable extends Component{
 
     return(
       <div className="grey-app">
-        {this.props.title !== "River Analogues" &&
-        <div className="tbd-value-table">
-          <table>
-            <tr>
-              <th>
-                <div
-                  style={{
-                    'margin-right': '5px',
-                    display: 'inline-block'
-                  }}
-                >
-                    Year Averaged Bankfull Flow Duration,
-                </div>
-                <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
-                <div
-                  style={{
-                    'margin-left': '5px',
-                    display: 'inline-block'
-                  }}
-                >
-                    (days)
-                </div>
-              </th>
-            </tr>
-            <tr>
-              <td>{ebd}</td>
-            </tr>
-          </table>
-        </div>
-        }
+          {this.props.title !== "River Analogues" &&
+          <div className="tbd-value-table"
+            style={{
+              'border-radius': '5px'
+            }}
+            >
+            <table>
+              <tr>
+                <th>
+                  <div
+                    style={{
+                      'margin-right': '5px',
+                      display: 'inline-block',
+                    }}
+                  >
+                      Year Averaged Bankfull Flow Duration,
+                  </div>
+                  <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
+                  <div
+                    style={{
+                      'margin-left': '5px',
+                      display: 'inline-block'
+                    }}
+                  >
+                      (days)
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td>{ebd}</td>
+              </tr>
+            </table>
+          </div>
+          }
 
-          <ReactTable
-            data={this.props.data}
-            //data={streams}
-            columns={[
-              {
-                Header: "Site Info",
-                columns: [
-                  {
-                    Header: "Site ID",
-                    accessor: "siteID",
-                  },
-                  {
-                    Header: "Site Name",
-                    accessor: "siteName",
-                    minWidth: 400,
-                  },
-                ]
-              },
-              {
-                Header: "Coordinates",
-                columns: [
-                  {
-                    Header: "Latitude",
-                    accessor: "latitude"
-                  },
-                  {
-                    Header: "Longitude",
-                    accessor: "longitude"
-                  }
-                ]
-              },
-              {
-                Header: "Channel Info",
-                columns: [
-                  {
-                    Header: "Drainage Area (km)",
-                    accessor: "drainageAreaKm",
-                  },
-                  {
-                    Header: "Channel Width (m)",
-                    accessor: "channelWidthM",
-                  },
-                  {
-                    Header: "Channel Depth (m)",
-                    accessor: "channelDepthM",
-                  },
-                  {
-                    Header: "Country",
-                    accessor: "countryName",
-                  },
-                ]
-              },
-            ]}
-            defaultPageSize={10}
-            className="-striped -highlight"
-            SubComponent={row => {
-              const data = this.props.data;
-              const index = row.index;
-              const rowInfo = data[index];
+            <ReactTable
+              data={this.props.data}
+              //data={streams}
+              columns={[
+                {
+                  Header: "Site Info",
+                  columns: [
+                    {
+                      Header: "Site ID",
+                      accessor: "siteID",
+                    },
+                    {
+                      Header: "Site Name",
+                      accessor: "siteName",
+                      minWidth: 400,
+                    },
+                  ]
+                },
+                {
+                  Header: "Coordinates",
+                  columns: [
+                    {
+                      Header: "Latitude",
+                      accessor: "latitude"
+                    },
+                    {
+                      Header: "Longitude",
+                      accessor: "longitude"
+                    }
+                  ]
+                },
+                {
+                  Header: "Channel Info",
+                  columns: [
+                    {
+                      Header: "Drainage Area (km)",
+                      accessor: "drainageAreaKm",
+                    },
+                    {
+                      Header: "Channel Width (m)",
+                      accessor: "channelWidthM",
+                    },
+                    {
+                      Header: "Channel Depth (m)",
+                      accessor: "channelDepthM",
+                    },
+                    {
+                      Header: "Country",
+                      accessor: "countryName",
+                    },
+                  ]
+                },
+              ]}
+              defaultPageSize={10}
+              className="-striped -highlight"
+              SubComponent={row => {
+                const data = this.props.data;
+                const index = row.index;
+                const rowInfo = data[index];
 
-              let ebd_stream;
+                let ebd_stream;
 
-              if(this.props.tbdWithin10 !== -1){
-                ebd_stream = rowInfo.avgWithin10;
-              }else{
-                ebd_stream = rowInfo.avgWithin20;
-              }
+                if(this.props.tbdWithin10 !== -1){
+                  ebd_stream = rowInfo.avgWithin10;
+                }else{
+                  ebd_stream = rowInfo.avgWithin20;
+                }
 
-              return (
-                <div
-                  style={{
-                    "background-color": "#DBDBD9",
-                    padding: "20px"
-                  }}>
+                return (
+                  <div
+                    style={{
+                      "background-color": "#DBDBD9",
+                      padding: "20px"
+                    }}>
 
-                  <div className="">
-                    <div className="table-margin">
-                      <table>
-                        <tr>
-                          <th>Site ID</th>
-                          <th>Site Name</th>
-                          <th>Latitude</th>
-                          <th>Longitude</th>
-                        </tr>
-                        <tr>
-                          <td>{rowInfo.siteID}</td>
-                          <td>{rowInfo.siteName}</td>
-                          <td>{rowInfo.latitude}</td>
-                          <td>{rowInfo.longitude}</td>
-                        </tr>
-                      </table>
-                    </div>
-
-                    <div className="table-margin">
-                      <table>
-                        <tr>
-                          <th>
-                            <div>
-                              <div
-                                style={{
-                                  'margin-right': '2px',
-                                  display: 'inline-block'
-                                }}
-                              >
-                                Drainage Area (
-                              </div>
-                              <BaseSupSub style={{ display: 'inline-block' }} base="km" sup="2" />
-                              <div
-                                style={{
-                                  'margin-left': '2px',
-                                  display: 'inline-block'
-                                }}
-                              >
-                                 )
-                              </div>
-                            </div>
-                          </th>
-                          <th>Channel Width (m)</th>
-                          <th>Channel Depth (m)</th>
-                          <th>Source</th>
-                        </tr>
-                        <tr>
-                          <td>{rowInfo.drainageAreaKm}</td>
-                          <td>{rowInfo.channelWidthM}</td>
-                          <td>{rowInfo.channelDepthM}</td>
-                          <td>{rowInfo.descSource}</td>
-                        </tr>
-                      </table>
-                    </div>
-
-                    <div>
+                    <div className="">
                       <div className="table-margin">
                         <table>
                           <tr>
-                            <th>
-                              <div>
-                                <div
-                                  style={{
-                                    'margin-right': '5px',
-                                    display: 'inline-block'
-                                  }}
-                                >
-                                  Average
-                                </div>
-                                <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
-                                <div
-                                  style={{
-                                    'margin-left': '5px',
-                                    display: 'inline-block'
-                                  }}
-                                >
-                                  (days)
-                                </div>
-                              </div>
-                            </th>
-                            <th>Climate ID</th>
-                            <th>Climate Description</th>
+                            <th>Site ID</th>
+                            <th>Site Name</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
                           </tr>
                           <tr>
-                            <td>{ebd_stream}</td>
-                            <td>{rowInfo.climateCode}</td>
-                            <td>{rowInfo.climateDesc}</td>
+                            <td>{rowInfo.siteID}</td>
+                            <td>{rowInfo.siteName}</td>
+                            <td>{rowInfo.latitude}</td>
+                            <td>{rowInfo.longitude}</td>
                           </tr>
                         </table>
                       </div>
@@ -337,7 +284,6 @@ class RiverChannelsTable extends Component{
                         <table>
                           <tr>
                             <th>
-
                               <div>
                                 <div
                                   style={{
@@ -345,63 +291,144 @@ class RiverChannelsTable extends Component{
                                     display: 'inline-block'
                                   }}
                                 >
-                                  Estimated Bankfull Discharge (
+                                  Drainage Area (
                                 </div>
-                                <BaseSupSub style={{ display: 'inline-block' }} base="m" sup="3" />
+                                <BaseSupSub style={{ display: 'inline-block' }} base="km" sup="2" />
                                 <div
                                   style={{
                                     'margin-left': '2px',
                                     display: 'inline-block'
                                   }}
                                 >
-                                  /s)
+                                   )
                                 </div>
                               </div>
-
                             </th>
-                            <th>Reference</th>
+                            <th>Channel Width (m)</th>
+                            <th>Channel Depth (m)</th>
+                            <th>Source</th>
                           </tr>
                           <tr>
-                            <td>{rowInfo.estDischargeCubMPerSec}</td>
-                            <td>{rowInfo.refSource}</td>
+                            <td>{rowInfo.drainageAreaKm}</td>
+                            <td>{rowInfo.channelWidthM}</td>
+                            <td>{rowInfo.channelDepthM}</td>
+                            <td>{rowInfo.descSource}</td>
                           </tr>
                         </table>
                       </div>
-                    </div>
 
-                    <div className="div-google-map grey">
-                      <MapContainer
-                        lat={rowInfo.latitude}
-                        long={rowInfo.longitude}
-                      />
-                    </div>
+                      <div>
+                        <div className="table-margin">
+                          <table>
+                            <tr>
+                              <th>
+                                <div>
+                                  <div
+                                    style={{
+                                      'margin-right': '5px',
+                                      display: 'inline-block'
+                                    }}
+                                  >
+                                    Average
+                                  </div>
+                                  <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
+                                  <div
+                                    style={{
+                                      'margin-left': '5px',
+                                      display: 'inline-block'
+                                    }}
+                                  >
+                                    (days)
+                                  </div>
+                                </div>
+                              </th>
+                              <th>Climate ID</th>
+                              <th>Climate Description</th>
+                            </tr>
+                            <tr>
+                              <td>{ebd_stream}</td>
+                              <td>{rowInfo.climateCode}</td>
+                              <td>{rowInfo.climateDesc}</td>
+                            </tr>
+                          </table>
+                        </div>
 
-                    <div className="csv-btn">
-                      <button
-                        className="back-btn-result"
-                        onClick={() => this.downloadCSV(rowInfo.siteID)}>
-                        Download CSV File
-                      </button>
-                      <div
-                        style={{
-                          'text-align': 'center'
-                        }}
-                      >
-                        (It might take up to 15 seconds to prepare the file for download...)
+                        <div className="table-margin">
+                          <table>
+                            <tr>
+                              <th>
+
+                                <div>
+                                  <div
+                                    style={{
+                                      'margin-right': '2px',
+                                      display: 'inline-block'
+                                    }}
+                                  >
+                                    Estimated Bankfull Discharge (
+                                  </div>
+                                  <BaseSupSub style={{ display: 'inline-block' }} base="m" sup="3" />
+                                  <div
+                                    style={{
+                                      'margin-left': '2px',
+                                      display: 'inline-block'
+                                    }}
+                                  >
+                                    /s)
+                                  </div>
+                                </div>
+
+                              </th>
+                              <th>Reference</th>
+                            </tr>
+                            <tr>
+                              <td>{rowInfo.estDischargeCubMPerSec}</td>
+                              <td>{rowInfo.refSource}</td>
+                            </tr>
+                          </table>
+                        </div>
                       </div>
-                    </div>
 
-                    <hr />
+                      <div className="div-google-map grey">
+                        <MapContainer
+                          lat={rowInfo.latitude}
+                          long={rowInfo.longitude}
+                        />
+                      </div>
+
+
+                        <div className="csv-btn">
+                          <button
+                            className={downloadButtonState}
+                            disabled={this.state.downloaded}
+                            onClick={() => this.downloadCSV(rowInfo.siteID)}>
+                            Download CSV File
+                          </button>
+
+                          {!this.state.downloaded
+                            ?
+                            <div
+                              style={{
+                                'text-align': 'center',
+                              }}
+                            >
+                              (It might take up to 15 seconds to prepare the file for download...)
+                            </div>
+                            : <div></div>
+                          }
+
+                        </div>
+
+                      <hr />
+
+                    </div>
 
                   </div>
+                );
+              }}
+            />
+        </div>
 
-                </div>
-              );
-            }}
-          />
-
-
-      </div>
     )
    }
  }
