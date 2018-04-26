@@ -35,7 +35,8 @@ export const ClimateOrders = (props) => {
       <Grid className="padding-grid">
         <Row>
           <Col sm={4} md={2} className={title}>
-              Climate:
+              Climate
+              <span style={{'color': 'red'}}>*</span>
           </Col>
 
           <Col sm={4} md={9} className="leftAlignedText">
@@ -193,7 +194,7 @@ export const DrainageArea = (props) => {
                   display: 'inline-block'
                 }}
               >
-              ):
+              )
               </div>
             </div>
           </Col>
@@ -256,7 +257,7 @@ export const RiverSize = (props) => {
     <div className="">
       <Grid className="padding-grid">
         <Col md={2} className={title}>
-            River Size:
+            River Size
         </Col>
         <Col md={9} className="leftAlignedText">
 
@@ -384,7 +385,8 @@ export const TBDPrecision = (props) =>{
     <div className="">
       <Grid className="padding-grid">
         <Col sm={12} md={2} className={title}>
-            Precision:
+            Precision
+            <span style={{'color': 'red'}}>*</span>
         </Col>
         <Col sm={12} md={9} className="leftAlignedText">
 

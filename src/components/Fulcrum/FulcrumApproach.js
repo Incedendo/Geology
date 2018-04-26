@@ -49,6 +49,7 @@ class FulcrumApproach extends Component {
 
     submitted: false, //true if all inputs are validated to perform a successful API call
     submitClicked: false,
+    loading: true,
     inputs_validated: true,
     errorMessage: '',
 
@@ -206,7 +207,8 @@ class FulcrumApproach extends Component {
           response: data,
           tableData: data.streams,
           tbdWithin10: data.tbdWithin10,
-          tbdWithin20: data.tbdWithin20
+          tbdWithin20: data.tbdWithin20,
+          loading: false,
         });
       }
 
@@ -749,9 +751,15 @@ class FulcrumApproach extends Component {
     )
   }
 
-  renderRiverChannelTable = (TBDMode, tableData, tbdWithin10, tbdWithin20) => (
+  renderRiverChannelTable = (loading, TBDMode, tableData, tbdWithin10, tbdWithin20) => (
     <div>
-      {TBDMode==="Customized" &&
+      {TBDMode==="Customized" && loading &&
+        <div>
+          Please wait...
+        </div>
+      }
+
+      {TBDMode==="Customized" && !loading &&
         <div>
           <RiverChannelsTable
             data={tableData}
@@ -826,6 +834,7 @@ class FulcrumApproach extends Component {
 
       submitted,
       submitClicked,
+      loading,
       inputs_validated,
       errorMessage,
 
@@ -1054,7 +1063,7 @@ class FulcrumApproach extends Component {
               />
             )}
 
-            {this.renderRiverChannelTable(TBDMode, tableData, tbdWithin10, tbdWithin20)}
+            {this.renderRiverChannelTable(loading, TBDMode, tableData, tbdWithin10, tbdWithin20)}
 
           </div>
         }

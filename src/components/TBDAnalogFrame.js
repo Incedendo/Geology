@@ -48,6 +48,7 @@ class TBDAnalogFrame extends Component{
     normal_Border: '',
     error_Border: 'red',
 
+    loading: true,
     tableData: [],
     tbdWithin10: 0,
     tbdWithin20: 0,
@@ -139,6 +140,7 @@ class TBDAnalogFrame extends Component{
         tableData: data.streams,
         tbdWithin10: data.tbdWithin10,
         tbdWithin20: data.tbdWithin20,
+        loading: false,
       })
     });
   }
@@ -260,36 +262,6 @@ class TBDAnalogFrame extends Component{
       console.log("validateInputs() failed");
       return false;
     }
-
-    // check if users choose ALL 3 big Radio Buttons
-
-    // if(this.props.displayedPresicion){
-    //   if(this.validateClimateInputs() ||
-    //     (
-    //       this.validateDrainageInputs() ||
-    //       this.validateRiverInputs()
-    //     )
-    //     && this.validatePrecisionInputs()
-    //   ){
-    //         console.log("validate ALL inputs");
-    //         return true;
-    //   }else{
-    //         console.log("validateInputs() failed");
-    //         return false;
-    //   }
-    // }else{
-    //   if( this.validateClimateInputs() ){
-    //       if(this.validateDrainageInputs() ||
-    //       this.validateRiverInputs()){
-    //
-    //       }
-    //         console.log("validate ALL inputs");
-    //         return true;
-    //   }else{
-    //         console.log("validateInputs() failed");
-    //         return false;
-    //   }
-    // }
   }
 
   renderClimateOrders = () => {
@@ -311,7 +283,8 @@ class TBDAnalogFrame extends Component{
             'margin-left': '5px !important',
           }}>
             <Col sm={4} md={2} className={title}>
-                Climate:
+                Climate
+                <span style={{'color': 'red'}}>*</span>
             </Col>
 
             <Col sm={4} md={9} className="leftAlignedText">
@@ -470,7 +443,7 @@ class TBDAnalogFrame extends Component{
                     display: 'inline-block'
                   }}
                 >
-                ):
+                )
                 </div>
               </div>
             </Col>
@@ -536,7 +509,7 @@ class TBDAnalogFrame extends Component{
       <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
           <Col md={2} className={title}>
-              River Size:
+              River Size
           </Col>
           <Col md={9} className="leftAlignedText">
 
@@ -663,7 +636,8 @@ class TBDAnalogFrame extends Component{
       <div className="enclosing-border purple-background">
         <Grid className="padding-grid">
           <Col sm={4} md={2} className={title}>
-              Precision:
+              Precision
+              <span style={{'color': 'red'}}>*</span>
           </Col>
           <Col sm={4} md={9} className="leftAlignedText">
 
@@ -948,9 +922,9 @@ class TBDAnalogFrame extends Component{
               </h1>
             </div>
 
-            {this.state.tableData === null ?
+            {this.state.loading ?
               <div>
-                ...Loading Result
+                ...Loading Result...
               </div>
               :
               <RiverChannelsTable
