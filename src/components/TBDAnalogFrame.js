@@ -518,7 +518,7 @@ class TBDAnalogFrame extends Component{
              >
                <RadioButton
                  value="RiverDepth"
-                 rootColor = {this.state.selectedRiverSize ==="" ? "white" : "grey"}
+                 rootColor = "grey"
                  pointColor={pointColor}
                  iconInnerSize="0px"
                >
@@ -526,7 +526,7 @@ class TBDAnalogFrame extends Component{
                </RadioButton>
                <RadioButton
                  value="CrossSectionalArea"
-                 rootColor = {this.state.selectedRiverSize ==="" ? "white" : "grey"}
+                 rootColor = "grey"
                  pointColor = {pointColor}
                  iconInnerSize="0px"
                >
@@ -825,6 +825,10 @@ class TBDAnalogFrame extends Component{
 
   clearAll = (e) => {
     e.preventDefault();
+    this.resetAllState();
+  }
+
+  resetAllState = () => {
     this.setState({
       selectedClimate: "", // set when Climate radio buttons are clicked
       climateFromDropdown: "",
@@ -864,7 +868,13 @@ class TBDAnalogFrame extends Component{
           <form onSubmit={this.handleSubmit} className="form">
             <div className="header">
               <div className='back-button-div-tbd'>
-                 <Link to="/" className=" back-button-link back-button-effect">Back</Link>
+                <Link
+                   to="/"
+                   className="back-button-link back-button-effect"
+                  //  onClick={this.clearAll}
+                >
+                  Back
+                </Link>
               </div>
 
               <h1 className='inline-page-title'>
