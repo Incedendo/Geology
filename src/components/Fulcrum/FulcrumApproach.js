@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
@@ -1074,3 +1075,32 @@ class FulcrumApproach extends Component {
 }
 
 export default FulcrumApproach;
+
+FulcrumApproach.propTypes = {
+  AvgBkflDpt: PropTypes.number,
+  BkflChanWdt: PropTypes.number,
+  HydrolicRad: PropTypes.number,
+  Dee16: PropTypes.number,
+  Dee50: PropTypes.number,
+  Dee84: PropTypes.number,
+  Dee90: PropTypes.number,
+  SedimentDensity: PropTypes.number,
+  DMLMult: PropTypes.number,
+
+  response: PropTypes.shape({
+    slope: PropTypes.number.isRequired,
+    meanSlopeVelocity: PropTypes.number.isRequired,
+    channelBankfullDischarge: PropTypes.number.isRequired,
+    totalBedloadDischarge: PropTypes.number.isRequired,
+    totalBedloadVolumeSedimentDischarge: PropTypes.number.isRequired,
+    tbdWithin10: PropTypes.number.isRequired,
+    tbdWithin20: PropTypes.number.isRequired,
+    totalBankfullSuspendedSedimentDischarge_VanRijn: PropTypes.number.isRequired,
+    totalBankfullSuspendedSedimentDischarge_WrightParker: PropTypes.number.isRequired,
+    totalCombinedSedimentVolumeDischargePerYear_VanRijn: PropTypes.number.isRequired,
+    totalCombinedSedimentVolumeDischargePerYear_WrightParker:PropTypes.number.isRequired,
+    totalSuspendedSedimentVolumeDischargedPerYear_VanRijn: PropTypes.number.isRequired,
+    totalSuspendedSedimentVolumeDischargedPerYear_WrightParker: PropTypes.number.isRequired,
+    data: PropTypes.array
+  })
+};

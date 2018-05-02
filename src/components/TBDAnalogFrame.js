@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 //import RadioButton package
@@ -45,8 +46,8 @@ class TBDAnalogFrame extends Component{
     submitClicked: false,
     submitted: false,
 
-    normal_Border: '',
-    error_Border: 'red',
+    // normal_Border: '',
+    // error_Border: 'red',
 
     loading: true,
     tableData: [],
@@ -954,3 +955,21 @@ class TBDAnalogFrame extends Component{
 }
 
 export default TBDAnalogFrame;
+
+TBDAnalogFrame.propTypes = {
+  selectedClimate: PropTypes.object.isRequired,
+  climateFromDropdown: PropTypes.string.isRequired,
+
+  // 6 inputs for the text fields:
+  drainage_low: PropTypes.number,
+  drainage_high: PropTypes.number,
+
+  selectedRiverSize: PropTypes.string,
+  isCrossSection: PropTypes.bool,
+  riverLow: PropTypes.number,
+  riverHigh: PropTypes.number,
+  riverWidth: PropTypes.number,
+  selectedPrecision: PropTypes.string.isRequired,
+  isWithin10: PropTypes.bool.isRequired,
+  isWithin20: PropTypes.bool.isRequired,
+}

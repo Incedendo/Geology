@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <div className="App grey-app">
-        <meta charset="UTF-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset= ISO-8859-1"/>
         <Router>
           {renderRoutes(routes)}
         </Router>

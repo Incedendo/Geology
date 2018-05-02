@@ -9,43 +9,108 @@ class DownloadButton extends Component{
     downloaded: false,
   }
 
+  // componentDidMount(){
+  //   const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID='+this.props.siteID;
+  //   const getRequestData = {
+  //     method: 'GET',
+  //     Origin:'http://rafter-ui-bucket.s3-website-us-east-1.amazonaws.com/FulcrumApproach',
+  //     //mode: "cors",
+  //     headers: {
+  //       // 'Content-Type': 'text/plain',
+  //       // Accept: 'text/plain',
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //       // 'X-Content-Type-Options': 'nosniff',
+  //     }
+  //   }
+  //
+  //   fetch(getCsvURL, getRequestData)
+  //   // .then( results => results.json() )
+  //   .then( response => {
+  //       if (response.status === 200 || response.status === 201) {
+  //         console.log("Checking status:");
+  //         console.log(response.text);
+  //         return response.text();
+  //         //return response.url;
+  //       } else {
+  //         console.log('Get CSV Failure!', response.status);
+  //       }
+  //     }
+  //   ).then( downloadURL => {
+  //     console.log("printing downloadURL: " + downloadURL);
+  //     this.setState({
+  //       downloadURL: downloadURL
+  //     })
+  //   })
+  // }
+
   downloadCSV = (id) => {
 
-    console.log("stream id: ",id);
+    // const downloadURL = 'https://s3.amazonaws.com/rafter-discharge-bucket/discharge/discharge-05CK004.csv';
+    //
+    // console.log("stream id: ",id);
+    //
+    // const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID='+id;
+    //
+    // const getRequestData = {
+    //   method: 'GET',
+    //   Origin:'http://rafter-ui-bucket.s3-website-us-east-1.amazonaws.com/FulcrumApproach',
+    //   //mode: "cors",
+    //   headers: {
+    //     // 'Content-Type': 'text/plain',
+    //     // Accept: 'text/plain',
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json',
+    //     // 'X-Content-Type-Options': 'nosniff',
+    //   }
+    // }
 
-    const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID='+id;
+    // fetch(downloadURL, getRequestData).then( blob => {
+    //   console.log("expecting returned data");
+    //   //console.log(blob);
+    //   const fileName = 'tbd_data_' + id + '.csv';
+    //   fileDownload(blob, fileName);
+    //   this.setState({
+    //     downloaded: true
+    //   })
+    // }).catch(function(error) {
+    //   console.log('Requestfailed', error)
+    // });
 
-    const getRequestData = {
-      method: 'GET',
-      Origin:'http://rafter-ui-bucket.s3-website-us-east-1.amazonaws.com/FulcrumApproach',
-      mode: "cors",
-      headers: {
-        // 'Content-Type': 'text/plain',
-        // Accept: 'text/plain',
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        // 'X-Content-Type-Options': 'nosniff',
-      }
-    }
+    // fetch(getCsvURL, getRequestData)
+    // // .then( results => results.json() )
+    // .then( response => {
+    //     if (response.status === 200 || response.status === 201) {
+    //       console.log("Checking status:");
+    //       console.log(response);
+    //       return response.text();
+    //     } else {
+    //       console.log('Get CSV Failure!', response.status);
+    //     }
+    //   }
+    // ).then( downloadURL => {
+    //   console.log("printing downloadURL: " + downloadURL);
+    //
+    //   return fetch(downloadURL, getRequestData);
+    // })
+    // // .then(response => {
+    // //   response.blob();
+    // // })
+    // .then( blob => {
+    //   console.log("expecting returned data");
+    //   console.log(blob);
+    //   const fileName = 'tbd_data_' + id + '.csv';
+    //   fileDownload(blob, fileName);
+    // }).catch(function(error) {
+    //   console.log('Requestfailed', error)
+    // });
+    //
+    // this.setState({
+    //   downloaded: true
+    // })
+  }
 
-    fetch(getCsvURL, getRequestData)
-    // .then( results => results.json() )
-    .then( response =>
-      {
-        if (response.status === 200 || response.status === 201) {
-          console.log(response);
-          return response.blob();
-        } else {
-          console.log('Get CSV Failure!', response.status);
-        }
-      }
-    ).then( blob => {
-      console.log("expecting returned data");
-      console.log(blob);
-      const fileName = 'tbd_data_' + id + '.csv';
-      fileDownload(blob, fileName);
-    });
-
+  setDownloaded = () => {
     this.setState({
       downloaded: true
     })
@@ -57,15 +122,10 @@ class DownloadButton extends Component{
       "": this.state.downloaded
     })
 
+    const link = "https://s3.amazonaws.com/rafter-discharge-bucket/discharge/discharge-"+this.props.siteID+".csv";
+
     return(
       <div className="csv-btn">
-        <button
-          className={downloadButtonState}
-          disabled={this.state.downloaded}
-          onClick={() => this.downloadCSV(this.props.siteID)}>
-          Download CSV File
-        </button>
-
         {!this.state.downloaded
           ?
           <div
@@ -73,7 +133,11 @@ class DownloadButton extends Component{
               'text-align': 'center',
             }}
           >
-            (It might take up to 15 seconds to prepare the file for download...)
+            <a href={link}
+              onClick={this.setDownloaded}
+            >
+              Download Discharge Data into a CSV file
+            </a>
           </div>
           : <div></div>
         }
