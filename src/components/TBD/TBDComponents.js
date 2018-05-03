@@ -19,9 +19,6 @@ const pointColor = "#FFFFFF";
 */
 
 export const ClimateOrders = (props) => {
-
-  console.log(props);
-
   var title = classNames({
     "leftAlignedText-Title": true,
     "title-error": props.submitClicked &&
@@ -231,6 +228,8 @@ export const DrainageArea = (props) => {
   The River div component in TBD/Analogues Appraoch
 */
 export const RiverSize = (props) => {
+
+  console.log(props);
 
   //customized className for component's title for quick input validation
   var textfieldMin = classNames({

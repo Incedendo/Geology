@@ -7,42 +7,47 @@ import classNames from 'classnames';
 class DownloadButton extends Component{
   state = {
     downloaded: false,
+    downloadURL: ''
   }
 
-  // componentDidMount(){
-  //   const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID='+this.props.siteID;
-  //   const getRequestData = {
-  //     method: 'GET',
-  //     Origin:'http://rafter-ui-bucket.s3-website-us-east-1.amazonaws.com/FulcrumApproach',
-  //     //mode: "cors",
-  //     headers: {
-  //       // 'Content-Type': 'text/plain',
-  //       // Accept: 'text/plain',
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //       // 'X-Content-Type-Options': 'nosniff',
-  //     }
-  //   }
-  //
-  //   fetch(getCsvURL, getRequestData)
-  //   // .then( results => results.json() )
-  //   .then( response => {
-  //       if (response.status === 200 || response.status === 201) {
-  //         console.log("Checking status:");
-  //         console.log(response.text);
-  //         return response.text();
-  //         //return response.url;
-  //       } else {
-  //         console.log('Get CSV Failure!', response.status);
-  //       }
-  //     }
-  //   ).then( downloadURL => {
-  //     console.log("printing downloadURL: " + downloadURL);
-  //     this.setState({
-  //       downloadURL: downloadURL
-  //     })
-  //   })
-  // }
+  componentDidMount(){
+    const getCsvURL = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/GetDischarge?siteID='+this.props.siteID;
+    const getRequestData = {
+      method: 'GET',
+      Origin:'http://rafter-ui-bucket.s3-website-us-east-1.amazonaws.com/FulcrumApproach',
+      //mode: "cors",
+      headers: {
+        // 'Content-Type': 'text/plain',
+        // Accept: 'text/plain',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        // 'X-Content-Type-Options': 'nosniff',
+      }
+    }
+
+    fetch(getCsvURL, getRequestData)
+    // .then( results => results.json() )
+    .then( response => {
+        if (response.status === 200 || response.status === 201) {
+          console.log("Checking status:");
+          console.log(response.text);
+          return response.text();
+          //return response.url;
+        } else {
+          console.log('Get CSV Failure!', response.status);
+        }
+      }
+    ).then( downloadURL => {
+      console.log("printing downloadURL: " + downloadURL);
+      this.setState({
+        downloadURL: downloadURL
+      })
+    })
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    return this.state.downloaded !== nextState.downloaded
+  }
 
   downloadCSV = (id) => {
 
@@ -75,7 +80,7 @@ class DownloadButton extends Component{
     //   })
     // }).catch(function(error) {
     //   console.log('Requestfailed', error)
-    // });
+    // });np
 
     // fetch(getCsvURL, getRequestData)
     // // .then( results => results.json() )
@@ -124,8 +129,23 @@ class DownloadButton extends Component{
 
     const link = "https://s3.amazonaws.com/rafter-discharge-bucket/discharge/discharge-"+this.props.siteID+".csv";
 
+    const testLink = this.state.downloadURL;
+    console.log(this.state.downloadURL);
+
     return(
       <div className="csv-btn">
+
+        {/* {this.state.downloadURL !== '' ?
+        <div>
+          <a href={testLink}>Test download</a>
+        </div>
+        :
+        <div>
+          ...loading URL...
+        </div>
+        } */}
+
+
         {!this.state.downloaded
           ?
           <div
@@ -139,7 +159,8 @@ class DownloadButton extends Component{
               Download Discharge Data into a CSV file
             </a>
           </div>
-          : <div></div>
+          :
+          <div></div>
         }
       </div>
     )

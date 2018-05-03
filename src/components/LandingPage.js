@@ -32,13 +32,21 @@ class LandingPage extends Component{
           'font-size': '25px',
           'text-align': 'center'
         }}
-        >Fulcrum Theory Approach Sediment Flux Estimates:</div>
+        >Fulcrum Theory Approach Sediment Flux Estimates</div>
       <ul>
         <li>
           Leverage the Fulcrum approach to estimate source-to-sink sediment flux calculations using readily available data in the rock record of channel fill thickness and grainsize.
         </li>
         <li>
-          Derive sediment flux estimates using a default value for the variable of average annual days of bankfull duration (tbd) or query adatabase of over 500 streams to input a more stream specific tbdvalue based on selected parameters of climate, drainage area and/or channel size.
+          Derive sediment flux estimates using a default value for the variable of average annual days of bankfull duration
+          <span> </span>
+          <span>
+             <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
+          </span> or query adatabase of over 500 streams to input a more stream specific
+          <span> </span>
+          <span>
+             <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
+          </span> value based on selected parameters of climate, drainage area and/or channel size.
         </li>
       </ul>
 
@@ -70,13 +78,17 @@ class LandingPage extends Component{
             display: 'inline-block'
           }}
         >
-          ):
+          )
         </div>
       </div>
 
       <ul>
         <li>
-          Query a database of over 500 streams, selecting stream specific attributes of climate, drainage area and/or channel size to calculate an average annual days at bankfull duration (tbd) value.
+          Query a database of over 500 streams, selecting stream specific attributes of climate, drainage area and/or channel size to calculate an average annual days at bankfull duration
+          <span> </span>
+          <span>
+            <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
+          </span> value.
         </li>
       </ul>
 
@@ -92,7 +104,7 @@ class LandingPage extends Component{
           // 'font-weight': 'bold',
           'text-align': 'center'
         }}
-      >River Analogues:</div>
+      >River Analogues</div>
       <ul>
         <li>
           Select parameters of climate, drainage area and/or channel size to query a database of over 600 streams and return all analogous rivers based on the designated attributes.
@@ -177,31 +189,26 @@ class LandingPage extends Component{
 
               <div className="div-helpful-link">
                 <a className="white-text"
-                  href="https://s3.amazonaws.com/rafter-ui-bucket/Holbrook+and+Wanas%2C+2014.pdf">1. Holbrook and Wana, 2014 (pdf)</a>
-              </div>
-
-              <div className="div-helpful-link ">
-                <a className="white-text"
-                  href="https://s3.amazonaws.com/rafter-ui-bucket/Data+Dictionary.docx">2. Data Dictionary (pdf)</a>
+                  href="https://s3.amazonaws.com/rafter-ui-bucket/Holbrook+and+Wanas%2C+2014.pdf">1. Holbrook and Wanas, 2014 (pdf)</a>
               </div>
 
               <div className="div-helpful-link">
                 <a className="white-text"
-                  href="https://s3.amazonaws.com/rafter-ui-bucket/Fulcrum+Test+Claculations+Spread+Sheet.xlsx">3. Original Fulcrum Theory Approach (xlsx)</a>
+                  href="https://s3.amazonaws.com/rafter-ui-bucket/Fulcrum+Test+Claculations+Spread+Sheet.xlsx">2. Original Fulcrum Theory Approach (xlsx)</a>
               </div>
 
               <div className="div-helpful-link">
-                <a className="white-text"href="https://sgee.tcu.edu/staff/john-holbrook-ph-d/">4. Dr Holbrook's Home Page</a>
-              </div>
-
-              <div className="div-helpful-link">
-                <a className="white-text"
-                  href="https://frg.leeds.ac.uk">5. Fluvial Research Group Main Page</a>
+                <a className="white-text"href="https://sgee.tcu.edu/staff/john-holbrook-ph-d/">3. Dr Holbrook's Home Page</a>
               </div>
 
               <div className="div-helpful-link">
                 <a className="white-text"
-                  href="">6. References (pdf)</a>
+                  href="https://frg.leeds.ac.uk">4. Fluvial Research Group Main Page</a>
+              </div>
+
+              <div className="div-helpful-link">
+                <a className="white-text"
+                  href="">5. References (pdf)</a>
               </div>
 
             </div>

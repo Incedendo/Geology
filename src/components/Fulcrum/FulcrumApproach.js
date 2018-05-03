@@ -619,6 +619,12 @@ class FulcrumApproach extends Component {
 
   renderSubmitBtn = () => (
     <div>
+      <button
+        onClick={this.clearAll}
+        className="back-btn-result">
+        Clear
+      </button>
+
       {/* SUBMIT BUTTON */}
       <button type="submit" onClick={this.handleSubmit} className="back-btn-result">
         Submit
@@ -651,7 +657,7 @@ class FulcrumApproach extends Component {
                   >
                     Default
                   </div>
-                  <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+                  <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
                   <div
                     style={{
                       'margin-left': '5px',
@@ -677,7 +683,7 @@ class FulcrumApproach extends Component {
                   >
                     Customized
                   </div>
-                  <BaseSupSub style={{ display: 'inline-block' }} base="T" sub="bd" />
+                  <BaseSupSub style={{ display: 'inline-block' }} base="t" sub="bd" />
                 </div>
 
               </RadioButton>
@@ -687,7 +693,7 @@ class FulcrumApproach extends Component {
 
         {TBDMode === "Default" &&
           <div className="white-txt">
-            TBD will be calculated using Default value of 6.5
+            <BaseSupSub style={{ display: 'inline-block' }} base=" t" sub="bd" /> will be calculated using Default value of 6.5
           </div>
         }
 
@@ -701,13 +707,13 @@ class FulcrumApproach extends Component {
 
   // render Climate, Drainage Area, River Size and Precision Components
   renderTBDComponents = (...rest) => {
-    const {
-      submitClicked,
-      selectedClimate, enabledFirstOrderDropdown, enabledKoppenDropdown, climateFromDropdown,
-      drainage_low, drainage_high,
-      riverLow, riverHigh, selectedRiverSize, toggleRiverWidthAttr, calculatedDepthUsingWidth, riverWidth,
-      selectedPrecision
-    } = rest;
+    // const {
+    //   submitClicked,
+    //   selectedClimate, enabledFirstOrderDropdown, enabledKoppenDropdown, climateFromDropdown,
+    //   drainage_low, drainage_high,
+    //   riverLow, riverHigh, selectedRiverSize, toggleRiverWidthAttr, calculatedDepthUsingWidth, riverWidth,
+    //   selectedPrecision
+    // } = rest;
 
     return(
       <div className="purple-background">
@@ -737,7 +743,7 @@ class FulcrumApproach extends Component {
           setRiverSizeSelectedOption= {this.setRiverSizeSelectedOption}
           setRangeValues = {this.setRangeValues}
           updateFieldValue = {this.updateFieldValue}
-          toggleRiverWidthAttr = {this.state.toggleRiverWidthAttr}
+          toggleRiverWidthAttr = {this.toggleRiverWidthAttr}
           calculatedDepthUsingWidth = {this.state.calculatedDepthUsingWidth}
           riverWidth = {this.state.riverWidth}
           setRiverWidth = {this.setRiverWidth}
@@ -803,6 +809,86 @@ class FulcrumApproach extends Component {
       }
     </div>
   )
+
+
+  clearAll = () => {
+    this.setState({
+      post: [],
+
+      AvgBkflDpt: 0,
+      BkflChanWdt: 0,
+      HydrolicRad: 0,
+      Dee16: 0,
+      Dee50: 0,
+      Dee84: 0,
+      Dee90: 0,
+      SedimentDensity: 0,
+      DMLMult: 0,
+
+      //booleans to for error checking of inputs
+      valid_AvgBkflDpt: true,
+      valid_BkflChanWdt: true,
+      valid_HydrolicRad: true,
+      valid_Dee16: true,
+      valid_Dee50: true,
+      valid_Dee84: true,
+      valid_Dee90: true,
+      valid_SedimentDensity: true,
+      valid_DMLMult: true,
+
+      submitted: false, //true if all inputs are validated to perform a successful API call
+      submitClicked: false,
+      loading: true,
+      inputs_validated: true,
+      errorMessage: '',
+
+      TBDMode: "", // "Default" or "Customized"
+      //Customized TBD parameters:
+          climateFromDropdown: "",
+          selectedClimate: "",
+          enabledFirstOrderDropdown: false,
+          enabledKoppenDropdown: false,
+
+          // 6 inputs for the text fields:
+          drainage_low: null,
+          drainage_high: null,
+
+          selectedRiverSize: "", // set when river size radio buttons are clicked
+          isCrossSection: false,
+          riverLow: null,
+          riverHigh: null,
+          riverWidth: null,
+          toggleRiverWidthAttr: false,
+          calculatedDepthUsingWidth: false,
+
+          selectedPrecision: "", // set when Precision Radio Buttons are clicked
+          isWithin10: false,
+          isWithin20: false,
+
+      //an object to store the calculated esults after submit returns a JSON object.
+      response: {
+        slope: 0,
+        meanSlopeVelocity: 0,
+        channelBankfullDischarge: 0,
+        totalBedloadDischarge: 0,
+        totalBedloadVolumeSedimentDischarge: 0,
+        tbdWithin10: 0,
+        tbdWithin20: 0,
+        totalBankfullSuspendedSedimentDischarge_VanRijn: 0,
+        totalBankfullSuspendedSedimentDischarge_WrightParker: 0,
+        totalCombinedSedimentVolumeDischargePerYear_VanRijn: 0,
+        totalCombinedSedimentVolumeDischargePerYear_WrightParker:0,
+        totalSuspendedSedimentVolumeDischargedPerYear_VanRijn: 0,
+        totalSuspendedSedimentVolumeDischargedPerYear_WrightParker: 0,
+        data: [],
+      },
+
+      //Extra fields for TBD response:
+      tableData: [],
+      tbdWithin10: 0,
+      tbdWithin20: 0,
+    })
+  }
 
 
   //----------------------------------------------------------------------
@@ -942,19 +1028,19 @@ class FulcrumApproach extends Component {
         returnedData: response.totalBedloadVolumeSedimentDischarge,
       },
       {
-        title: "TBD Within 10%",
+        title: "Average Bankfull Days Within 10%",
         returnedData: response.tbdWithin10,
       },
       {
-        title: "TBD Within 20%",
+        title: "Average Bankfull Days Within 20%",
         returnedData: response.tbdWithin20,
       },
       {
-        title: "Total Bankful Suspended Sediment Discharge (Van Rijn), Qss (m^3/s)",
+        title: "Total Bankfull Suspended Sediment Discharge (Van Rijn), Qss (m^3/s)",
         returnedData: response.totalBankfullSuspendedSedimentDischarge_VanRijn,
       },
       {
-        title: "Total Bankful Suspended Sediment Discharge (Wright Parker), Qss (m^3/s)",
+        title: "Total Bankfull Suspended Sediment Discharge (Wright Parker), Qss (m^3/s)",
         returnedData: response.totalBankfullSuspendedSedimentDischarge_WrightParker,
       },
       {
