@@ -4,12 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import FulcrumInputComponent from './FulcrumInputComponent';
 import FulcrumResultComponent from './FulcrumResultComponent';
-import TBDApproach from '../TBD/TBDApproach';
 import RiverChannelsTable  from "../TBD/RiverChannelsTable";
-
-//import Select package
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 
 import BaseSupSub from 'react-basesupsub';
 
@@ -124,7 +119,7 @@ class FulcrumApproach extends Component {
       JimPostUrl = 'https://aae79tnck1.execute-api.us-east-1.amazonaws.com/Prod/api/main/Fulcrum';
       postReqBody = JSON.stringify({
         "IsFulcrum": true,
-        "IsMetric": false,
+        "IsMetric": true,
         "IsRiverAnalogue" : false,
         "IsTBD": true,
         "TBD": {
@@ -191,7 +186,7 @@ class FulcrumApproach extends Component {
 
     fetch(JimPostUrl, postRequestData)
     .then( response => {
-        if (response.status == 200 || response.status == 201) {
+        if (response.status === 200 || response.status === 201) {
             return response.json();
         } else {
           console.log('Failure!', response.status);
@@ -313,19 +308,17 @@ class FulcrumApproach extends Component {
   handleSubmit = (e) => {
       e.preventDefault();
 
-      // this.printState();
-
-      const {
-        state_AvgBkflDpt,
-        state_BkflChanWdt,
-        state_HydrolicRad,
-        state_Dee16,
-        state_Dee50,
-        state_Dee84,
-        state_Dee90,
-        state_SedimentDensity,
-        state_DMLMult,
-      } = this.state;
+      // const {
+      //   state_AvgBkflDpt,
+      //   state_BkflChanWdt,
+      //   state_HydrolicRad,
+      //   state_Dee16,
+      //   state_Dee50,
+      //   state_Dee84,
+      //   state_Dee90,
+      //   state_SedimentDensity,
+      //   state_DMLMult,
+      // } = this.state;
 
       //make sure the form's inputs are validated before proceed to send the post request to the server.
       if(this.validateAllInputsFulcrum()){

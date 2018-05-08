@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../../assets/scss/include.scss';
 import '../../assets/scss/ResultTable.scss';
-import fileDownload from 'js-file-download';
 import classNames from 'classnames';
 
 class DownloadButton extends Component{
@@ -122,29 +121,16 @@ class DownloadButton extends Component{
   }
 
   render(){
-    const downloadButtonState = classNames({
-      "back-btn-result": !this.state.downloaded,
-      "": this.state.downloaded
-    })
+    // const downloadButtonState = classNames({
+    //   "back-btn-result": !this.state.downloaded,
+    //   "": this.state.downloaded
+    // })
 
     const link = "https://s3.amazonaws.com/rafter-discharge-bucket/discharge/discharge-"+this.props.siteID+".csv";
 
-    const testLink = this.state.downloadURL;
-    console.log(this.state.downloadURL);
 
     return(
       <div className="csv-btn">
-
-        {/* {this.state.downloadURL !== '' ?
-        <div>
-          <a href={testLink}>Test download</a>
-        </div>
-        :
-        <div>
-          ...loading URL...
-        </div>
-        } */}
-
 
         {!this.state.downloaded
           ?

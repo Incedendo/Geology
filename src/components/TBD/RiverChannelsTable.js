@@ -1,81 +1,13 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import { Link } from 'react-router-dom';
-import MyLink from '../Link/MyLink';
 import DownloadButton from './DownloadButton';
-// import {makeData} from './Utils.js';
-import DetailedChannelView from './DetailedChannelView';
-import DetailChannelModal from './DetailChannelModal';
 import MapContainer from '../GoogleAPIScripts/MapContainer';
 import BaseSupSub from 'react-basesupsub';
 //  for FileDownload
 
 import '../../assets/scss/include.scss';
 import '../../assets/scss/ResultTable.scss';
-
-
-const fakeData = [
-  {
-    altitude:null,
-    avG_WITHIN_10:0.075,
-    avG_WITHIN_20:0.15,
-    channeL_DEPTH_FT:null,
-    channeL_DEPTH_M:10,
-    channeL_WIDTH_FT:null,
-    channeL_WIDTH_M:5,
-    climatE_CODE:null,
-    climatE_DESC:null,
-    climatE_ID:18,
-    countY_ID:"33011",
-    countY_NAME:null,
-    countrY_ID:1,
-    countrY_NAME:"USA",
-    desC_SOURCE:"USGS",
-    drainagE_AREA_KM:9.323964,
-    drainagE_AREA_MI:3.6,
-    laT_LONG_DATUM:"NAD83",
-    latitude:"41.210171",
-    longitude:"-73.898506",
-    reF_SOURCE:null,
-    reF_SOURCE_ID:0,
-    sitE_ID:"01093800",
-    sitE_NAME:"STONY BROOK TRIBUTARY NEAR TEMPLE NH",
-    statE_ABV:null,
-    statE_ID:33,
-    statE_NAME:null,
-  },
-  {
-    altitude:null,
-    avG_WITHIN_10:0.075,
-    avG_WITHIN_20:0.15,
-    channeL_DEPTH_FT:null,
-    channeL_DEPTH_M:45,
-    channeL_WIDTH_FT:null,
-    channeL_WIDTH_M:17,
-    climatE_CODE:null,
-    climatE_DESC:null,
-    climatE_ID:18,
-    countY_ID:"33011",
-    countY_NAME:null,
-    countrY_ID:1,
-    countrY_NAME:"USA",
-    desC_SOURCE:"USGS",
-    drainagE_AREA_KM:9.323964,
-    drainagE_AREA_MI:3.6,
-    laT_LONG_DATUM:"NAD83",
-    latitude:"36.1910972",
-    longitude:"-111.8037701",
-    reF_SOURCE:null,
-    reF_SOURCE_ID:0,
-    sitE_ID:"1567055",
-    sitE_NAME:"AUSTIN RIVER",
-    statE_ABV:null,
-    statE_ID:33,
-    statE_NAME:null,
-  },
-]
 
 class RiverChannelsTable extends Component{
 

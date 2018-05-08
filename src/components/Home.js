@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Col } from 'react-bootstrap';
 import '../assets/scss/LandingPage.css';
 import '../assets/scss/include.scss';
 import LandingPage from './LandingPage';
-import HomeLinkComponent from './HomeLinkComponent';
 import logo from '../assets/image/final_rafter_logo.png';
 import GeoDeptlogo from '../assets/image/SGEEwordmark.png';
 

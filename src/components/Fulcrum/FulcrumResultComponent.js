@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import '../../assets/scss/include.scss';
 
@@ -10,7 +10,7 @@ const FulcrumResultComponent = ( {title, returnedData} ) => (
       </Col>
       <Col sm={4} md={6} className="leftAlignedText">
         {
-          isNaN(returnedData) ? "No result." : returnedData
+          isNaN(returnedData) ? "No result." : returnedData.toFixed(7)
         }
      </Col>
     </Row>

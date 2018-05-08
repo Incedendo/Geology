@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 //import RadioButton package
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
 //import Select package
@@ -11,7 +10,6 @@ import BaseSupSub from 'react-basesupsub';
 
 import '../../assets/scss/include.scss';
 
-const rootColor = "#23CE2B";
 const pointColor = "#FFFFFF";
 
 /*

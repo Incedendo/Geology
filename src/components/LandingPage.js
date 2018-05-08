@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import HomeLinkComponent from './HomeLinkComponent';
 import '../assets/scss/LandingPage.css';
-import FlipCard from 'react-flipcard';
 import { Grid, Row, Col } from 'react-bootstrap';
 import BaseSupSub from 'react-basesupsub';
-import classNames from 'classnames';
-
 import logo from '../assets/image/final_rafter_logo.png';
 import GeoDeptlogo from '../assets/image/SGEEwordmark.png';
 
@@ -208,7 +204,7 @@ class LandingPage extends Component{
 
               <div className="div-helpful-link">
                 <a className="white-text"
-                  href="">5. References (pdf)</a>
+                  href="https://s3.amazonaws.com/rafter-ui-bucket/Works+Cited+RAFTER.pdf">5. References (pdf)</a>
               </div>
 
             </div>

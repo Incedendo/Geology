@@ -16,7 +16,6 @@ import RiverChannelsTable  from "./TBD/RiverChannelsTable";
 
 import '../assets/scss/include.scss';
 
-const rootColor = "#23CE2B";
 const pointColor = "#FFFFFF";
 
 class TBDAnalogFrame extends Component{
@@ -79,7 +78,7 @@ class TBDAnalogFrame extends Component{
       body:
         JSON.stringify({
           "IsFulcrum": false,
-          "IsMetric": false,
+          "IsMetric": true,
           "IsRiverAnalogue" : false,
           "IsTBD": true,
 
@@ -198,10 +197,14 @@ class TBDAnalogFrame extends Component{
   validateDrainageInputs(){
     if(this.state.drainage_low > 0 ||  this.state.drainage_high > 0){
         if(this.state.drainage_low === ''){
-          this.state.drainage_low = 0;
+          this.setState({
+            riverLow: 0
+          })
         }
         if(this.state.drainage_high === ''){
-          this.state.drainage_high = Number.MAX_VALUE;
+          this.setState({
+            riverHigh: Number.MAX_VALUE
+          })
         }
 
         console.log("successfully Validate drainage Inputs: Low: "+ this.state.drainage_low + " , High:  "+ this.state.drainage_high);
@@ -216,10 +219,14 @@ class TBDAnalogFrame extends Component{
     if(this.state.selectedRiverSize !== ""){
       if(this.state.riverLow > 0 || this.state.riverHigh > 0){
           if(this.state.riverLow === ''){
-            this.state.riverLow = 0;
+            this.setState({
+              riverLow: 0
+            })
           }
           if(this.state.riverHigh === ''){
-            this.state.riverHigh = Number.MAX_VALUE;
+            this.setState({
+              riverHigh: Number.MAX_VALUE
+            })
           }
           console.log("validated River Size: Low: "+ this.state.riverLow + " , High:  "+ this.state.riverHigh);
           return true;
@@ -272,10 +279,10 @@ class TBDAnalogFrame extends Component{
       "title-error": this.state.submitClicked && (this.state.selectedClimate === "" || this.state.climateFromDropdown === "")
     })
 
-    var selectColorError = classNames({
-      "error-color-First-order": this.state.submitClicked && this.state.selectedFirstOrder === "",
-      "error-color-Koppen": this.state.submitClicked &&  this.state.selectedKoppen === "",
-    })
+    // var selectColorError = classNames({
+    //   "error-color-First-order": this.state.submitClicked && this.state.selectedFirstOrder === "",
+    //   "error-color-Koppen": this.state.submitClicked &&  this.state.selectedKoppen === "",
+    // })
 
     return(
       <div className="enclosing-border purple-background">
@@ -450,7 +457,7 @@ class TBDAnalogFrame extends Component{
             </Col>
             <Col  md={9} className="leftAlignedText">
               <div className="inline-with-right-margin">
-                Min: <input  className="black-txt"
+                Min: <input
                   type="textbox"
                   name="drainage_low"
                   className={textfieldMin}
@@ -460,7 +467,7 @@ class TBDAnalogFrame extends Component{
                 />
               </div>
               <div className="inline-no-right-margin">
-                Max: <input  className="black-txt"
+                Max: <input
                   type="textbox"
                   name="drainage_high"
                   className={textfieldMax}
