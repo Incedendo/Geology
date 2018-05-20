@@ -7,7 +7,7 @@ import BaseSupSub from 'react-basesupsub';
 //  for FileDownload
 
 import '../../assets/scss/include.scss';
-import '../../assets/scss/ResultTable.scss';
+import '../../assets/scss/ResultTable.css';
 
 class RiverChannelsTable extends Component{
 

@@ -75,6 +75,24 @@ h3{
   height: 80px;
 }
 
+.warning{
+  position: absolute;
+  bottom: 90px;
+  background: grey;
+  left: 0px;
+  right: 0px;
+  color: white;
+}
+
+.bottom-warning{
+  position: absolute;
+  bottom: 90px;
+  background: grey;
+  left: 0px;
+  right: 0px;
+  color: white;
+}
+
 //previously working version
 // .home-footer{
 //   position: absolute;

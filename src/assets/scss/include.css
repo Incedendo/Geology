@@ -103,6 +103,22 @@ h3 {
   padding: 3px;
   height: 80px; }
 
+.warning {
+  position: absolute;
+  bottom: 90px;
+  background: grey;
+  left: 0px;
+  right: 0px;
+  color: white; }
+
+.bottom-warning {
+  position: absolute;
+  bottom: 90px;
+  background: grey;
+  left: 0px;
+  right: 0px;
+  color: white; }
+
 .home-footer {
   position: absolute;
   margin-top: 20px;
